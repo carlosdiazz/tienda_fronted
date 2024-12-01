@@ -3,8 +3,8 @@ import { entityUsuarioGQL } from "./usuario.interface";
 import { entityRoleGQL } from "../role";
 
 export const allUsuariosGQL = gql`
-  query AllUser($limit: Int, $activo: Boolean, $idEmpresa: Int) {
-    allUser(limit: $limit, activo: $activo, id_empresa: $idEmpresa) {
+  query AllUser($limit: Int, $activo: Boolean) {
+    allUser(limit: $limit, activo: $activo ) {
       ${entityUsuarioGQL}
       role {
         ${entityRoleGQL}
