@@ -25,7 +25,6 @@ import { toast } from "sonner";
 export default function UsuariosPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [activo, setActivo] = useState(true);
-  const [idEmpresa, setIdEmoresa] = useState<null | number>(null);
 
   const usuarios: UsuarioInterface[] = useUsuariosStore(
     (state) => state.usuarios
@@ -39,11 +38,11 @@ export default function UsuariosPage() {
 
   useEffect(() => {
     getUsuarios(1000, activo, );
-  }, [activo, ]);
+  }, [activo]);
 
   const onSubmit = async () => {
     setIsLoading(true);
-    await getUsuarios(10000, activo, idEmpresa);
+    await getUsuarios(10000, activo);
     setIsLoading(false);
     toast.success("Usuarios Actualizados");
   };
@@ -53,15 +52,6 @@ export default function UsuariosPage() {
       setActivo(true);
     } else {
       setActivo(false);
-    }
-  };
-
-  const handleSelectEmpresaChange = (value: string) => {
-    if (value === "0") {
-      setIdEmoresa(null);
-    } else {
-      const empresa = Number(value);
-      setIdEmoresa(empresa);
     }
   };
 
