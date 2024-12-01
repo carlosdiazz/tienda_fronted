@@ -1,0 +1,12 @@
+export class AppRouter {
+  static login = "/login";
+  static admin = "/admin";
+
+  //Por defecto
+  static adminAdmin = `${this.admin}/admin`;
+  static adminHome = `${this.admin}/home`;
+
+  //Entidades
+  static adminUsuarios = `${this.admin}/usuarios`;
+  static adminRoles = `${this.admin}/roles`;
+}
