@@ -15,3 +15,10 @@ export {
 } from "./usuario/usuario-action";
 
 export { getPermisosAccionAction } from "./permisoAccion/permisoAccion.action";
+
+export {
+  getEmpresaByIdAction,
+  getEmpresasAction,
+  removeEmpresaAction,
+  updateOrCreateEmpresaByIdAction,
+} from "./empresas/empresa-action";

@@ -9,4 +9,6 @@ export class AppRouter {
   //Entidades
   static adminUsuarios = `${this.admin}/usuarios`;
   static adminRoles = `${this.admin}/roles`;
+  static adminProductos = `${this.admin}/productos`;
+  static adminEmpresas = `${this.admin}/empresas`;
 }

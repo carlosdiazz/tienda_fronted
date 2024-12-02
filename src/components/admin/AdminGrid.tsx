@@ -15,6 +15,7 @@ import { RoleAminCard } from "../role";
 import { UsuarioAdminCard } from "../usuarios";
 import { PermisoAccion } from "@/config";
 import { useFavoritosStore } from "./admin-favorites.store";
+import { EmpresaAdminCard } from "../empresas";
 
 
 export const AdminGrid = () => {
@@ -26,6 +27,8 @@ export const AdminGrid = () => {
       {isFavorite(PermisoAccion.USER_VIEW) && <UsuarioAdminCard />}
 
       {isFavorite(PermisoAccion.ROLE_VIEW) && <RoleAminCard />}
+
+      {isFavorite(PermisoAccion.EMPRESA_VIEW) && <EmpresaAdminCard />}
 
     </div>
   );
