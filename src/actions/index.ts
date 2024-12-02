@@ -22,3 +22,10 @@ export {
   removeEmpresaAction,
   updateOrCreateEmpresaByIdAction,
 } from "./empresas/empresa-action";
+
+export {
+  getProductoByIdAction,
+  getProductosAction,
+  removeProductoAction,
+  updateOrCreateProductoByIdAction,
+} from "./productos/productos-action";
