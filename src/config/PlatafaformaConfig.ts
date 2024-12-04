@@ -7,6 +7,6 @@ export const PlataformaConfig = (): PlataformaConfigInterface => {
   //TODO
   return {
     img: "/generica.png",
-    name: "Tienda",
+    name: "MaxerComp",
   };
 };
