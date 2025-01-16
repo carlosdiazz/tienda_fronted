@@ -5,7 +5,8 @@ import {
   Printer,
   User2,
   Armchair,
-  ChartColumn
+  ChartColumn,
+  Copy
 } from "lucide-react";
 import { PermisoAccion } from "../constants";
 
@@ -41,6 +42,12 @@ export const menuItemEntidades: MenuItemInterface[] = [
     Title: "Productos",
     Icon: <ChartColumn />,
     permiso_view: PermisoAccion.PRODUCTOS_VIEW
+  },
+  {
+    Path: AppRouter.adminProveedores,
+    Title: "Proveedores",
+    Icon: <Copy />,
+    permiso_view: PermisoAccion.PROVEEDOR_VIEW
   },
 
 ];
