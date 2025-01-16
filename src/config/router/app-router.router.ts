@@ -12,4 +12,5 @@ export class AppRouter {
   static adminProductos = `${this.admin}/productos`;
   static adminEmpresas = `${this.admin}/empresas`;
   static adminProveedores = `${this.admin}/proveedores`;
+  static adminClientes = `${this.admin}/clientes`;
 }

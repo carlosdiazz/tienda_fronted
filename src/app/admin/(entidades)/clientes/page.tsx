@@ -2,11 +2,12 @@
 
 import {
   Button,
+  ClienteInterface,
+  ClientesGrid,
   EmptyEntity,
   LoadingPage,
   PermisoClient,
-  ProveedorGrid,
-  ProveedorInterface,
+
   Select,
   SelectContent,
   SelectGroup,
@@ -14,8 +15,9 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  useCLienteStore,
   useFavoritosStore,
-  useProveedorStore,
+
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { Star } from "lucide-react";
@@ -24,7 +26,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 
-export default function ProductosPage() {
+export default function ClientesPage() {
   const [activo, setActivo] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,25 +38,25 @@ export default function ProductosPage() {
     }
   };
 
-  const proveedores: ProveedorInterface[] = useProveedorStore(
-    (state) => state.proveedores
+  const clientes: ClienteInterface[] = useCLienteStore(
+    (state) => state.clientes
   );
-  const getProveedores = useProveedorStore((state) => state.getProveedores);
-  const loadingProveedor = useProveedorStore((state) => state.loading);
+  const getClientes = useCLienteStore((state) => state.getClientes);
+  const loadingClientes = useCLienteStore((state) => state.loading);
 
-  const permiso = PermisoAccion.PROVEEDOR_VIEW;
+  const permiso = PermisoAccion.CLIENTE_VIEW;
   const toggleFavorites = useFavoritosStore((state) => state.toggleFavorites);
   const isFavorite = useFavoritosStore((state) => state.isFavorite(permiso));
 
   const onSubmit = async () => {
     setIsLoading(true);
-    await getProveedores(10000, activo);
+    await getClientes(10000, activo);
     setIsLoading(false);
-    toast.success("Proveedores Actualizados");
+    toast.success("Clientes Actualizados");
   };
 
   useEffect(() => {
-    getProveedores(1000, activo);
+    getClientes(1000, activo);
   }, [activo]);
 
   return (
@@ -70,7 +72,7 @@ export default function ProductosPage() {
               )}
             </Button>
             <h1 className="text-lg font-semibold md:text-2xl mb-2">
-              Proveedores
+              Clientes
             </h1>
           </div>
 
@@ -90,8 +92,8 @@ export default function ProductosPage() {
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
-            <PermisoClient permiso={PermisoAccion.PROVEEDOR_CREATE}>
-              <Link href={`${AppRouter.adminProveedores}/0`}>
+            <PermisoClient permiso={PermisoAccion.CLIENTE_CREATE}>
+              <Link href={`${AppRouter.adminClientes}/0`}>
                 <Button>Nuevo</Button>
               </Link>
             </PermisoClient>
@@ -102,15 +104,15 @@ export default function ProductosPage() {
           </div>
         </div>
 
-        {loadingProveedor === true ? (
+        {loadingClientes === true ? (
           <LoadingPage />
-        ) : proveedores.length === 0 ? (
+        ) : clientes.length === 0 ? (
           <EmptyEntity
-            title="No hay Proveedores creado"
-            subTitle="Para crear un nuevo Proveedor pulsa '+'"
+            title="No hay Clientes creados"
+            subTitle="Para crear un nuevo Cliente pulsa '+'"
           />
         ) : (
-          <ProveedorGrid proveedores={proveedores} />
+          <ClientesGrid clientes={clientes} />
         )}
       </div>
     </div>

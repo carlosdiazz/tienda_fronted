@@ -36,3 +36,10 @@ export {
   removeProveedorAction,
   updateOrCreateProveedorByIdAction,
 } from "./proveedores/proveedores-action";
+
+export {
+  getClienteByIdAction,
+  getClientesAction,
+  removeClienteAction,
+  updateOrCreateClienteByIdAction,
+} from "./clientes/clientes-action";
