@@ -89,6 +89,8 @@ const updateProductoByIdAction = async (
           codigo: producto.codigo,
           price: producto.price,
           stock: producto.stock,
+          stock_minimo: producto.stock_minimo,
+          is_service: producto.is_service,
         },
       },
     });
@@ -125,6 +127,8 @@ const createProductoByIdAction = async (
           codigo: producto.codigo,
           price: producto.price,
           stock: producto.stock,
+          stock_minimo: producto.stock_minimo,
+          is_service: producto.is_service,
         },
       },
     });

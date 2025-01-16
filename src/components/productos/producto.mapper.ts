@@ -11,6 +11,8 @@ export const ProductoMapper = (data: any): ProductoInterface => {
     codigo: validateProperty<number>(data, "codigo", "number"),
     price: validateProperty<number>(data, "price", "number"),
     stock: validateProperty<number>(data, "stock", "number"),
+    stock_minimo: validateProperty<number>(data, "stock_minimo", "number"),
+    is_service: validateProperty<boolean>(data, "is_service", "boolean"),
   };
 };
 

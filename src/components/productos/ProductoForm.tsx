@@ -51,6 +51,8 @@ export const ProductoForm = ({ producto }: Props) => {
       codigo: producto.codigo,
       price: producto.price,
       stock: producto.stock,
+      is_service: producto.is_service,
+      stock_minimo: producto.stock_minimo
     },
   });
   const { handleSubmit } = form;
@@ -183,6 +185,47 @@ export const ProductoForm = ({ producto }: Props) => {
                   </FormControl>
                   <FormDescription>Stock del Producto</FormDescription>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Stock Minimo*/}
+            <FormField
+              control={form.control}
+              name="stock_minimo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Stock Minimo</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      }
+                    />
+                  </FormControl>
+                  <FormDescription>Stock Minimo del Producto</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/*Activo*/}
+            <FormField
+              control={form.control}
+              name="is_service"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="inline-flex items-center space-x-4">
+                      <FormLabel>Servicio</FormLabel>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
                 </FormItem>
               )}
             />

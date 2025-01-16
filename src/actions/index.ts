@@ -29,3 +29,10 @@ export {
   removeProductoAction,
   updateOrCreateProductoByIdAction,
 } from "./productos/productos-action";
+
+export {
+  getProveedorByIdAction,
+  getProveedoresAction,
+  removeProveedorAction,
+  updateOrCreateProveedorByIdAction,
+} from "./proveedores/proveedores-action";

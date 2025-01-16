@@ -9,6 +9,8 @@ export interface ProductoInterface {
   name: string;
   price: number;
   stock: number;
+  is_service: boolean;
+  stock_minimo: number;
 }
 
 export interface ProductoFormInterface {
@@ -20,6 +22,8 @@ export interface ProductoFormInterface {
   name: string;
   price: number;
   stock: number;
+  is_service: boolean;
+  stock_minimo: number;
 }
 
 export const productoFormSchema = z.object({
@@ -31,6 +35,8 @@ export const productoFormSchema = z.object({
   name: z.string().min(3),
   price: z.number(),
   stock: z.number(),
+  is_service: z.boolean(),
+  stock_minimo: z.number(),
 });
 
 export type ProductoFormSchemaType = z.infer<typeof productoFormSchema>;
@@ -44,6 +50,8 @@ export const emptyProducto: ProductoInterface = {
   img_url: "",
   price: 0,
   stock: 0,
+  is_service: false,
+  stock_minimo: 0,
 };
 
 export const entityProductoGQL = `
@@ -55,4 +63,6 @@ export const entityProductoGQL = `
   name
   price
   stock
+  is_service
+  stock_minimo
 `;
