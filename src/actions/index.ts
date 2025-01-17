@@ -43,3 +43,10 @@ export {
   removeClienteAction,
   updateOrCreateClienteByIdAction,
 } from "./clientes/clientes-action";
+
+export {
+  getFacturaAction,
+  getFacturaByIdAction,
+  removeFacturaAction,
+  updateOrCreateFacturaByIdAction,
+} from "./facturas/factura-action";

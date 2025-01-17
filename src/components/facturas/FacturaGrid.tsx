@@ -18,42 +18,43 @@ import { useState } from "react";
 
 import { toast } from "sonner";
 import Link from "next/link";
-import { ProveedorInterface } from "./proveedor.interface";
-import { useProveedorStore } from "./proveedor.store";
-import { removeProveedorAction } from "@/actions";
+import { FacturaInterface } from "./factura.interface";
+import { useFacturaStore } from "./factura.store";
+import { removeFacturaAction } from "@/actions";
+
 
 
 interface Props {
-  proveedores: ProveedorInterface[];
+  factura: FacturaInterface[];
 }
-export const ProveedorGrid = ({ proveedores }: Props) => {
+export const FacturaGrid = ({ factura }: Props) => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {proveedores.map((proveedor) => (
-          <ProveedorCard proveedor={proveedor} key={proveedor.id} />
+        {factura.map((index) => (
+          <FacturaCard factura={index} key={index.id} />
         ))}
       </div>
     </div>
   );
 };
 
-interface PropsProveedor {
-  proveedor: ProveedorInterface;
+interface PropsFactura {
+  factura: FacturaInterface;
 }
 
-export const ProveedorCard = ({ proveedor }: PropsProveedor) => {
+export const FacturaCard = ({ factura }: PropsFactura) => {
   const [isLoading, setIsLoading] = useState(false);
-  const getProveedores = useProveedorStore((state) => state.getProveedores);
+  const getFactura = useFacturaStore((state) => state.getFactura);
 
   const onDelete = async () => {
     setIsLoading(true);
-    const resp = await removeProveedorAction(proveedor.id);
+    const resp = await removeFacturaAction(factura.id);
     setIsLoading(false);
     if (resp.error) {
       toast.error(resp.message);
     } else {
-      await getProveedores(100, true);
+      await getFactura(100, true);
       toast.success(resp.message);
     }
   };
@@ -62,35 +63,33 @@ export const ProveedorCard = ({ proveedor }: PropsProveedor) => {
     <Card>
       <CardHeader>
         <CardTitle className="grid justify-between gap-2">
-        <h3 className="text-lg font-semibold">{proveedor.name}</h3>
-        <p className="text-muted-foreground">{proveedor.descripcion}</p>
+        <h3 className="text-lg font-semibold">Total: {factura.total}</h3>
+        <p className="text-muted-foreground">toal Pagado: {factura.total_pagado}</p>
         </CardTitle>
       </CardHeader>
 
       <CardContent>
-
-
         <div className="flex items-center space-x-2 mt-4">
-          <Switch checked={proveedor.activo} />
+          <Switch checked={factura.activo} />
           <Label>Activo</Label>
         </div>
       </CardContent>
 
       <CardFooter className="flex justify-end gap-x-2">
-        <PermisoClient permiso={PermisoAccion.PROVEEDOR_DELETE}>
+        <PermisoClient permiso={PermisoAccion.FACTURA_DELETE}>
           <Button variant="destructive" disabled={isLoading} onClick={onDelete}>
             Eliminar
           </Button>
         </PermisoClient>
 
-        <PermisoClient permiso={PermisoAccion.PROVEEDOR_UPDATE}>
-          <Link href={`${AppRouter.adminProveedores}/${proveedor.id}`}>
+        <PermisoClient permiso={PermisoAccion.FACTURA_UPDATE}>
+          <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
             <Button variant="default">Editar</Button>
           </Link>
         </PermisoClient>
 
-        <PermisoClient permiso={PermisoAccion.PROVEEDOR_VIEW}>
-          <Link href={`${AppRouter.adminProveedores}/${proveedor.id}`}>
+        <PermisoClient permiso={PermisoAccion.FACTURA_VIEW}>
+          <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
             <Button variant="secondary">Ver</Button>
           </Link>
         </PermisoClient>
