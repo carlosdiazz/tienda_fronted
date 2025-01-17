@@ -50,3 +50,10 @@ export {
   removeFacturaAction,
   updateOrCreateFacturaByIdAction,
 } from "./facturas/factura-action";
+
+export {
+  getComprobanteAction,
+  getComprobanteByIdAction,
+  removeComprobanteAction,
+  updateOrCreateComprobanteByIdAction,
+} from "./comprobantes/comprobantes-action";

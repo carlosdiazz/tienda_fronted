@@ -20,6 +20,7 @@ import { ProductosAdminCard } from "../productos";
 import { ProveedorAdminCard } from "../proveedores";
 import { ClienteAdminCard } from "../clientes";
 import { FacturaAdminCard } from "../facturas";
+import { ComprobanteAdminCard } from "../comprobantes";
 
 
 export const AdminGrid = () => {
@@ -41,6 +42,8 @@ export const AdminGrid = () => {
       {isFavorite(PermisoAccion.CLIENTE_VIEW) && <ClienteAdminCard />}
 
       {isFavorite(PermisoAccion.FACTURA_VIEW) && <FacturaAdminCard />}
+
+      {isFavorite(PermisoAccion.COMPROBANTE_VIEW) && <ComprobanteAdminCard />}
 
     </div>
   );

@@ -8,7 +8,8 @@ import {
   ChartColumn,
   Copy,
   User,
-  Hammer
+  Hammer,
+  MedalIcon
 } from "lucide-react";
 import { PermisoAccion } from "../constants";
 
@@ -60,8 +61,14 @@ export const menuItemEntidades: MenuItemInterface[] = [
   {
     Path: AppRouter.adminFactura,
     Title: "Facturas",
-    Icon: <User />,
+    Icon: <Hammer />,
     permiso_view: PermisoAccion.FACTURA_VIEW
+  },
+  {
+    Path: AppRouter.adminComprobante,
+    Title: "Comprobantes",
+    Icon: <MedalIcon />,
+    permiso_view: PermisoAccion.COMPROBANTE_VIEW
   },
 
 ];
