@@ -4,3 +4,4 @@ export * from "./comprobante.mapper";
 export * from "./comprobante.store";
 export * from "./ComprobanteAdminCard";
 export * from "./ComprobanteGrid";
+export * from "./ComprobanteForm";

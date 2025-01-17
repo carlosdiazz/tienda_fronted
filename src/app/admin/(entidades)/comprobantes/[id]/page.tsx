@@ -1,12 +1,12 @@
-import { getProveedorByIdAction } from "@/actions";
-import { ProveedorForm, ProveedorInterface } from "@/components";
+import { getComprobanteByIdAction } from "@/actions";
+import { ComprobanteForm, ComprobanteInterface } from "@/components";
 import { notFound } from "next/navigation";
 
 type Params = Promise<{
   id: string;
 }>;
 
-export default async function ProveedorEdit(props: {
+export default async function ComprobanteEdit(props: {
   params: Promise<Params>;
 }) {
   const params = await props.params;
@@ -15,16 +15,16 @@ export default async function ProveedorEdit(props: {
     notFound();
   }
 
-  const isProveedor = await getProveedorByIdAction(id);
-  if (isProveedor === null) {
+  const isComprobante = await getComprobanteByIdAction(id);
+  if (isComprobante === null) {
     notFound();
   }
 
-  const proveedor: ProveedorInterface = isProveedor;
+  const comprobante: ComprobanteInterface = isComprobante;
 
-  return <div className="w-full mx-auto">
-    <ProveedorForm proveedor={proveedor} />
-  </div>;
+  return (
+    <div className="w-full mx-auto">
+      <ComprobanteForm comprobante={comprobante} />
+    </div>
+  );
 }
-
-

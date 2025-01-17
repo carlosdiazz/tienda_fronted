@@ -1,4 +1,11 @@
 import { z } from "zod";
+import {
+  entityFacturaDetalleGQL,
+  FacturaDetalleInterface,
+} from "./factura-detalle";
+import { entityProductoGQL } from "../productos";
+import { ComprobanteInterface, entityComprobanteGQL } from "../comprobantes";
+import { ClienteInterface, emptyCliente, entityClienterGQL } from "../clientes";
 
 export interface FacturaInterface {
   id: number;
@@ -8,6 +15,9 @@ export interface FacturaInterface {
   is_credito: boolean;
   total_pagado: number;
   faltante: number;
+  cliente: ClienteInterface;
+  factura_detalle: FacturaDetalleInterface[];
+  comprobante: ComprobanteInterface[];
 }
 
 export interface FacturaFormInterface {
@@ -40,7 +50,32 @@ export const emptyFactura: FacturaInterface = {
   is_credito: false,
   total: 0,
   total_pagado: 0,
+  cliente: emptyCliente,
+  factura_detalle: [],
+  comprobante: [],
 };
+
+export const entityRelacionesFacturaGQL = `
+  activo
+  codigo_factura
+  faltante
+  id
+  is_credito
+  total
+  total_pagado
+  cliente {
+    ${entityClienterGQL}
+  }
+  factura_detalle {
+    ${entityFacturaDetalleGQL}
+    producto{
+      ${entityProductoGQL}
+    }
+  }
+  comprobante {
+    ${entityComprobanteGQL}
+  }
+`;
 
 export const entityFacturaGQL = `
   activo

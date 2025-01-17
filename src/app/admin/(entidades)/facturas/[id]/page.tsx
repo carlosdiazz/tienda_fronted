@@ -1,12 +1,12 @@
-import { getProveedorByIdAction } from "@/actions";
-import { ProveedorForm, ProveedorInterface } from "@/components";
+import { getFacturaByIdAction } from "@/actions";
+import { FacturaForm, FacturaInterface } from "@/components";
 import { notFound } from "next/navigation";
 
 type Params = Promise<{
   id: string;
 }>;
 
-export default async function ProveedorEdit(props: {
+export default async function FacturaEdit(props: {
   params: Promise<Params>;
 }) {
   const params = await props.params;
@@ -15,15 +15,15 @@ export default async function ProveedorEdit(props: {
     notFound();
   }
 
-  const isProveedor = await getProveedorByIdAction(id);
-  if (isProveedor === null) {
+  const isFactura = await getFacturaByIdAction(id);
+  if (isFactura === null) {
     notFound();
   }
 
-  const proveedor: ProveedorInterface = isProveedor;
+  const factura: FacturaInterface = isFactura;
 
   return <div className="w-full mx-auto">
-    <ProveedorForm proveedor={proveedor} />
+    <FacturaForm factura={factura} />
   </div>;
 }
 

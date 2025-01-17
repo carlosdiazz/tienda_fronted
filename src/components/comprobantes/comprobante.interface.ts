@@ -10,15 +10,17 @@ export interface ComprobanteFormInterface {
   id: number;
   concepto: string;
   monto_pagado: number;
+  id_facura: number;
 }
 
-export const ComprobanteFormSchema = z.object({
+export const comprobanteFormSchema = z.object({
   id: z.number(),
   monto_pagado: z.number(),
   concepto: z.string().min(3),
+  id_facura: z.number(),
 });
 
-export type ComprobanteFormSchemaType = z.infer<typeof ComprobanteFormSchema>;
+export type ComprobanteFormSchemaType = z.infer<typeof comprobanteFormSchema>;
 
 export const emptyComprobante: ComprobanteInterface = {
   id: 0,

@@ -1,5 +1,8 @@
 import { validateProperty } from "@/lib";
 import { FacturaInterface } from "./factura.interface";
+import { GetFacturaDetalleResponse } from "./factura-detalle";
+import { GetComprobanteResponse } from "../comprobantes";
+import { ClienteMapper } from "../clientes";
 
 export const FacturaMapper = (data: any): FacturaInterface => {
   return {
@@ -10,6 +13,9 @@ export const FacturaMapper = (data: any): FacturaInterface => {
     total: validateProperty<number>(data, "total", "number"),
     total_pagado: validateProperty<number>(data, "total_pagado", "number"),
     is_credito: validateProperty<boolean>(data, "is_credito", "boolean"),
+    factura_detalle: GetFacturaDetalleResponse(data["factura_detalle"]),
+    comprobante: GetComprobanteResponse(data["comprobante"]),
+    cliente: ClienteMapper(data["cliente"]),
   };
 };
 

@@ -63,17 +63,20 @@ export const FacturaCard = ({ factura }: PropsFactura) => {
     <Card>
       <CardHeader>
         <CardTitle className="grid justify-between gap-2">
+        <Badge variant={"secondary"}>#{factura.codigo_factura}</Badge>
         <Badge variant={factura.total === factura.total_pagado ? "info" : "destructive"}>{factura.total === factura.total_pagado ? "Pagada" : "Pendiente"}</Badge>
         <h3 className="text-lg font-semibold">Total: {factura.total}</h3>
-        <p className="text-muted-foreground">Total Pagado: {factura.total_pagado}</p>
+          <p className="text-muted-foreground">Total Pagado: {factura.total_pagado}</p>
+          <p className="text-muted-foreground">Total Items: {factura.factura_detalle.length}</p>
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
-        <div className="flex items-center space-x-2 mt-4">
+      <CardContent className="mt-2">
+        <div className="flex items-center space-x-2">
           <Switch checked={factura.activo} />
           <Label>Activo</Label>
         </div>
+        <p className="text-muted-foreground mt-2">Cliente: {factura.cliente.name}</p>
       </CardContent>
 
       <CardFooter className="flex justify-end gap-x-2">

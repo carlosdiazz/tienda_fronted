@@ -113,7 +113,7 @@ const createComprobanteByIdAction = async (
       variables: {
         createComprobanteInput: {
           concepto: Comprobante.concepto,
-          //id_factura: C,
+          id_factura: Comprobante.id_facura,
           monto_pagado: Comprobante.monto_pagado,
         },
       },
