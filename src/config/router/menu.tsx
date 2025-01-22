@@ -9,7 +9,9 @@ import {
   Copy,
   User,
   Hammer,
-  MedalIcon
+  MedalIcon,
+  Bell,
+  GalleryHorizontal
 } from "lucide-react";
 import { PermisoAccion } from "../constants";
 
@@ -73,6 +75,18 @@ export const menuItemEntidades: MenuItemInterface[] = [
 
 ];
 
+//TODO Cambiar Roles
 export const menuItemProcesos: MenuItemInterface[] = [
-
+  {
+    Path: AppRouter.adminVentas,
+    Title: "Ventas",
+    Icon: <GalleryHorizontal />,
+    permiso_view: PermisoAccion.FACTURA_CREATE
+  },
+  {
+    Path: AppRouter.adminInventario,
+    Title: "Inventario",
+    Icon: <Bell />,
+    permiso_view: PermisoAccion.FACTURA_CREATE
+  },
 ];
