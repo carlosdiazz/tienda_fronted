@@ -12,7 +12,7 @@ import {
   removeFacturaGQL,
   updateFacturaGQL,
 } from "@/components";
-import { ResponsePropio } from "@/interface";
+import { ResponseFacturaPropio, ResponsePropio } from "@/interface";
 import {
   getGraphQLErrorMessage,
   makeClientGraphql,
@@ -69,7 +69,7 @@ export const getFacturaByIdAction = async (
   }
 };
 
-const updateFacturaByIdAction = async (
+export const updateFacturaByIdAction = async (
   factura: FacturaFormInterface
 ): Promise<ResponsePropio> => {
   //console.info("updateFacturaByIdAction");
@@ -101,13 +101,13 @@ const updateFacturaByIdAction = async (
   }
 };
 
-const createFacturaByIdAction = async (
+export const createFacturaByIdAction = async (
   factura: FacturaFormInterface
-): Promise<ResponsePropio> => {
+): Promise<ResponseFacturaPropio> => {
   //console.info("createFacturaByIdAction");
   try {
     const peti = await makeClientGraphql();
-    await peti.mutate({
+    const { data } = await peti.mutate({
       mutation: createFacturaGQL,
       fetchPolicy: "no-cache",
       variables: {
@@ -121,9 +121,12 @@ const createFacturaByIdAction = async (
       },
     });
 
+    const new_factura = FacturaMapper(data["createFactura"]);
+
     return {
       error: false,
       message: "Factura Creada",
+      id: new_factura.id,
     };
   } catch (e) {
     console.error(`Error => ${e}`);
@@ -131,18 +134,19 @@ const createFacturaByIdAction = async (
     return {
       error: true,
       message: `Error creando Factura: ${message}`,
+      id: 0,
     };
   }
 };
 
-export const updateOrCreateFacturaByIdAction = async (
-  factura: FacturaFormInterface
-): Promise<ResponsePropio> => {
-  if (factura.id === 0) {
-    return await createFacturaByIdAction(factura);
-  }
-  return await updateFacturaByIdAction(factura);
-};
+//export const updateOrCreateFacturaByIdAction = async (
+//  factura: FacturaFormInterface
+//): Promise<ResponsePropio> => {
+//  if (factura.id === 0) {
+//    return await createFacturaByIdAction(factura);
+//  }
+//  return await updateFacturaByIdAction(factura);
+//};
 
 export const removeFacturaAction = async (
   id: number

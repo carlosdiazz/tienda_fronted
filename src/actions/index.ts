@@ -48,7 +48,8 @@ export {
   getFacturaAction,
   getFacturaByIdAction,
   removeFacturaAction,
-  updateOrCreateFacturaByIdAction,
+  updateFacturaByIdAction,
+  createFacturaByIdAction,
 } from "./facturas/factura-action";
 
 export {

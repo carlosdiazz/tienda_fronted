@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { ClienteInterface } from "../clientes";
 import {
-  createFacturaGQL,
   FacturaFormInterface,
   facturaFormSchema,
   FacturaFormSchemaType,
@@ -29,11 +28,12 @@ import {
   Switch,
 } from "../ui";
 import { useState } from "react";
-import { sleep } from "@/lib";
 import { Plus, X } from "lucide-react";
 import { Producto, useVentasStore } from "./ventas.store";
 import { toast } from "sonner";
-import { updateOrCreateFacturaByIdAction } from "@/actions";
+import { createFacturaByIdAction } from "@/actions";
+import { useRouter } from "next/navigation";
+import { AppRouter } from "@/config";
 
 interface Props {
   facturaForm: FacturaFormInterface;
@@ -60,6 +60,8 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
   const realizarCompra = useVentasStore((state) => state.realizarCompra);
 
   const total = useVentasStore((state) => state.total);
+
+  const router = useRouter();
 
   const form = useForm<FacturaFormSchemaType>({
     resolver: zodResolver(facturaFormSchema),
@@ -101,15 +103,17 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
       productos: new_productos,
     };
 
-    const resp = await updateOrCreateFacturaByIdAction(newFactura);
+    const resp = await createFacturaByIdAction(newFactura);
     if (resp.error) {
       toast.error(`Error => ${resp.message}`);
       setLoading(false);
       return;
     }
     realizarCompra()
-    toast.success(`Procesado`);
     setLoading(false);
+    toast.success(`Procesado`);
+    router.replace(`${AppRouter.adminFactura}/${resp.id}`);
+
   }
 
   const handleAgregarProducto = () => {
