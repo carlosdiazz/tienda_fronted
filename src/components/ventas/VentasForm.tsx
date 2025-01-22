@@ -3,9 +3,11 @@
 import { useForm } from "react-hook-form";
 import { ClienteInterface } from "../clientes";
 import {
+  createFacturaGQL,
   FacturaFormInterface,
   facturaFormSchema,
   FacturaFormSchemaType,
+  ProductosVentasInterface,
 } from "../facturas";
 import { ProductoInterface } from "../productos";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +32,8 @@ import { useState } from "react";
 import { sleep } from "@/lib";
 import { Plus, X } from "lucide-react";
 import { Producto, useVentasStore } from "./ventas.store";
+import { toast } from "sonner";
+import { updateOrCreateFacturaByIdAction } from "@/actions";
 
 interface Props {
   facturaForm: FacturaFormInterface;
@@ -53,6 +57,8 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
 
   const removerProducto = useVentasStore((state) => state.removerProducto);
 
+  const realizarCompra = useVentasStore((state) => state.realizarCompra);
+
   const total = useVentasStore((state) => state.total);
 
   const form = useForm<FacturaFormSchemaType>({
@@ -73,9 +79,36 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
 
   async function onSubmit(data: FacturaFormSchemaType) {
     setLoading(true);
-    console.log(`OnSubmit`);
-    console.log(data);
-    await sleep(2);
+    const new_productos: ProductosVentasInterface[] =
+      productosSeleccionados.map((i) => {
+        return { id_producto: i.id, cantidad: i.cantidad };
+      });
+
+    if (total === 0 || new_productos.length === 0) {
+      toast.error("No tienes ningun producto");
+      setLoading(false);
+      return;
+    }
+
+    const newFactura: FacturaFormInterface = {
+      activo: data.activo,
+      faltante: data.faltante,
+      id: data.id,
+      id_cliente: idCliente,
+      is_credito: data.is_credito,
+      total: total,
+      total_pagado: data.total_pagado,
+      productos: new_productos,
+    };
+
+    const resp = await updateOrCreateFacturaByIdAction(newFactura);
+    if (resp.error) {
+      toast.error(`Error => ${resp.message}`);
+      setLoading(false);
+      return;
+    }
+    realizarCompra()
+    toast.success(`Procesado`);
     setLoading(false);
   }
 
@@ -159,9 +192,7 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
               />
             </div>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 my-5 mt-5">
-            Agregar Producto
-          </h3>
+          <h3 className="text-lg font-medium  my-5 mt-5">Agregar Producto</h3>
           <div className="grid grid-cols-3">
             <div className="flex items-center space-x-2 mt-2">
               <Select onValueChange={setProductoActual} value={productoActual}>
@@ -191,42 +222,35 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
             </div>
           </div>
 
-          <h3 className="text-lg font-medium text-gray-900 mt-5 my-5">
+          <h3 className="text-lg font-medium  mt-5 my-5">
             Productos Seleccionados
           </h3>
 
           {/* Tabla de productos seleccionados */}
           <div className="w-3/4 items-start">
-            <table className="min-w-full table-auto border-collapse border border-gray-200">
+            <table className="min-w-full table-auto border-collapse border">
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                <tr className="">
+                  <th className="px-4 py-2 text-left text-sm font-medium ">
                     Producto
                   </th>
-                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                  <th className="px-4 py-2 text-left text-sm font-medium ">
                     Cantidad
                   </th>
-                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                  <th className="px-4 py-2 text-left text-sm font-medium ">
                     Precio Total
                   </th>
-                  <th className="px-4 py-2 text-center text-sm font-medium text-gray-700">
+                  <th className="px-4 py-2 text-center text-sm font-medium">
                     Acciones
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {productosSeleccionados.map((producto, index) => (
-                  <tr
-                    key={producto.id}
-                    className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                  >
-                    <td className="px-4 py-2 text-sm text-gray-800">
-                      {producto.name}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-800">
-                      {producto.cantidad}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-800">
+                  <tr key={producto.id}>
+                    <td className="px-4 py-2 text-sm ">{producto.name}</td>
+                    <td className="px-4 py-2 text-sm ">{producto.cantidad}</td>
+                    <td className="px-4 py-2 text-sm ">
                       ${producto.price * producto.cantidad}
                     </td>
                     <td className="px-4 py-2 text-center">
@@ -247,9 +271,7 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
           </div>
 
           <div className="mt-5">
-            <label className="block text-sm font-medium text-gray-700">
-              Total
-            </label>
+            <label className="block text-sm font-medium ">Total</label>
             <span className="text-xl font-bold">${total.toFixed(2)}</span>
           </div>
 

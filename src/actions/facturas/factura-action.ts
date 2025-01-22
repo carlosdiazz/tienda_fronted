@@ -113,10 +113,10 @@ const createFacturaByIdAction = async (
       variables: {
         createFacturaInput: {
           activo: factura.activo,
-          //id_cliente: 1,
+          id_cliente: factura.id_cliente,
           is_credito: factura.is_credito,
           total_pagado: factura.total_pagado,
-          //productos: { cantidad: 0, id_producto: 0 },
+          productos: factura.productos,
         },
       },
     });

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type Producto = {
   id: number;
@@ -18,54 +19,66 @@ interface VentasState {
   productosSeleccionados: ProductoSeleccionado[];
   agregarProducto: (producto: Producto, cantidad: number) => void;
   removerProducto: (id_producto: number) => void;
+  realizarCompra: () => void;
 }
 
-export const useVentasStore = create<VentasState>((set, get) => ({
-  total: 0,
-  productosSeleccionados: [],
-  agregarProducto: (producto, cantidad) => {
-    set((state) => {
-      const productoExistente = state.productosSeleccionados.find(
-        (p) => p.id === producto.id
-      );
-      let nuevosProductosSeleccionados;
+export const useVentasStore = create<VentasState>()(
+  persist(
+    (set, get) => ({
+      total: 0,
+      productosSeleccionados: [],
+      agregarProducto: (producto, cantidad) => {
+        set((state) => {
+          const productoExistente = state.productosSeleccionados.find(
+            (p) => p.id === producto.id
+          );
+          let nuevosProductosSeleccionados;
 
-      if (productoExistente) {
-        nuevosProductosSeleccionados = state.productosSeleccionados.map((p) =>
-          p.id === producto.id ? { ...p, cantidad: p.cantidad + cantidad } : p
-        );
-      } else {
-        nuevosProductosSeleccionados = [
-          ...state.productosSeleccionados,
-          { ...producto, cantidad },
-        ];
+          if (productoExistente) {
+            nuevosProductosSeleccionados = state.productosSeleccionados.map(
+              (p) =>
+                p.id === producto.id
+                  ? { ...p, cantidad: p.cantidad + cantidad }
+                  : p
+            );
+          } else {
+            nuevosProductosSeleccionados = [
+              ...state.productosSeleccionados,
+              { ...producto, cantidad },
+            ];
+          }
+
+          const nuevoTotal = nuevosProductosSeleccionados.reduce(
+            (sum, p) => sum + p.price * p.cantidad,
+            0
+          );
+
+          return {
+            productosSeleccionados: nuevosProductosSeleccionados,
+            total: nuevoTotal,
+          };
+        });
+      },
+      removerProducto: (productoId) => {
+        set((state) => {
+          const nuevosProductosSeleccionados =
+            state.productosSeleccionados.filter((p) => p.id !== productoId);
+          const nuevoTotal = nuevosProductosSeleccionados.reduce(
+            (sum, p) => sum + p.price * p.cantidad,
+            0
+          );
+
+          return {
+            productosSeleccionados: nuevosProductosSeleccionados,
+            total: nuevoTotal,
+          };
+        });
+      },
+      realizarCompra: () => {
+        set({ total: 0 });
+        set({ productosSeleccionados: [] });
       }
-
-      const nuevoTotal = nuevosProductosSeleccionados.reduce(
-        (sum, p) => sum + p.price * p.cantidad,
-        0
-      );
-
-      return {
-        productosSeleccionados: nuevosProductosSeleccionados,
-        total: nuevoTotal,
-      };
-    });
-  },
-  removerProducto: (productoId) => {
-    set((state) => {
-      const nuevosProductosSeleccionados = state.productosSeleccionados.filter(
-        (p) => p.id !== productoId
-      );
-      const nuevoTotal = nuevosProductosSeleccionados.reduce(
-        (sum, p) => sum + p.price * p.cantidad,
-        0
-      );
-
-      return {
-        productosSeleccionados: nuevosProductosSeleccionados,
-        total: nuevoTotal,
-      };
-    });
-  },
-}));
+    }),
+    { name: "stock" }
+  )
+);
