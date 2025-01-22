@@ -11,3 +11,4 @@ export * from "./proveedores";
 export * from "./clientes";
 export * from "./facturas";
 export * from "./comprobantes";
+export * from "./ventas";
