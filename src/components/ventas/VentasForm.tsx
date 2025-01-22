@@ -12,6 +12,7 @@ import { ProductoInterface } from "../productos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
+  Card,
   Form,
   FormControl,
   FormDescription,
@@ -109,11 +110,10 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
       setLoading(false);
       return;
     }
-    realizarCompra()
+    realizarCompra();
     setLoading(false);
     toast.success(`Procesado`);
     router.replace(`${AppRouter.adminFactura}/${resp.id}`);
-
   }
 
   const handleAgregarProducto = () => {
@@ -136,183 +136,176 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
 
   return (
     <div>
-      <h1 className="py-10 text-xl">Punto de Venta</h1>
-
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-4 gap-4">
-            <div className="col-span-2">
-              {/* Cliente */}
+            {/* Primera tarjeta: Clientes, Productos y Productos seleccionados */}
+            <Card className="col-span-3 p-4">
+              <h2 className="text-lg font-bold mb-4">Gestión de Venta</h2>
+
+              <div className="grid grid-cols-3 gap-4">
+                {/* Cliente */}
+                <FormField
+                  control={form.control}
+                  name="id_cliente"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cliente</FormLabel>
+                      <Select
+                        onValueChange={(value) => {
+                          field.onChange(parseInt(value, 10));
+                          setIdCliente(parseInt(value, 10));
+                        }}
+                        defaultValue={`${field.value}`}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona el Cliente" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {clientes.map((item) => (
+                            <SelectItem value={`${item.id}`} key={item.id}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>Cliente seleccionado</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Switch de Crédito */}
+                <FormField
+                  control={form.control}
+                  name="is_credito"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-start mt-4">
+                      <FormLabel>Crédito</FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Agregar Producto */}
+              <h3 className="text-lg font-medium mt-6">Agregar Producto</h3>
+              <div className="flex items-center space-x-2 mt-2">
+                <Select
+                  onValueChange={setProductoActual}
+                  value={productoActual}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccione un producto" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {productos.map((producto) => (
+                      <SelectItem key={producto.id} value={`${producto.id}`}>
+                        {producto.name} - ${producto.price}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  type="number"
+                  min="1"
+                  value={cantidadActual}
+                  onChange={(e) => setCantidadActual(e.target.value)}
+                  placeholder="Cantidad"
+                  className="w-28"
+                />
+                <Button
+                  onClick={handleAgregarProducto}
+                  size="icon"
+                  type="button"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="sr-only">Agregar producto</span>
+                </Button>
+              </div>
+
+              {/* Productos Seleccionados */}
+              <h3 className="text-lg font-medium mt-6">
+                Productos Seleccionados
+              </h3>
+              <table className="min-w-full table-auto border-collapse border mt-2">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2 text-left">Producto</th>
+                    <th className="px-4 py-2 text-left">Cantidad</th>
+                    <th className="px-4 py-2 text-left">Precio Total</th>
+                    <th className="px-4 py-2 text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {productosSeleccionados.map((producto, index) => (
+                    <tr key={producto.id}>
+                      <td className="px-4 py-2">{producto.name}</td>
+                      <td className="px-4 py-2">{producto.cantidad}</td>
+                      <td className="px-4 py-2">
+                        ${producto.price * producto.cantidad}
+                      </td>
+                      <td className="px-4 py-2 text-center">
+                        <Button
+                          onClick={() => removerProducto(Number(producto.id))}
+                          size="icon"
+                          variant="ghost"
+                          type="button"
+                        >
+                          <X className="h-4 w-4" />
+                          <span className="sr-only">Remover producto</span>
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Card>
+
+            {/* Segunda tarjeta: Monto a pagar y botón de pagar */}
+            <Card className="col-span-1 p-4">
+              <h2 className="text-lg font-bold mb-4">Resumen</h2>
+
+              {/* Total */}
+              <div className="mt-2">
+                <label className="block text-sm font-medium">Total</label>
+                <span className="text-xl font-bold">${total.toFixed(2)}</span>
+              </div>
+
+              {/* Monto a Pagar */}
               <FormField
                 control={form.control}
-                name="id_cliente"
+                name="total_pagado"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Cliente</FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        field.onChange(parseInt(value, 10));
-                        setIdCliente(parseInt(value, 10));
-                      }}
-                      defaultValue={`${field.value}`}
-                      //disabled={resultado.id === 0 ? false : true}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecciona el Cliente" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {clientes.map((item) => (
-                          <SelectItem value={`${item.id}`} key={item.id}>
-                            {item.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormDescription>Cliente seleccionado</FormDescription>
+                  <FormItem className="mt-4">
+                    <FormLabel>Monto a Pagar</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10))
+                        }
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </div>
 
-            {/* Activo */}
-            <div className="col-span-1">
-              <FormField
-                control={form.control}
-                name="is_credito"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col items-start">
-                    <FormLabel>Crédito</FormLabel>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <h3 className="text-lg font-medium  my-5 mt-5">Agregar Producto</h3>
-          <div className="grid grid-cols-3">
-            <div className="flex items-center space-x-2 mt-2">
-              <Select onValueChange={setProductoActual} value={productoActual}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione un producto" />
-                </SelectTrigger>
-                <SelectContent>
-                  {productos.map((producto) => (
-                    <SelectItem key={producto.id} value={`${producto.id}`}>
-                      {producto.name} - ${producto.price}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Input
-                type="number"
-                min="1"
-                value={cantidadActual}
-                onChange={(e) => setCantidadActual(e.target.value)}
-                placeholder="Cantidad"
-                className="w-28"
-              />
-              <Button onClick={handleAgregarProducto} size="icon" type="button">
-                <Plus className="h-4 w-4" />
-                <span className="sr-only">Agregar producto</span>
+              {/* Botón de Pagar */}
+              <Button type="submit" disabled={loading} className="mt-6 w-full">
+                Pagar
               </Button>
-            </div>
+            </Card>
           </div>
-
-          <h3 className="text-lg font-medium  mt-5 my-5">
-            Productos Seleccionados
-          </h3>
-
-          {/* Tabla de productos seleccionados */}
-          <div className="w-3/4 items-start">
-            <table className="min-w-full table-auto border-collapse border">
-              <thead>
-                <tr className="">
-                  <th className="px-4 py-2 text-left text-sm font-medium ">
-                    Producto
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-medium ">
-                    Cantidad
-                  </th>
-                  <th className="px-4 py-2 text-left text-sm font-medium ">
-                    Precio Total
-                  </th>
-                  <th className="px-4 py-2 text-center text-sm font-medium">
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {productosSeleccionados.map((producto, index) => (
-                  <tr key={producto.id}>
-                    <td className="px-4 py-2 text-sm ">{producto.name}</td>
-                    <td className="px-4 py-2 text-sm ">{producto.cantidad}</td>
-                    <td className="px-4 py-2 text-sm ">
-                      ${producto.price * producto.cantidad}
-                    </td>
-                    <td className="px-4 py-2 text-center">
-                      <Button
-                        onClick={() => removerProducto(Number(producto.id))}
-                        size="icon"
-                        variant="ghost"
-                        type="button"
-                      >
-                        <X className="h-4 w-4" />
-                        <span className="sr-only">Remover producto</span>
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-5">
-            <label className="block text-sm font-medium ">Total</label>
-            <span className="text-xl font-bold">${total.toFixed(2)}</span>
-          </div>
-
-          <div className="grid grid-cols-4 mt-10 gap-4">
-            {/* Monto a Pagar */}
-            <FormField
-              control={form.control}
-              name="total_pagado"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Monto</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value, 10))
-                      }
-                    />
-                  </FormControl>
-                  <FormDescription>Monto a Pagar</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="mt-5 pb-10">
-            <Button
-              type="submit"
-              disabled={loading}
-              className="flex items-center"
-            >
-              Pagar
-            </Button>
-          </div>
-
-          <div></div>
         </form>
       </Form>
     </div>

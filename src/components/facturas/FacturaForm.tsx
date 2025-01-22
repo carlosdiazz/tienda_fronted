@@ -5,6 +5,7 @@ import React from "react";
 import { FacturaInterface } from "./factura.interface";
 import {
   Badge,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -16,15 +17,27 @@ import {
   TableHeader,
   TableRow,
 } from "../ui";
+import { generatePDF } from "./generar-pdf";
+import { Import } from "lucide-react";
 
 interface Props {
   factura: FacturaInterface;
 }
 
 export const FacturaForm = ({ factura }: Props) => {
+  const handlePrint = () => {
+    generatePDF(factura);
+  };
+
   return (
     <div className=" mx-auto ">
-      <h1 className="text-2xl font-bold mb-4">Detalles de la Factura</h1>
+      <div className="flex gap-4">
+        <h1 className="text-2xl font-bold mb-4">Detalles de la Factura</h1>
+        <Button onClick={handlePrint}>
+          {" "}
+          <Import></Import>
+        </Button>
+      </div>
       <div className="grid gap-4 md:grid-cols-2">
         {/*Detalle Factura */}
         <Card>
@@ -33,7 +46,7 @@ export const FacturaForm = ({ factura }: Props) => {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-            <p>
+              <p>
                 <strong>Cliente:</strong> {factura.cliente.name}
               </p>
               <p>
