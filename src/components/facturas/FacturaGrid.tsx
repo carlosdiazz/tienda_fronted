@@ -12,6 +12,12 @@ import {
   CardTitle,
   Label,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../ui";
 
 import { useState } from "react";
@@ -21,20 +27,111 @@ import Link from "next/link";
 import { FacturaInterface } from "./factura.interface";
 import { useFacturaStore } from "./factura.store";
 import { removeFacturaAction } from "@/actions";
-
-
+import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
 
 interface Props {
-  factura: FacturaInterface[];
+  facturas: FacturaInterface[];
 }
-export const FacturaGrid = ({ factura }: Props) => {
+
+const FACTURA_PER_PAGE = 10;
+
+export const FacturaGrid = ({ facturas }: Props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(facturas.length / FACTURA_PER_PAGE);
+  const startIndex = (currentPage - 1) * FACTURA_PER_PAGE;
+  const endIndex = startIndex + FACTURA_PER_PAGE;
+  const currentFacturas = facturas.slice(startIndex, endIndex);
+
+  const goToNextPage = () => {
+    setCurrentPage((page) => Math.min(page + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {factura.map((index) => (
-          <FacturaCard factura={index} key={index.id} />
-        ))}
-      </div>
+    <div className="container">
+      <Card>
+        <CardHeader>
+          <CardTitle>Lista de Facturas</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Codigo</TableHead>
+                <TableHead>Cliente</TableHead>
+                <TableHead>Total</TableHead>
+                <TableHead>Total Pagado</TableHead>
+                <TableHead>Faltante</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Acciones</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {currentFacturas.map((factura) => (
+                <TableRow key={factura.id}>
+                  <TableCell>{factura.codigo_factura}</TableCell>
+                  <TableCell>{factura.cliente.name}</TableCell>
+                  <TableCell>{factura.total}</TableCell>
+                  <TableCell>{factura.total_pagado}</TableCell>
+                  <TableCell>{factura.faltante}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        factura.total === factura.total_pagado
+                          ? "info"
+                          : "destructive"
+                      }
+                    >
+                      {factura.total === factura.total_pagado
+                        ? "Pagada"
+                        : "Pendiente"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
+                      <Button variant="ghost" size="icon">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            Anterior
+          </Button>
+          <div className="text-sm text-muted-foreground">
+            Página {currentPage} de {totalPages}
+          </div>
+          <Button
+            variant="outline"
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente
+            <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
+        </CardFooter>
+      </Card>
+      {/*
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {factura.map((index) => (
+            <FacturaCard factura={index} key={index.id} />
+          ))}
+        </div>
+        */}
     </div>
   );
 };
@@ -63,11 +160,21 @@ export const FacturaCard = ({ factura }: PropsFactura) => {
     <Card>
       <CardHeader>
         <CardTitle className="grid justify-between gap-2">
-        <Badge variant={"secondary"}>#{factura.codigo_factura}</Badge>
-        <Badge variant={factura.total === factura.total_pagado ? "info" : "destructive"}>{factura.total === factura.total_pagado ? "Pagada" : "Pendiente"}</Badge>
-        <h3 className="text-lg font-semibold">Total: {factura.total}</h3>
-          <p className="text-muted-foreground">Total Pagado: {factura.total_pagado}</p>
-          <p className="text-muted-foreground">Total Items: {factura.factura_detalle.length}</p>
+          <Badge variant={"secondary"}>#{factura.codigo_factura}</Badge>
+          <Badge
+            variant={
+              factura.total === factura.total_pagado ? "info" : "destructive"
+            }
+          >
+            {factura.total === factura.total_pagado ? "Pagada" : "Pendiente"}
+          </Badge>
+          <h3 className="text-lg font-semibold">Total: {factura.total}</h3>
+          <p className="text-muted-foreground">
+            Total Pagado: {factura.total_pagado}
+          </p>
+          <p className="text-muted-foreground">
+            Total Items: {factura.factura_detalle.length}
+          </p>
         </CardTitle>
       </CardHeader>
 
@@ -76,7 +183,9 @@ export const FacturaCard = ({ factura }: PropsFactura) => {
           <Switch checked={factura.activo} />
           <Label>Activo</Label>
         </div>
-        <p className="text-muted-foreground mt-2">Cliente: {factura.cliente.name}</p>
+        <p className="text-muted-foreground mt-2">
+          Cliente: {factura.cliente.name}
+        </p>
       </CardContent>
 
       <CardFooter className="flex justify-end gap-x-2">

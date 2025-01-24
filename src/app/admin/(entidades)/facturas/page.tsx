@@ -111,7 +111,7 @@ export default function FacturaPage() {
             subTitle="Para crear un nuevoa Factura pulsa '+'"
           />
         ) : (
-          <FacturaGrid factura={factura} />
+          <FacturaGrid facturas={factura} />
         )}
       </div>
     </div>

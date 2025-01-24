@@ -75,21 +75,6 @@ export default function ComprobantePage() {
             </h1>
           </div>
 
-          <div className="flex justify-end m-2 gap-x-4 ">
-            <Select onValueChange={handleSelectChange}>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue placeholder="Activo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Activo</SelectLabel>
-                  <SelectItem value="true">Activo</SelectItem>
-                  <SelectItem value="false">Inactivo</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
           <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.COMPROBANTE_CREATE}>
               <Link href={`${AppRouter.adminComprobante}/0`}>
@@ -111,7 +96,7 @@ export default function ComprobantePage() {
             subTitle="Para crear un nuevoa Comprobante pulsa '+'"
           />
         ) : (
-          <ComprobanteGrid Comprobante={Comprobante} />
+          <ComprobanteGrid Comprobantes={Comprobante} />
         )}
       </div>
     </div>

@@ -150,28 +150,6 @@ export const ProductoForm = ({ producto }: Props) => {
               )}
             />
 
-            {/* Stock */}
-            <FormField
-              control={form.control}
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stock</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value, 10))
-                      }
-                    />
-                  </FormControl>
-                  <FormDescription>Stock del Producto</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* Stock Minimo*/}
             <FormField
               control={form.control}

@@ -1,7 +1,7 @@
 "use client";
 
 import { AppRouter, PermisoAccion } from "@/config";
-import { ImageCustom, PermisoClient } from "../common";
+import { PermisoClient } from "../common";
 import {
   Badge,
   Button,
@@ -12,6 +12,12 @@ import {
   CardTitle,
   Label,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../ui";
 
 import { useState } from "react";
@@ -21,18 +27,99 @@ import Link from "next/link";
 import { ProductoInterface } from "./producto.interface";
 import { useProductosStore } from "./productos.store";
 import { removeProductoAction } from "@/actions";
+import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
 
 interface Props {
   productos: ProductoInterface[];
 }
+
+const PRODUCTS_PER_PAGE = 10;
+
 export const ProductosGrid = ({ productos }: Props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(productos.length / PRODUCTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const currentProducts = productos.slice(startIndex, endIndex);
+
+  const goToNextPage = () => {
+    setCurrentPage((page) => Math.min(page + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {productos.map((producto) => (
-          <ProductoCard producto={producto} key={producto.id} />
-        ))}
-      </div>
+    <div className="container">
+      <Card>
+        <CardHeader>Lista de Productos</CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Codigo</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Stock</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Servicio</TableHead>
+                <TableHead>Acciones</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {currentProducts.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell>{product.codigo}</TableCell>
+                  <TableCell>{ product.name}</TableCell>
+                  <TableCell>{ product.stock}</TableCell>
+                  <TableCell>${product.price }</TableCell>
+                  <TableCell>
+                    <Badge >
+                      {product.is_service?"SI":"NO"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                  <Link href={`${AppRouter.adminProductos}/${product.id}`}>
+                      <Button variant="ghost" size="icon">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            Anterior
+          </Button>
+          <div className="text-sm text-muted-foreground">
+            Página {currentPage} de {totalPages}
+          </div>
+          <Button
+            variant="outline"
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente
+            <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
+        </CardFooter>
+      </Card>
+      {/*
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {productos.map((producto) => (
+              <ProductoCard producto={producto} key={producto.id} />
+            ))}
+          </div>
+      */}
     </div>
   );
 };

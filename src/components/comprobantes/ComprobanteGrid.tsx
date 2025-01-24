@@ -3,15 +3,18 @@
 import { AppRouter, PermisoAccion } from "@/config";
 import { PermisoClient } from "../common";
 import {
-  Badge,
   Button,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-  Label,
-  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../ui";
 
 import { useState } from "react";
@@ -21,20 +24,85 @@ import Link from "next/link";
 import { ComprobanteInterface } from "./comprobante.interface";
 import { useComprobanteStore } from "./comprobante.store";
 import { removeComprobanteAction } from "@/actions";
-
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Props {
-  Comprobante: ComprobanteInterface[];
+  Comprobantes: ComprobanteInterface[];
 }
-export const ComprobanteGrid = ({ Comprobante }: Props) => {
+
+const COMPROBANTE_PER_PAGE = 10;
+
+export const ComprobanteGrid = ({ Comprobantes }: Props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(Comprobantes.length / COMPROBANTE_PER_PAGE);
+  const startIndex = (currentPage - 1) * COMPROBANTE_PER_PAGE;
+  const endIndex = startIndex + COMPROBANTE_PER_PAGE;
+  const currentComprobantes = Comprobantes.slice(startIndex, endIndex);
+
+  const goToNextPage = () => {
+    setCurrentPage((page) => Math.min(page + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Comprobante.map((index) => (
-          <ComprobanteCard Comprobante={index} key={index.id} />
-        ))}
-      </div>
+    <div className="container">
+      <Card>
+        <CardHeader>
+          <CardTitle>Lista de Comprobantes</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Codigo</TableHead>
+                <TableHead>Concepto</TableHead>
+                <TableHead>Monto Abonado</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {currentComprobantes.map((comprobante) => (
+                <TableRow key={comprobante.id}>
+                  <TableCell>{comprobante.id}</TableCell>
+                  <TableCell>{comprobante.concepto}</TableCell>
+                  <TableCell>${comprobante.monto_pagado}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            Anterior
+          </Button>
+          <div className="text-sm text-muted-foreground">
+            Página {currentPage} de {totalPages}
+          </div>
+          <Button
+            variant="outline"
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente
+            <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
+        </CardFooter>
+      </Card>
+      {/*
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Comprobante.map((index) => (
+            <ComprobanteCard Comprobante={index} key={index.id} />
+          ))}
+        </div>
+        */}
     </div>
   );
 };
@@ -63,8 +131,12 @@ export const ComprobanteCard = ({ Comprobante }: PropsComprobante) => {
     <Card>
       <CardHeader>
         <CardTitle className="grid justify-between gap-2">
-        <h3 className="text-lg font-semibold">Concepto: {Comprobante.concepto}</h3>
-        <p className="text-muted-foreground">Monto Pagado: {Comprobante.monto_pagado}</p>
+          <h3 className="text-lg font-semibold">
+            Concepto: {Comprobante.concepto}
+          </h3>
+          <p className="text-muted-foreground">
+            Monto Pagado: {Comprobante.monto_pagado}
+          </p>
         </CardTitle>
       </CardHeader>
 
