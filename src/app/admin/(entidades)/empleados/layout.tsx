@@ -6,8 +6,8 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Empresas",
-  description: "Pagina para crear nuevas Empresa",
+  title: "Empleados",
+  description: "Pagina para crear nuevos Empleados",
 };
 
 export default async function RolesLayout({

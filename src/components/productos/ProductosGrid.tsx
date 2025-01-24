@@ -61,15 +61,12 @@ export const ProductoCard = ({ producto }: PropsProducto) => {
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between gap-4">
-          <ImageCustom
-            src={producto.img_url?producto.img_url : "https://i.ibb.co/kqJmz8F/empresa.jpg"}
-            width={100}
-            height={100}
-            alt="Logo"
-          />
           <div className="flex items-center gap-3">
             <Badge className="h-8" variant={"info"}>
               #: {producto.codigo}
+            </Badge>
+            <Badge className="h-8" variant={"info"}>
+              Stock: {producto.stock}
             </Badge>
           </div>
         </CardTitle>

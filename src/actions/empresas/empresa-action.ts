@@ -84,17 +84,16 @@ const updateEmpresaByIdAction = async (
           activo: empresa.activo,
           descripcion: empresa.descripcion,
           id: empresa.id,
-          img_url: empresa.img_url,
           name: empresa.name,
           codigo: empresa.codigo,
-          rnc: empresa.rnc,
+          cedula: empresa.cedula,
         },
       },
     });
 
     return {
       error: false,
-      message: "Empresa Actualizada",
+      message: "Empleado Actualizado",
     };
   } catch (e) {
     console.error(`Error => ${e}`);
@@ -119,24 +118,23 @@ const createEmpresaByIdAction = async (
         createEmpresaInput: {
           activo: empresa.activo,
           descripcion: empresa.descripcion,
-          img_url: empresa.img_url,
           name: empresa.name,
           codigo: empresa.codigo,
-          rnc: empresa.rnc,
+          cedula: empresa.cedula,
         },
       },
     });
 
     return {
       error: false,
-      message: "Empresa Creada",
+      message: "Empleado Creado",
     };
   } catch (e) {
     console.error(`Error => ${e}`);
     const message = getGraphQLErrorMessage(e);
     return {
       error: true,
-      message: `Error creando Empresa: ${message}`,
+      message: `Error creando Empleado: ${message}`,
     };
   }
 };

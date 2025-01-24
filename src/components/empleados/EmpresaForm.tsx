@@ -44,7 +44,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
       id: empresa.id,
       name: empresa.name,
       codigo: empresa.codigo,
-      cedula:empresa.cedula
+      cedula: empresa.cedula,
     },
   });
   const { handleSubmit } = form;
@@ -64,7 +64,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
   return (
     <div>
       <h1 className="py-3 text-lg font-semibold md:text-2xl mb-2">
-        {empresa.id === 0 ? "Crear Empresa" : "Actualizar Empresa"}
+        {empresa.id === 0 ? "Crear Empleado" : "Actualizar Empleado"}
       </h1>
 
       <Form {...form}>
@@ -80,7 +80,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
                   <FormControl>
                     <Input placeholder="Nombre" {...field} />
                   </FormControl>
-                  <FormDescription>Nombre de la Empresa</FormDescription>
+                  <FormDescription>Nombre del Empleado</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -91,11 +91,11 @@ export const EmpresaForm = ({ empresa }: Props) => {
               name="descripcion"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descripcion</FormLabel>
+                  <FormLabel>Cargo</FormLabel>
                   <FormControl>
                     <Textarea placeholder="Descripcion" {...field} />
                   </FormControl>
-                  <FormDescription>Descripcion de la Empresa</FormDescription>
+                  <FormDescription>Cargo del empleado</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -116,7 +116,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
                       }
                     />
                   </FormControl>
-                  <FormDescription>Codigo de la Empresa</FormDescription>
+                  <FormDescription>Codigo del Empleado</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -132,12 +132,10 @@ export const EmpresaForm = ({ empresa }: Props) => {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value, 10))
-                      }
+                      onChange={(e) => field.onChange(e.target.value, 10)}
                     />
                   </FormControl>
-                  <FormDescription>RNC de la Empresa</FormDescription>
+                  <FormDescription>Cedula del empleado</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -166,20 +164,19 @@ export const EmpresaForm = ({ empresa }: Props) => {
             {empresa.id === 0 ? (
               <PermisoClient permiso={PermisoAccion.EMPRESA_CREATE}>
                 <Button type="submit" disabled={loading}>
-                  Crear Empresa
+                  Crear Empleado
                 </Button>
               </PermisoClient>
             ) : (
               <PermisoClient permiso={PermisoAccion.EMPRESA_UPDATE}>
                 <Button type="submit" disabled={loading}>
-                  Actualizar Empresa
+                  Actualizar Empleado
                 </Button>
               </PermisoClient>
             )}
           </div>
         </form>
       </Form>
-
     </div>
   );
 };

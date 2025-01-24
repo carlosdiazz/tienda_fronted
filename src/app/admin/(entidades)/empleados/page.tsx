@@ -49,7 +49,7 @@ export default function EmpresaPage() {
     setIsLoading(true);
     await getEmpresa(10000, activo);
     setIsLoading(false);
-    toast.success("Empresas Actualizadas");
+    toast.success("Empleados Actualizados");
   };
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function EmpresaPage() {
                 <Star style={{ color: "black" }} />
               )}
             </Button>
-            <h1 className="text-lg font-semibold md:text-2xl mb-2">Empresas</h1>
+            <h1 className="text-lg font-semibold md:text-2xl mb-2">Empleados</h1>
           </div>
 
           <div className="flex justify-end m-2 gap-x-4 ">
@@ -88,7 +88,7 @@ export default function EmpresaPage() {
 
           <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.EMPRESA_CREATE}>
-              <Link href={`${AppRouter.adminEmpresas}/0`}>
+              <Link href={`${AppRouter.adminEmpleados}/0`}>
                 <Button>Nuevo</Button>
               </Link>
             </PermisoClient>
@@ -103,8 +103,8 @@ export default function EmpresaPage() {
           <LoadingPage />
         ) : empresas.length === 0 ? (
           <EmptyEntity
-            title="No hay Empresa creada"
-            subTitle="Para crear una nueva empresa pulsa '+'"
+            title="No hay Empleados creada"
+            subTitle="Para crear una nuevo Empleado pulsa '+'"
           />
         ) : (
           <EmpresaGrid empresas={empresas} />
