@@ -6,10 +6,9 @@ export const EmpresaMapper = (data: any): EmpresaInterface => {
     id: validateProperty<number>(data, "id", "number"),
     name: validateProperty<string>(data, "name", "string"),
     descripcion: validateProperty<string>(data, "descripcion", "string"),
-    img_url: data["img_url"],
     activo: validateProperty<boolean>(data, "activo", "boolean"),
     codigo: validateProperty<number>(data, "codigo", "number"),
-    rnc: validateProperty<string>(data, "rnc", "string"),
+    cedula: validateProperty<string>(data, "cedula", "string"),
   };
 };
 

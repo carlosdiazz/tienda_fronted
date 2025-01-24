@@ -17,10 +17,10 @@ export const EmpresaAdminCard = () => {
   return (
     <PermisoClient permiso={PermisoAccion.EMPRESA_VIEW}>
       <AdminCard
-        title="Empresas"
-        descripcion="Empresas Creadas"
+        title="Empleados"
+        descripcion="Empleados Agreados"
         total={empresas.length}
-        href={AppRouter.adminEmpresas}
+        href={AppRouter.adminEmpleados}
         permiso={PermisoAccion.EMPRESA_CREATE}
       />
     </PermisoClient>

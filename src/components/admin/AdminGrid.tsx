@@ -15,7 +15,7 @@ import { RoleAminCard } from "../role";
 import { UsuarioAdminCard } from "../usuarios";
 import { PermisoAccion } from "@/config";
 import { useFavoritosStore } from "./admin-favorites.store";
-import { EmpresaAdminCard } from "../empresas";
+import { EmpresaAdminCard } from "../empleados";
 import { ProductosAdminCard } from "../productos";
 import { ProveedorAdminCard } from "../proveedores";
 import { ClienteAdminCard } from "../clientes";

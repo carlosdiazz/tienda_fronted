@@ -5,7 +5,7 @@ export * from "./role";
 export * from "./usuarios";
 export * from "./ui";
 export * from "./admin";
-export * from "./empresas";
+export * from "./empleados";
 export * from "./productos";
 export * from "./proveedores";
 export * from "./clientes";

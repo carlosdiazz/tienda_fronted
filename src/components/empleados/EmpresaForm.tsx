@@ -42,10 +42,9 @@ export const EmpresaForm = ({ empresa }: Props) => {
       activo: empresa.activo,
       descripcion: empresa.descripcion,
       id: empresa.id,
-      img_url: empresa.img_url?empresa.img_url:"https://i.ibb.co/kqJmz8F/empresa.jpg",
       name: empresa.name,
       codigo: empresa.codigo,
-      rnc:empresa.rnc
+      cedula:empresa.cedula
     },
   });
   const { handleSubmit } = form;
@@ -59,7 +58,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
       toast.error(resp.message);
     } else {
       toast.success(resp.message);
-      router.replace(AppRouter.adminEmpresas);
+      router.replace(AppRouter.adminEmpleados);
     }
   }
   return (
@@ -101,21 +100,6 @@ export const EmpresaForm = ({ empresa }: Props) => {
                 </FormItem>
               )}
             />
-            {/*Img Url */}
-            <FormField
-              control={form.control}
-              name="img_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Img URL" {...field} />
-                  </FormControl>
-                  <FormDescription>Imagen URL de la Empresa</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             {/* Codigo */}
             <FormField
               control={form.control}
@@ -140,10 +124,10 @@ export const EmpresaForm = ({ empresa }: Props) => {
             {/* RNC */}
             <FormField
               control={form.control}
-              name="rnc"
+              name="cedula"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>RNC</FormLabel>
+                  <FormLabel>CEDULA</FormLabel>
                   <FormControl>
                     <Input
                       type="number"

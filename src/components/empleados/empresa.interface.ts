@@ -1,33 +1,30 @@
 import { z } from "zod";
 
 export interface EmpresaInterface {
+  id: number;
+  name: string;
+  descripcion: string;
   activo: boolean;
   codigo: number;
-  descripcion: string;
-  id: number;
-  img_url?: string;
-  name: string;
-  rnc: string;
+  cedula: string;
 }
 
 export interface EmpresaFormInterface {
+  id: number;
+  name: string;
+  descripcion: string;
   activo: boolean;
   codigo: number;
-  descripcion: string;
-  id: number;
-  img_url?: string;
-  name: string;
-  rnc: string;
+  cedula: string;
 }
 
 export const empresaFormSchema = z.object({
+  id: z.number(),
+  name: z.string().min(3),
+  descripcion: z.string().min(3),
   activo: z.boolean(),
   codigo: z.number(),
-  descripcion: z.string().min(3),
-  id: z.number(),
-  img_url: z.string().optional(),
-  name: z.string().min(3),
-  rnc: z.string().min(3),
+  cedula: z.string().min(3),
 });
 
 export type EmpresaFormSchemaType = z.infer<typeof empresaFormSchema>;
@@ -38,16 +35,14 @@ export const emptyEmpresa: EmpresaInterface = {
   descripcion: "",
   id: 0,
   name: "",
-  rnc: "",
-  img_url: "",
+  cedula: "",
 };
 
 export const entityEmpresaGQL = `
+  id
+  name
+  descripcion
   activo
   codigo
-  descripcion
-  id
-  img_url
-  name
-  rnc
+  cedula
 `;

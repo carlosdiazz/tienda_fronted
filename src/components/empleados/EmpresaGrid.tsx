@@ -1,7 +1,7 @@
 "use client";
 
 import { AppRouter, PermisoAccion } from "@/config";
-import { ImageCustom, PermisoClient } from "../common";
+import {  PermisoClient } from "../common";
 import {
   Badge,
   Button,
@@ -59,12 +59,6 @@ export const EmpresaCard = ({ empresa }: PropsEmpresa) => {
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between gap-4">
-          <ImageCustom
-            src={empresa.img_url?empresa.img_url : "https://i.ibb.co/kqJmz8F/empresa.jpg"}
-            width={100}
-            height={100}
-            alt="Logo"
-          />
           <div className="flex items-center gap-3">
             <Badge className="h-8" variant={"info"}>
               #: {empresa.codigo}
@@ -91,13 +85,13 @@ export const EmpresaCard = ({ empresa }: PropsEmpresa) => {
         </PermisoClient>
 
         <PermisoClient permiso={PermisoAccion.EMPRESA_UPDATE}>
-          <Link href={`${AppRouter.adminEmpresas}/${empresa.id}`}>
+          <Link href={`${AppRouter.adminEmpleados}/${empresa.id}`}>
             <Button variant="default">Editar</Button>
           </Link>
         </PermisoClient>
 
         <PermisoClient permiso={PermisoAccion.EMPRESA_VIEW}>
-          <Link href={`${AppRouter.adminEmpresas}/${empresa.id}`}>
+          <Link href={`${AppRouter.adminEmpleados}/${empresa.id}`}>
             <Button variant="secondary">Ver</Button>
           </Link>
         </PermisoClient>

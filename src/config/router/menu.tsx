@@ -37,8 +37,8 @@ export const menuItemEntidades: MenuItemInterface[] = [
     permiso_view: PermisoAccion.USER_VIEW
   },
   {
-    Path: AppRouter.adminEmpresas,
-    Title: "Empresas",
+    Path: AppRouter.adminEmpleados,
+    Title: "Empleados",
     Icon: <Armchair />,
     permiso_view: PermisoAccion.EMPRESA_VIEW
   },

@@ -6,7 +6,6 @@ export const ProductoMapper = (data: any): ProductoInterface => {
     id: validateProperty<number>(data, "id", "number"),
     name: validateProperty<string>(data, "name", "string"),
     descripcion: validateProperty<string>(data, "descripcion", "string"),
-    img_url: data["img_url"],
     activo: validateProperty<boolean>(data, "activo", "boolean"),
     codigo: validateProperty<number>(data, "codigo", "number"),
     price: validateProperty<number>(data, "price", "number"),

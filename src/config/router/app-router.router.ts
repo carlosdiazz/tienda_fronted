@@ -10,7 +10,7 @@ export class AppRouter {
   static adminUsuarios = `${this.admin}/usuarios`;
   static adminRoles = `${this.admin}/roles`;
   static adminProductos = `${this.admin}/productos`;
-  static adminEmpresas = `${this.admin}/empresas`;
+  static adminEmpleados = `${this.admin}/empleados`;
   static adminProveedores = `${this.admin}/proveedores`;
   static adminClientes = `${this.admin}/clientes`;
   static adminFactura = `${this.admin}/facturas`;

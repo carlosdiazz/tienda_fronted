@@ -84,7 +84,6 @@ const updateProductoByIdAction = async (
           activo: producto.activo,
           descripcion: producto.descripcion,
           id: producto.id,
-          img_url: producto.img_url,
           name: producto.name,
           codigo: producto.codigo,
           price: producto.price,
@@ -122,7 +121,6 @@ const createProductoByIdAction = async (
         createProductoInput: {
           activo: producto.activo,
           descripcion: producto.descripcion,
-          img_url: producto.img_url,
           name: producto.name,
           codigo: producto.codigo,
           price: producto.price,

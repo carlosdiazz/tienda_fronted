@@ -44,9 +44,6 @@ export const ProductoForm = ({ producto }: Props) => {
       activo: producto.activo,
       descripcion: producto.descripcion,
       id: producto.id,
-      img_url: producto.img_url
-        ? producto.img_url
-        : "https://i.ibb.co/kqJmz8F/empresa.jpg",
       name: producto.name,
       codigo: producto.codigo,
       price: producto.price,
@@ -108,21 +105,7 @@ export const ProductoForm = ({ producto }: Props) => {
                 </FormItem>
               )}
             />
-            {/*Img Url */}
-            <FormField
-              control={form.control}
-              name="img_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Img URL" {...field} />
-                  </FormControl>
-                  <FormDescription>Imagen URL del Producto</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             {/* Codigo */}
             <FormField
               control={form.control}
