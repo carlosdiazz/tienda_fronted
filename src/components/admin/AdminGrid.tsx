@@ -21,14 +21,13 @@ import { ProveedorAdminCard } from "../proveedores";
 import { ClienteAdminCard } from "../clientes";
 import { FacturaAdminCard } from "../facturas";
 import { ComprobanteAdminCard } from "../comprobantes";
-
+import { InventarioAdminCard, InventarioGrid } from "../inventario";
 
 export const AdminGrid = () => {
   const isFavorite = useFavoritosStore((state) => state.isFavorite);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
       {isFavorite(PermisoAccion.USER_VIEW) && <UsuarioAdminCard />}
 
       {isFavorite(PermisoAccion.ROLE_VIEW) && <RoleAminCard />}
@@ -45,6 +44,7 @@ export const AdminGrid = () => {
 
       {isFavorite(PermisoAccion.COMPROBANTE_VIEW) && <ComprobanteAdminCard />}
 
+      {isFavorite(PermisoAccion.INVENTARIO_VIEW) && <InventarioAdminCard />}
     </div>
   );
 };

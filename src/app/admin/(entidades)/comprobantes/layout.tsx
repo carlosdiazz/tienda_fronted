@@ -17,7 +17,7 @@ export default async function ComprobanteLayout({
 }) {
   const ver = await permisoServer(PermisoAccion.COMPROBANTE_VIEW);
   if (!ver) {
-    redirect(AppRouter.adminComprobante)
+    redirect(AppRouter.adminHome)
   };
 
   return <div>{children}</div>;

@@ -17,7 +17,7 @@ export default async function FacturaLayout({
 }) {
   const ver = await permisoServer(PermisoAccion.FACTURA_VIEW);
   if (!ver) {
-    redirect(AppRouter.adminFactura)
+    redirect(AppRouter.adminHome)
   };
 
   return <div>{children}</div>;

@@ -14,6 +14,9 @@ export default async function FacturaEdit(props: {
   if (isNaN(id)) {
     notFound();
   }
+  if (id === 0) {
+    notFound();
+  }
 
   const isFactura = await getFacturaByIdAction(id);
   if (isFactura === null) {

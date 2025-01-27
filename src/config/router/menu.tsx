@@ -87,6 +87,6 @@ export const menuItemProcesos: MenuItemInterface[] = [
     Path: AppRouter.adminInventario,
     Title: "Inventario",
     Icon: <Bell />,
-    permiso_view: PermisoAccion.FACTURA_CREATE
+    permiso_view: PermisoAccion.INVENTARIO_CREATE
   },
 ];

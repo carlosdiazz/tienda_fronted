@@ -19,7 +19,7 @@ export const ComprobanteAdminCard = () => {
   }, []);
 
   return (
-    <PermisoClient permiso={PermisoAccion.PRODUCTOS_VIEW}>
+    <PermisoClient permiso={PermisoAccion.COMPROBANTE_VIEW}>
       <AdminCard
         title="Comprobante"
         descripcion="Comprobante Creados"

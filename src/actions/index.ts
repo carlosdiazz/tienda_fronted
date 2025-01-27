@@ -58,3 +58,8 @@ export {
   removeComprobanteAction,
   updateOrCreateComprobanteByIdAction,
 } from "./comprobantes/comprobantes-action";
+
+export {
+  getInventarioAction,
+  createInventarioAction,
+} from "./inventario/inventario-gql";
