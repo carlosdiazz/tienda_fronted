@@ -68,9 +68,6 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
       is_ingreso: true,
       id_producto: idProducto,
     };
-    console.log(newInventario);
-    return;
-
     const resp = await createInventarioAction(newInventario);
     if (resp.error) {
       toast.error(`Error => ${resp.message}`);
@@ -86,7 +83,7 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
   return (
     <div>
       <Form {...form}>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-3 gap-4">
             {/* Producto */}
             <FormField
@@ -129,7 +126,7 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
                 <FormItem>
                   <FormLabel>Concepto</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Conceptop" {...field} />
+                    <Textarea placeholder="Concepto" {...field} />
                   </FormControl>
                   <FormDescription>Concepto</FormDescription>
                   <FormMessage />
