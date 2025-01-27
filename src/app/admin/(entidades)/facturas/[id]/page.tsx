@@ -1,6 +1,7 @@
 import { getFacturaByIdAction } from "@/actions";
 import { FacturaForm, FacturaInterface } from "@/components";
-import { notFound } from "next/navigation";
+import { AppRouter } from "@/config";
+import { notFound, redirect } from "next/navigation";
 
 type Params = Promise<{
   id: string;
@@ -15,7 +16,7 @@ export default async function FacturaEdit(props: {
     notFound();
   }
   if (id === 0) {
-    notFound();
+   redirect(AppRouter.adminVentas)
   }
 
   const isFactura = await getFacturaByIdAction(id);

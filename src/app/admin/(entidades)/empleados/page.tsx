@@ -18,7 +18,7 @@ import {
   useFavoritosStore,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
-import { Star } from "lucide-react";
+import { Star, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -62,11 +62,7 @@ export default function EmpresaPage() {
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="flex gap-4">
             <Button onClick={() => toggleFavorites(permiso)}>
-              {isFavorite ? (
-                <Star style={{ color: "red" }} />
-              ) : (
-                <Star style={{ color: "black" }} />
-              )}
+            {isFavorite ? <TrashIcon /> : <Star />}
             </Button>
             <h1 className="text-lg font-semibold md:text-2xl mb-2">Empleados</h1>
           </div>
