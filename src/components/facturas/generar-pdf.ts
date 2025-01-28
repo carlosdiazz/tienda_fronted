@@ -16,7 +16,7 @@ export const generatePDF = (factura: FacturaInterface) => {
   doc.rect(0, 0, 120, 15, "F"); // Encabezado de ancho completo
   doc.setFontSize(12);
   doc.setTextColor("#FFFFFF");
-  doc.text("Factura", 5, 10);
+  doc.text("Factura de Maxsercomp ", 5, 10);
 
   // Información del Cliente (Compacta)
   doc.setFontSize(9);
