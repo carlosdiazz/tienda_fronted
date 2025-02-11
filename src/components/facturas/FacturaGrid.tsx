@@ -27,7 +27,7 @@ import Link from "next/link";
 import { FacturaInterface } from "./factura.interface";
 import { useFacturaStore } from "./factura.store";
 import { removeFacturaAction } from "@/actions";
-import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
+import { ChevronLeft, ChevronRight, Edit, Eye } from "lucide-react";
 
 interface Props {
   facturas: FacturaInterface[];
@@ -94,7 +94,7 @@ export const FacturaGrid = ({ facturas }: Props) => {
                   <TableCell>
                     <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
                       <Button variant="ghost" size="icon">
-                        <Edit className="h-4 w-4" />
+                        <Eye className="h-4 w-4" />
                       </Button>
                     </Link>
                   </TableCell>
