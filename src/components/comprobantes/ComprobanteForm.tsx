@@ -140,11 +140,14 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
                   <FormLabel>Monto Pagado</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value, 10))
-                      }
+                        type="number"
+                        inputMode="numeric"
+                        pattern="\d*"
+                        step="any"
+                        {...field}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10))
+                        }
                     />
                   </FormControl>
                   <FormDescription>Monto Pagado</FormDescription>
