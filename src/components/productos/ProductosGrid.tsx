@@ -71,20 +71,20 @@ export const ProductosGrid = ({ productos }: Props) => {
               {currentProducts.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell>{product.codigo}</TableCell>
-                  <TableCell>{ product.name}</TableCell>
-                  <TableCell>{ product.stock}</TableCell>
-                  <TableCell>${product.price }</TableCell>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>{product.stock}</TableCell>
+                  <TableCell>${product.price}</TableCell>
                   <TableCell>
-                    <Badge >
-                      {product.is_service?"SI":"NO"}
-                    </Badge>
+                    <Badge>{product.is_service ? "SI" : "NO"}</Badge>
                   </TableCell>
                   <TableCell>
-                  <Link href={`${AppRouter.adminProductos}/${product.id}`}>
-                      <Button variant="ghost" size="icon">
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    </Link>
+                    <PermisoClient permiso={PermisoAccion.PRODUCTOS_UPDATE}>
+                      <Link href={`${AppRouter.adminProductos}/${product.id}`}>
+                        <Button variant="ghost" size="icon">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </PermisoClient>
                   </TableCell>
                 </TableRow>
               ))}

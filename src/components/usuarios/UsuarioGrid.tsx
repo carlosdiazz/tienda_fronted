@@ -12,6 +12,7 @@ import {
 import { UsuarioInterface } from "./usuario.interface";
 import { AppRouter, PermisoAccion } from "@/config";
 import { PermisoClient } from "../common";
+import { Eye } from "lucide-react";
 
 interface Props {
   usuarios: UsuarioInterface[];
@@ -58,15 +59,10 @@ export const CardUsuario = ({ usuario }: PropsCardUsuario) => {
       </CardContent>
 
       <CardFooter className="flex justify-end gap-x-2">
-        <PermisoClient permiso={PermisoAccion.USER_UPDATE}>
-          <Link href={`${AppRouter.adminUsuarios}/${usuario.id}`}>
-            <Button variant="default">Editar</Button>
-          </Link>
-        </PermisoClient>
 
         <PermisoClient permiso={PermisoAccion.USER_VIEW}>
           <Link href={`${AppRouter.adminUsuarios}/${usuario.id}`}>
-            <Button variant="secondary">Ver</Button>
+            <Button variant="secondary"><Eye/></Button>
           </Link>
         </PermisoClient>
       </CardFooter>

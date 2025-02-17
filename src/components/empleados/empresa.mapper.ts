@@ -9,6 +9,8 @@ export const EmpresaMapper = (data: any): EmpresaInterface => {
     activo: validateProperty<boolean>(data, "activo", "boolean"),
     codigo: validateProperty<number>(data, "codigo", "number"),
     cedula: validateProperty<string>(data, "cedula", "string"),
+    sueldo: validateProperty<number>(data, "sueldo", "number"),
+    fecha: data["fecha"],
   };
 };
 

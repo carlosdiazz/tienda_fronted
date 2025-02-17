@@ -7,6 +7,8 @@ export interface EmpresaInterface {
   activo: boolean;
   codigo: number;
   cedula: string;
+  sueldo: number;
+  fecha: string;
 }
 
 export interface EmpresaFormInterface {
@@ -16,6 +18,8 @@ export interface EmpresaFormInterface {
   activo: boolean;
   codigo: number;
   cedula: string;
+  sueldo: number;
+  fecha: string;
 }
 
 export const empresaFormSchema = z.object({
@@ -25,6 +29,8 @@ export const empresaFormSchema = z.object({
   activo: z.boolean(),
   codigo: z.number(),
   cedula: z.string().min(3),
+  fecha: z.string().min(10).max(11),
+  sueldo:z.number()
 });
 
 export type EmpresaFormSchemaType = z.infer<typeof empresaFormSchema>;
@@ -36,6 +42,8 @@ export const emptyEmpresa: EmpresaInterface = {
   id: 0,
   name: "",
   cedula: "",
+  fecha: "",
+  sueldo:0
 };
 
 export const entityEmpresaGQL = `
@@ -45,4 +53,6 @@ export const entityEmpresaGQL = `
   activo
   codigo
   cedula
+  sueldo
+  fecha
 `;

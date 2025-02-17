@@ -87,6 +87,7 @@ const updateEmpresaByIdAction = async (
           name: empresa.name,
           codigo: empresa.codigo,
           cedula: empresa.cedula,
+          sueldo: empresa.sueldo,
         },
       },
     });
@@ -121,6 +122,8 @@ const createEmpresaByIdAction = async (
           name: empresa.name,
           codigo: empresa.codigo,
           cedula: empresa.cedula,
+          sueldo: empresa.sueldo,
+          fecha: empresa.fecha,
         },
       },
     });

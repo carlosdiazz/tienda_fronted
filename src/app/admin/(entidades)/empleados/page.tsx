@@ -18,6 +18,7 @@ import {
   useFavoritosStore,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { Star, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -59,7 +60,7 @@ export default function EmpresaPage() {
   return (
     <div>
       <div className="w-full mx-auto py-2 px-2">
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="flex gap-4">
             <Button onClick={() => toggleFavorites(permiso)}>
             {isFavorite ? <TrashIcon /> : <Star />}
@@ -67,8 +68,8 @@ export default function EmpresaPage() {
             <h1 className="text-lg font-semibold md:text-2xl mb-2">Empleados</h1>
           </div>
 
-          <div className="flex justify-end m-2 gap-x-4 ">
-            <Select onValueChange={handleSelectChange}>
+          <div className="flex justify-end m-2 gap-x-4">
+          <Select onValueChange={handleSelectChange}>
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="Activo" />
               </SelectTrigger>
@@ -80,17 +81,14 @@ export default function EmpresaPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.EMPRESA_CREATE}>
               <Link href={`${AppRouter.adminEmpleados}/0`}>
-                <Button>Nuevo</Button>
+                <Button>+</Button>
               </Link>
             </PermisoClient>
 
             <Button onClick={onSubmit} disabled={isLoading}>
-              Actualizar
+              <UpdateIcon/>
             </Button>
           </div>
         </div>
@@ -99,7 +97,7 @@ export default function EmpresaPage() {
           <LoadingPage />
         ) : empresas.length === 0 ? (
           <EmptyEntity
-            title="No hay Empleados creada"
+            title="No hay Empleados creados"
             subTitle="Para crear una nuevo Empleado pulsa '+'"
           />
         ) : (

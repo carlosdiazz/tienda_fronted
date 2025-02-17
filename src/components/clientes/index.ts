@@ -5,3 +5,7 @@ export * from "./clientes.store";
 export * from "./ClienteAdminCard";
 export * from "./ClientesGrid";
 export * from "./ClienteForm";
+
+//Table
+export * from "./table/ClientesTables";
+export * from "./table/data-table-clientes";

@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { AppRouter, PermisoAccion } from "@/config";
 import {
   Button,
+  Calendar,
   Form,
   FormControl,
   FormDescription,
@@ -26,6 +27,8 @@ import {
   Textarea,
 } from "../ui";
 import { PermisoClient } from "../common";
+import { convertirDateAString } from "@/lib";
+import { parseISO } from "date-fns";
 
 interface Props {
   empresa: EmpresaInterface;
@@ -33,6 +36,10 @@ interface Props {
 
 export const EmpresaForm = ({ empresa }: Props) => {
   const [loading, setLoading] = useState(false);
+  const newFecha = empresa.id === 0 ? "" : empresa.fecha;
+  const [date, setDate] = useState<Date>(
+    newFecha ? parseISO(newFecha) : new Date()
+  );
 
   const router = useRouter();
 
@@ -45,6 +52,8 @@ export const EmpresaForm = ({ empresa }: Props) => {
       name: empresa.name,
       codigo: empresa.codigo,
       cedula: empresa.cedula,
+      sueldo: empresa.sueldo,
+      fecha:empresa.fecha
     },
   });
   const { handleSubmit } = form;
@@ -70,6 +79,32 @@ export const EmpresaForm = ({ empresa }: Props) => {
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2  gap-8">
+            {/*Fecha*/}
+            <FormField
+              control={form.control}
+              name="fecha"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fecha de ingreso {`${field.value}`}</FormLabel>
+                  <FormControl>
+                    <Calendar
+                      disabled={empresa.id === 0 ? false : true}
+                      mode="single"
+                      selected={date}
+                      onSelect={(newDate) => {
+                        const fecha = newDate || new Date();
+                        setDate(fecha);
+                        const newFecha = convertirDateAString(fecha);
+                        field.onChange(newFecha);
+                      }}
+                      initialFocus
+                      toDate={new Date()}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
             {/*Name */}
             <FormField
               control={form.control}
@@ -121,7 +156,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
                 </FormItem>
               )}
             />
-            {/* RNC */}
+            {/* CEDULA */}
             <FormField
               control={form.control}
               name="cedula"
@@ -140,6 +175,29 @@ export const EmpresaForm = ({ empresa }: Props) => {
                 </FormItem>
               )}
             />
+
+            {/* Sueldo */}
+            <FormField
+              control={form.control}
+              name="sueldo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Sueldo del empelado</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      }
+                    />
+                  </FormControl>
+                  <FormDescription>Sueldo del Empleado</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/*Activo*/}
             <FormField
               control={form.control}

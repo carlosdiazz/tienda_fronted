@@ -21,6 +21,7 @@ import Link from "next/link";
 import { ProveedorInterface } from "./proveedor.interface";
 import { useProveedorStore } from "./proveedor.store";
 import { removeProveedorAction } from "@/actions";
+import { Eye } from "lucide-react";
 
 
 interface Props {
@@ -79,19 +80,14 @@ export const ProveedorCard = ({ proveedor }: PropsProveedor) => {
       <CardFooter className="flex justify-end gap-x-2">
         <PermisoClient permiso={PermisoAccion.PROVEEDOR_DELETE}>
           <Button variant="destructive" disabled={isLoading} onClick={onDelete}>
-            Eliminar
+            X
           </Button>
         </PermisoClient>
 
-        <PermisoClient permiso={PermisoAccion.PROVEEDOR_UPDATE}>
-          <Link href={`${AppRouter.adminProveedores}/${proveedor.id}`}>
-            <Button variant="default">Editar</Button>
-          </Link>
-        </PermisoClient>
 
         <PermisoClient permiso={PermisoAccion.PROVEEDOR_VIEW}>
           <Link href={`${AppRouter.adminProveedores}/${proveedor.id}`}>
-            <Button variant="secondary">Ver</Button>
+            <Button variant="secondary"><Eye/></Button>
           </Link>
         </PermisoClient>
       </CardFooter>

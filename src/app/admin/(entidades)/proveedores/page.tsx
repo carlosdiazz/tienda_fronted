@@ -18,6 +18,7 @@ import {
   useProveedorStore,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { Star, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -60,7 +61,7 @@ export default function ProductosPage() {
   return (
     <div>
       <div className="w-full mx-auto py-2 px-2">
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="flex gap-4">
             <Button onClick={() => toggleFavorites(permiso)}>
             {isFavorite ? <TrashIcon /> : <Star />}
@@ -70,8 +71,8 @@ export default function ProductosPage() {
             </h1>
           </div>
 
-          <div className="flex justify-end m-2 gap-x-4 ">
-            <Select onValueChange={handleSelectChange}>
+          <div className="flex justify-end m-2 gap-x-4">
+          <Select onValueChange={handleSelectChange}>
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="Activo" />
               </SelectTrigger>
@@ -83,17 +84,14 @@ export default function ProductosPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.PROVEEDOR_CREATE}>
               <Link href={`${AppRouter.adminProveedores}/0`}>
-                <Button>Nuevo</Button>
+                <Button>+</Button>
               </Link>
             </PermisoClient>
 
             <Button onClick={onSubmit} disabled={isLoading}>
-              Actualizar
+              <UpdateIcon/>
             </Button>
           </div>
         </div>

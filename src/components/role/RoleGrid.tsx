@@ -17,6 +17,7 @@ import { useState } from "react";
 import { removeRoleAction } from "@/actions";
 import { toast } from "sonner";
 import { useRoleStore } from "./role.store";
+import { Eye } from "lucide-react";
 
 interface Props {
   roles: RoleInterface[];
@@ -70,18 +71,12 @@ export const CardRole = ({ role }: PropsCardRole) => {
       <CardFooter className="flex justify-end gap-x-2">
         <PermisoClient permiso={PermisoAccion.ROLE_DELETE}>
           <Button variant="destructive" disabled={isLoading} onClick={onDelete}>
-            Eliminar
+            X
           </Button>
         </PermisoClient>
-        <PermisoClient permiso={PermisoAccion.ROLE_UPDATE}>
-          <Link href={`${AppRouter.adminRoles}/${role.id}`}>
-            <Button variant="default">Editar</Button>
-          </Link>
-        </PermisoClient>
-
         <PermisoClient permiso={PermisoAccion.ROLE_VIEW}>
           <Link href={`${AppRouter.adminRoles}/${role.id}`}>
-            <Button variant="secondary">Ver</Button>
+            <Button variant="secondary"><Eye/></Button>
           </Link>
         </PermisoClient>
       </CardFooter>

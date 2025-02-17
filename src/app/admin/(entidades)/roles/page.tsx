@@ -17,6 +17,7 @@ import {
   useRoleStore,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { Star, TrashIcon } from "lucide-react";
 
 import Link from "next/link";
@@ -81,11 +82,11 @@ export default function RolesPage() {
 
             <PermisoClient permiso={PermisoAccion.ROLE_CREATE}>
               <Link href={`${AppRouter.adminRoles}/0`}>
-                <Button>Nuevo</Button>
+                <Button>+</Button>
               </Link>
             </PermisoClient>
             <Button onClick={onSubmit} disabled={isLoading}>
-              Actualizar
+              <UpdateIcon/>
             </Button>
           </div>
         </div>

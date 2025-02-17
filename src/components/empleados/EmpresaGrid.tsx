@@ -19,6 +19,7 @@ import { useEmpresaStore } from "./empresa.store";
 import { removeEmpresaAction } from "@/actions";
 import { toast } from "sonner";
 import Link from "next/link";
+import { Eye } from "lucide-react";
 
 interface Props {
   empresas: EmpresaInterface[];
@@ -80,19 +81,13 @@ export const EmpresaCard = ({ empresa }: PropsEmpresa) => {
       <CardFooter className="flex justify-end gap-x-2">
         <PermisoClient permiso={PermisoAccion.EMPRESA_DELETE}>
           <Button variant="destructive" disabled={isLoading} onClick={onDelete}>
-            Eliminar
+            X
           </Button>
-        </PermisoClient>
-
-        <PermisoClient permiso={PermisoAccion.EMPRESA_UPDATE}>
-          <Link href={`${AppRouter.adminEmpleados}/${empresa.id}`}>
-            <Button variant="default">Editar</Button>
-          </Link>
         </PermisoClient>
 
         <PermisoClient permiso={PermisoAccion.EMPRESA_VIEW}>
           <Link href={`${AppRouter.adminEmpleados}/${empresa.id}`}>
-            <Button variant="secondary">Ver</Button>
+            <Button variant="secondary"><Eye/></Button>
           </Link>
         </PermisoClient>
       </CardFooter>
