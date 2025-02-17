@@ -21,7 +21,8 @@ import {
 
 export const getFacturaAction = async (
   limit: number,
-  activo: boolean | null
+  activo: boolean | null,
+  is_paid: boolean | null
 ): Promise<FacturaInterface[]> => {
   //console.info("getFacturaAction");
   try {
@@ -33,6 +34,7 @@ export const getFacturaAction = async (
       variables: {
         limit: limit,
         activo: activo,
+        isPaid: is_paid,
       },
     });
 

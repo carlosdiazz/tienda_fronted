@@ -5,18 +5,19 @@ import { getFacturaAction } from "@/actions";
 interface FacturaState {
   factura: FacturaInterface[];
   loading: boolean;
-  getFactura: (limit: number, activo?: boolean) => Promise<void>;
+  getFactura: (limit: number, is_paid: boolean | null) => Promise<void>;
 }
 
 export const useFacturaStore = create<FacturaState>()((set, get) => ({
   factura: [],
   loading: true,
-  getFactura: async (limit, activo) => {
+  getFactura: async (limit, is_paid) => {
     set({ loading: true });
-    const new_Activo = activo === undefined ? null : activo;
+
     const factura: FacturaInterface[] = await getFacturaAction(
       limit,
-      new_Activo
+      true,
+      is_paid
     );
     set({ loading: false });
     set({ factura });

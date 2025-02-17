@@ -19,6 +19,7 @@ import {
 
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { Star, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -61,7 +62,7 @@ export default function ComprobantePage() {
   return (
     <div>
       <div className="w-full mx-auto py-2 px-2">
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="flex gap-4">
             <Button onClick={() => toggleFavorites(permiso)}>
             {isFavorite ? <TrashIcon /> : <Star />}
@@ -74,12 +75,12 @@ export default function ComprobantePage() {
           <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.COMPROBANTE_CREATE}>
               <Link href={`${AppRouter.adminComprobante}/0`}>
-                <Button>Nuevo</Button>
+                <Button>+</Button>
               </Link>
             </PermisoClient>
 
             <Button onClick={onSubmit} disabled={isLoading}>
-              Actualizar
+              <UpdateIcon/>
             </Button>
           </div>
         </div>

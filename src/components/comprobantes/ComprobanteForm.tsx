@@ -47,7 +47,7 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
   const getFacturas = useFacturaStore((state) => state.getFactura);
 
   useEffect(() => {
-    getFacturas(1000, true);
+    getFacturas(1000, false);
   }, []);
 
   const form = useForm<ComprobanteFormSchemaType>({

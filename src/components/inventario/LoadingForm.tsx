@@ -19,7 +19,7 @@ export const LoadingForm = ({ inventario }: Props) => {
   const getProductos = useProductosStore((state) => state.getProductos);
 
   useEffect(() => {
-    getProductos(1000, true);
+    getProductos(1000, true, false);
   }, []);
 
   if (loadingProductos) {

@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 import { entityProductoGQL } from "./producto.interface";
 
 export const allProductosGQL = gql`
-  query AllProductos($offset: Int, $limit: Int, $activo: Boolean) {
-    allProductos(offset: $offset, limit: $limit, activo: $activo) {
+  query AllProductos($offset: Int, $limit: Int, $activo: Boolean, $isService: Boolean) {
+    allProductos(offset: $offset, limit: $limit, activo: $activo, is_service: $isService) {
       ${entityProductoGQL}
     }
   }
