@@ -1,19 +1,18 @@
-"use client";
-
-import { PermisoClient } from "@/components";
-import { Button, Switch } from "@/components/ui";
+import { Badge, Button, PermisoClient, Switch } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowUpDown, Eye } from "lucide-react";
 import Link from "next/link";
 
-export type ClientesColumn = {
+export type EmpleadosColumns = {
   id: number;
+  codigo: number;
   name: string;
-  documento: string;
-  telefono: string;
+  descripcion: string;
   activo: boolean;
+  sueldo: number;
+  fecha: string;
 };
 
 const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
@@ -27,7 +26,7 @@ const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
   return <ArrowUpDown className="ml-2 h-4 w-4" />;
 };
 
-export const columnsClientes: ColumnDef<ClientesColumn>[] = [
+export const columnsEmpleados: ColumnDef<EmpleadosColumns>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -43,31 +42,53 @@ export const columnsClientes: ColumnDef<ClientesColumn>[] = [
     },
   },
   {
-    accessorKey: "documento",
+    accessorKey: "descripcion",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Documento
+          Descripcion
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
     },
   },
   {
-    accessorKey: "telefono",
+    accessorKey: "sueldo",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Telefono
+          Sueldo
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const sueldo: number = row.getValue("sueldo");
+      return <Badge variant={"secondary"}>${sueldo}.00 </Badge>;
+    },
+  },
+  {
+    accessorKey: "fecha",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Fecha de Ingreso
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const fecha: string = row.getValue("fecha");
+      return <Badge variant={"outline"}>{fecha.slice(0, 10)}</Badge>;
     },
   },
   {
@@ -91,16 +112,14 @@ export const columnsClientes: ColumnDef<ClientesColumn>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
-      return (
-        <div/>
-      );
+      return <div />;
     },
     cell: ({ row }) => {
       const id: number = row.getValue("id");
 
       return (
-        <PermisoClient permiso={PermisoAccion.CLIENTE_VIEW}>
-          <Link href={`${AppRouter.adminClientes}/${id}`}>
+        <PermisoClient permiso={PermisoAccion.EMPRESA_UPDATE}>
+          <Link href={`${AppRouter.adminEmpleados}/${id}`}>
             <Button variant="secondary">
               <Eye />
             </Button>

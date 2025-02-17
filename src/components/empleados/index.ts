@@ -5,3 +5,5 @@ export * from "./empresa.store";
 export * from "./empresaAmindCard";
 export * from "./EmpresaGrid";
 export * from "./EmpresaForm";
+
+export * from "./table/EmpleadosTables";

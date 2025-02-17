@@ -1,20 +1,17 @@
-"use client";
-
-import { PermisoClient } from "@/components";
-import { Button, Switch } from "@/components/ui";
+import { Button, PermisoClient, Switch } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowUpDown, Eye } from "lucide-react";
 import Link from "next/link";
 
-export type ClientesColumn = {
-  id: number;
-  name: string;
-  documento: string;
-  telefono: string;
-  activo: boolean;
-};
+export type UsuariosColumns = {
+  id: number,
+  name: string,
+  email: string,
+  nickname: string,
+  activo:boolean
+}
 
 const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
   if (isSorted === "asc") {
@@ -27,7 +24,7 @@ const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
   return <ArrowUpDown className="ml-2 h-4 w-4" />;
 };
 
-export const columnsClientes: ColumnDef<ClientesColumn>[] = [
+export const columnsUsuarios: ColumnDef<UsuariosColumns>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -43,28 +40,28 @@ export const columnsClientes: ColumnDef<ClientesColumn>[] = [
     },
   },
   {
-    accessorKey: "documento",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Documento
+          Email
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
     },
   },
   {
-    accessorKey: "telefono",
+    accessorKey: "nickname",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Telefono
+          Apodo
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
@@ -99,8 +96,8 @@ export const columnsClientes: ColumnDef<ClientesColumn>[] = [
       const id: number = row.getValue("id");
 
       return (
-        <PermisoClient permiso={PermisoAccion.CLIENTE_VIEW}>
-          <Link href={`${AppRouter.adminClientes}/${id}`}>
+        <PermisoClient permiso={PermisoAccion.USER_UPDATE}>
+          <Link href={`${AppRouter.adminUsuarios}/${id}`}>
             <Button variant="secondary">
               <Eye />
             </Button>

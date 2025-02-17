@@ -5,3 +5,4 @@ export * from "./usuario-gql";
 export * from "./usuario.mapper";
 export * from "./UsuarioForm";
 export * from "./UsuarioAdminCard";
+export * from "./table/UsuariosTables";

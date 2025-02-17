@@ -11,7 +11,7 @@ export const ClientesTables = ({ clientes }: Props) => {
   console.log(clientes);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto">
       <DataTableClientes columns={columnsClientes} data={clientes} />
     </div>
   );

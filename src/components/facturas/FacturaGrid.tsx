@@ -142,7 +142,7 @@ interface PropsFactura {
 
 export const FacturaCard = ({ factura }: PropsFactura) => {
   const [isLoading, setIsLoading] = useState(false);
-  const getFactura = useFacturaStore((state) => state.getFactura);
+  const getFacturas = useFacturaStore((state) => state.getFactura);
 
   const onDelete = async () => {
     setIsLoading(true);
@@ -151,7 +151,7 @@ export const FacturaCard = ({ factura }: PropsFactura) => {
     if (resp.error) {
       toast.error(resp.message);
     } else {
-      await getFactura(100, true);
+      await getFacturas(100, true, null);
       toast.success(resp.message);
     }
   };

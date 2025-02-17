@@ -2,6 +2,7 @@
 
 import {
   Button,
+  ClienteInterface,
   EmptyEntity,
   FacturaGrid,
   FacturaInterface,
@@ -14,6 +15,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  useCLienteStore,
   useFacturaStore,
   useFavoritosStore,
 } from "@/components";
@@ -26,9 +28,10 @@ import { toast } from "sonner";
 
 export default function FacturaPage() {
   const [isPaid, setIsPaid] = useState<boolean | null>(null);
+  const [id_cliente, setId_cliente] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectChange = (value: string) => {
+  const handleSelectPaidChange = (value: string) => {
     if (value === "true") {
       setIsPaid(true);
     } else if (value === "false") {
@@ -42,20 +45,38 @@ export default function FacturaPage() {
   const getFactura = useFacturaStore((state) => state.getFactura);
   const loadingFactura = useFacturaStore((state) => state.loading);
 
+  const clientes: ClienteInterface[] = useCLienteStore(
+    (state) => state.clientes
+  );
+  const getClientes = useCLienteStore((state) => state.getClientes);
+
   const permiso = PermisoAccion.FACTURA_VIEW;
   const toggleFavorites = useFavoritosStore((state) => state.toggleFavorites);
   const isFavorite = useFavoritosStore((state) => state.isFavorite(permiso));
 
   const onSubmit = async () => {
     setIsLoading(true);
-    await getFactura(10000, isPaid);
+    await getFactura(10000, isPaid, id_cliente);
     setIsLoading(false);
     toast.success("Factura Actualizada");
   };
 
   useEffect(() => {
-    getFactura(1000, isPaid);
-  }, [isPaid]);
+    getClientes(999, true);
+  }, []);
+
+  useEffect(() => {
+    getFactura(1000, isPaid, id_cliente);
+  }, [isPaid, id_cliente]);
+
+  const handleSelectClienteChange = (value: string) => {
+    if (value === "0") {
+      setId_cliente(null);
+    } else {
+      const cliente = Number(value);
+      setId_cliente(cliente);
+    }
+  };
 
   return (
     <div>
@@ -65,11 +86,29 @@ export default function FacturaPage() {
             <Button onClick={() => toggleFavorites(permiso)}>
               {isFavorite ? <TrashIcon /> : <Star />}
             </Button>
-            <h1 className="text-lg font-semibold md:text-2xl mb-2">Factura</h1>
+            <h1 className="text-lg font-semibold md:text-2xl mb-2">Facturas</h1>
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
-            <Select onValueChange={handleSelectChange}>
+            <Select onValueChange={handleSelectClienteChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Clientes" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Clientes</SelectLabel>
+                  <SelectItem value={`0`} key="0">
+                    Todos
+                  </SelectItem>
+                  {clientes.map((item) => (
+                    <SelectItem value={`${item.id}`} key={item.id}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select onValueChange={handleSelectPaidChange}>
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="Estado" />
               </SelectTrigger>

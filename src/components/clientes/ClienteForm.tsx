@@ -18,6 +18,11 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Switch,
   Textarea,
 } from "../ui";
@@ -87,6 +92,33 @@ export const ClienteForm = ({ cliente }: Props) => {
                 </FormItem>
               )}
             />
+
+            {/*Tipo de Documento */}
+            <FormField
+              control={form.control}
+              name="tipo_documento"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo de Documento</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona un tipo de documento" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cedula">Cédula</SelectItem>
+                        <SelectItem value="pasaporte">Pasaporte</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>Tipo de Docmento</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             {/*Documento */}
             <FormField
               control={form.control}
@@ -98,22 +130,6 @@ export const ClienteForm = ({ cliente }: Props) => {
                     <Textarea placeholder="Documento" {...field} />
                   </FormControl>
                   <FormDescription>Documento</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/*Tipo de Documento */}
-            <FormField
-              control={form.control}
-              name="tipo_documento"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tipo de Documento</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Tipo de Documento" {...field} />
-                  </FormControl>
-                  <FormDescription>Tipo de Docmento</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -172,6 +188,7 @@ export const ClienteForm = ({ cliente }: Props) => {
           </div>
         </form>
       </Form>
+
     </div>
   );
 };

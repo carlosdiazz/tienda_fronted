@@ -15,6 +15,7 @@ import {
   useUsuariosStore,
   UsuarioGrid,
   UsuarioInterface,
+  UsuariosTables,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { UpdateIcon } from "@radix-ui/react-icons";
@@ -100,9 +101,11 @@ export default function UsuariosPage() {
             subTitle="Para crear un nuevo Usuario pulsa '+'"
           />
         ) : (
-          <UsuarioGrid usuarios={usuarios} />
+          <UsuariosTables usuarios={usuarios}/>
         )}
       </div>
     </div>
   );
 }
+
+//<UsuarioGrid usuarios={usuarios} />

@@ -2,6 +2,7 @@
 
 import {
   Button,
+  EmpleadosTables,
   EmpresaGrid,
   EmpresaInterface,
   EmptyEntity,
@@ -101,9 +102,11 @@ export default function EmpresaPage() {
             subTitle="Para crear una nuevo Empleado pulsa '+'"
           />
         ) : (
-          <EmpresaGrid empresas={empresas} />
+          <EmpleadosTables empleados={empresas}/>
         )}
       </div>
     </div>
   );
 }
+
+//<EmpresaGrid empresas={empresas} />
