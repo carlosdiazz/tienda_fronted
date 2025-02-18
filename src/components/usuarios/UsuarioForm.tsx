@@ -110,11 +110,11 @@ export const UsuarioForm = ({ usuario }: Props) => {
               name="nickname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nickname</FormLabel>
+                  <FormLabel>Apodo</FormLabel>
                   <FormControl>
                     <Input placeholder="Nickname" {...field} />
                   </FormControl>
-                  <FormDescription>Nickname del usuario</FormDescription>
+                  <FormDescription>Apodo del usuario</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -142,11 +142,11 @@ export const UsuarioForm = ({ usuario }: Props) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Contrasena</FormLabel>
                   <FormControl>
                     <Input placeholder="Password" {...field} type="password" />
                   </FormControl>
-                  <FormDescription>Password del usuario</FormDescription>
+                  <FormDescription>Contrasena del usuario</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -60,9 +60,9 @@ export const ProductosGrid = ({ productos }: Props) => {
             <TableHeader>
               <TableRow>
                 <TableHead>Codigo</TableHead>
-                <TableHead>Name</TableHead>
+                <TableHead>Nombre</TableHead>
                 <TableHead>Stock</TableHead>
-                <TableHead>Price</TableHead>
+                <TableHead>Precio</TableHead>
                 <TableHead>Servicio</TableHead>
                 <TableHead>Acciones</TableHead>
               </TableRow>
