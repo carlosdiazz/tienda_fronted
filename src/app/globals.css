@@ -14,14 +14,14 @@
     -moz-appearance: textfield; /* Para Firefox */
   }
 
+  /* Oculta la flecha de los select */
   select {
-    @apply appearance-none; /* Elimina el diseño por defecto */
+    @apply appearance-none bg-transparent pr-4;
   }
 
   select::-ms-expand {
-    display: none; /* Oculta la flecha en Edge/IE */
+    display: none; /* Para IE/Edge */
   }
-
 
   @layer base {
     :root {
