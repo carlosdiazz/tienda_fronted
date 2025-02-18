@@ -13,8 +13,8 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "MaxerComp",
-  description: "MaxerComp",
+  title: "MaxSerComp",
+  description: "MaxSerComp",
 };
 
 export default function RootLayout({
