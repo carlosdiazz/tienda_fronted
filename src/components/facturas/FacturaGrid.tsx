@@ -63,6 +63,7 @@ export const FacturaGrid = ({ facturas }: Props) => {
               <TableRow>
                 <TableHead>Codigo</TableHead>
                 <TableHead>Cliente</TableHead>
+                <TableHead>Metodo de Pago</TableHead>
                 <TableHead>Total</TableHead>
                 <TableHead>Total Pagado</TableHead>
                 <TableHead>Faltante</TableHead>
@@ -75,6 +76,7 @@ export const FacturaGrid = ({ facturas }: Props) => {
                 <TableRow key={factura.id}>
                   <TableCell>{factura.codigo_factura}</TableCell>
                   <TableCell>{factura.cliente.name}</TableCell>
+                  <TableCell>{factura.metodo_pago}</TableCell>
                   <TableCell>{factura.total}</TableCell>
                   <TableCell>{factura.total_pagado}</TableCell>
                   <TableCell>{factura.faltante}</TableCell>

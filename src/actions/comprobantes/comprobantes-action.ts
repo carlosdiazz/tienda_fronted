@@ -115,6 +115,8 @@ const createComprobanteByIdAction = async (
           concepto: Comprobante.concepto,
           id_factura: Comprobante.id_facura,
           monto_pagado: Comprobante.monto_pagado,
+          metodo_pago: Comprobante.metodo_pago,
+          referencia_pago: Comprobante.referencia_pago,
         },
       },
     });

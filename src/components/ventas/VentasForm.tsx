@@ -102,6 +102,8 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
       total: total,
       total_pagado: data.total_pagado,
       productos: new_productos,
+      metodo_pago: data.metodo_pago,
+      referencia_pago: data.referencia_pago,
     };
 
     const resp = await createFacturaByIdAction(newFactura);
@@ -295,6 +297,51 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
                         }
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Referencia de Pago */}
+              <FormField
+                control={form.control}
+                name="referencia_pago"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Referencia de Pago</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Referencia de Pago" {...field} />
+                    </FormControl>
+                    <FormDescription>Referencia de Pago</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Método de Pago */}
+              <FormField
+                control={form.control}
+                name="metodo_pago"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Método de Pago</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona un método" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="EFECTIVO">EFECTIVO</SelectItem>
+                        <SelectItem value="TARJETA">TARJETA</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Selecciona el método de pago
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

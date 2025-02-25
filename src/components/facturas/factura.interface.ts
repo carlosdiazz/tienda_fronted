@@ -15,6 +15,8 @@ export interface FacturaInterface {
   is_credito: boolean;
   total_pagado: number;
   faltante: number;
+  referencia_pago: string;
+  metodo_pago: string;
   cliente: ClienteInterface;
   factura_detalle: FacturaDetalleInterface[];
   comprobante: ComprobanteInterface[];
@@ -39,6 +41,8 @@ export interface FacturaFormInterface {
   total_pagado: number;
   faltante: number;
   id_cliente: number;
+  referencia_pago: string;
+  metodo_pago: string;
   productos: ProductosVentasInterface[];
 }
 
@@ -51,6 +55,8 @@ export const facturaFormSchema = z.object({
   total_pagado: z.number(),
   faltante: z.number(),
   id_cliente: z.number(),
+  referencia_pago: z.string(),
+  metodo_pago: z.string(),
   productos: z.array(productosVentasSchema),
 });
 
@@ -64,6 +70,8 @@ export const emptyFactura: FacturaInterface = {
   is_credito: false,
   total: 0,
   total_pagado: 0,
+  metodo_pago: "",
+  referencia_pago: "",
   cliente: emptyCliente,
   factura_detalle: [],
   comprobante: [],
@@ -78,6 +86,8 @@ export const emptyFacturaFormVentas: FacturaFormInterface = {
   total: 0,
   total_pagado: 0,
   id_cliente: 0,
+  metodo_pago: "",
+  referencia_pago: "",
   productos: [],
 };
 
@@ -89,6 +99,8 @@ export const entityRelacionesFacturaGQL = `
   is_credito
   total
   total_pagado
+  metodo_pago
+  referencia_pago
   cliente {
     ${entityClienterGQL}
   }
@@ -111,4 +123,6 @@ export const entityFacturaGQL = `
   is_credito
   total
   total_pagado
+  metodo_pago
+  referencia_pago
 `;

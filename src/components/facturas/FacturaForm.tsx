@@ -52,6 +52,14 @@ export const FacturaForm = ({ factura }: Props) => {
               <p>
                 <strong>Código:</strong> {factura.codigo_factura}
               </p>
+
+              <p>
+                <strong>Metodo de Pago:</strong> {factura.metodo_pago}
+              </p>
+
+              <p>
+                <strong>Referencia de Pago:</strong> {factura.referencia_pago}
+              </p>
               <p>
                 <strong>Total:</strong> ${factura.total.toFixed(2)}
               </p>
@@ -118,6 +126,8 @@ export const FacturaForm = ({ factura }: Props) => {
                 <TableRow>
                   <TableHead>Concepto</TableHead>
                   <TableHead className="text-right">Monto Pagado</TableHead>
+                  <TableHead className="text-right">Metodo de Pago</TableHead>
+                  <TableHead className="text-right">Referencia de Pago</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -126,6 +136,12 @@ export const FacturaForm = ({ factura }: Props) => {
                     <TableCell>{comprobante.concepto}</TableCell>
                     <TableCell className="text-right">
                       ${comprobante.monto_pagado.toFixed(2)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {comprobante.metodo_pago}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {comprobante.referencia_pago}
                     </TableCell>
                   </TableRow>
                 ))}

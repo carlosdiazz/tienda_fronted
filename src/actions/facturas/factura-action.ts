@@ -121,6 +121,8 @@ export const createFacturaByIdAction = async (
           is_credito: factura.is_credito,
           total_pagado: factura.total_pagado,
           productos: factura.productos,
+          metodo_pago: factura.metodo_pago,
+          referencia_pago: factura.referencia_pago,
         },
       },
     });

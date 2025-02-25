@@ -16,6 +16,12 @@ export const FacturaMapper = (data: any): FacturaInterface => {
     factura_detalle: GetFacturaDetalleResponse(data["factura_detalle"]),
     comprobante: GetComprobanteResponse(data["comprobante"]),
     cliente: ClienteMapper(data["cliente"]),
+    metodo_pago: validateProperty<string>(data, "metodo_pago", "string"),
+    referencia_pago: validateProperty<string>(
+      data,
+      "referencia_pago",
+      "string"
+    ),
   };
 };
 

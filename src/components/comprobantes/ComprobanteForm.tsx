@@ -57,6 +57,8 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
       id: comprobante.id,
       monto_pagado: comprobante.monto_pagado,
       id_facura: 0,
+      referencia_pago: comprobante.referencia_pago,
+      metodo_pago: comprobante.metodo_pago,
     },
   });
   const { handleSubmit } = form;
@@ -115,6 +117,51 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
               )}
             />
 
+            {/* Referencia de Pago */}
+            <FormField
+              control={form.control}
+              name="referencia_pago"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Referencia de Pago</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Referencia de Pago" {...field} />
+                  </FormControl>
+                  <FormDescription>Referencia de Pago</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Método de Pago */}
+            <FormField
+              control={form.control}
+              name="metodo_pago"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Método de Pago</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona un método" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="EFECTIVO">EFECTIVO</SelectItem>
+                      <SelectItem value="TARJETA">TARJETA</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Selecciona el método de pago
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Concepto */}
             <FormField
               control={form.control}
@@ -140,14 +187,14 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
                   <FormLabel>Monto Pagado</FormLabel>
                   <FormControl>
                     <Input
-                        type="number"
-                        inputMode="numeric"
-                        pattern="\d*"
-                        step="any"
-                        {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
-                        }
+                      type="number"
+                      inputMode="numeric"
+                      pattern="\d*"
+                      step="any"
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      }
                     />
                   </FormControl>
                   <FormDescription>Monto Pagado</FormDescription>

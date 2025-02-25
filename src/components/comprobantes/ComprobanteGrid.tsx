@@ -61,6 +61,8 @@ export const ComprobanteGrid = ({ Comprobantes }: Props) => {
                 <TableHead>Codigo</TableHead>
                 <TableHead>Concepto</TableHead>
                 <TableHead>Monto Abonado</TableHead>
+                <TableHead>Metodo de Pago</TableHead>
+                <TableHead>Referencia de Pago</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -69,6 +71,8 @@ export const ComprobanteGrid = ({ Comprobantes }: Props) => {
                   <TableCell>{comprobante.id}</TableCell>
                   <TableCell>{comprobante.concepto}</TableCell>
                   <TableCell>${comprobante.monto_pagado}</TableCell>
+                  <TableCell>{comprobante.metodo_pago}</TableCell>
+                  <TableCell>{comprobante.referencia_pago}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

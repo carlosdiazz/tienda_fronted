@@ -28,6 +28,7 @@ import { ProductoInterface } from "./producto.interface";
 import { useProductosStore } from "./productos.store";
 import { removeProductoAction } from "@/actions";
 import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   productos: ProductoInterface[];
@@ -37,6 +38,8 @@ const PRODUCTS_PER_PAGE = 10;
 
 export const ProductosGrid = ({ productos }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const totalPages = Math.ceil(productos.length / PRODUCTS_PER_PAGE);
   const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
@@ -49,6 +52,21 @@ export const ProductosGrid = ({ productos }: Props) => {
 
   const goToPreviousPage = () => {
     setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
+  const getProducts =useProductosStore((state)=>state.getProductos)
+
+  const onDelete = async (id: number) => {
+    setIsLoading(true);
+    const resp = await removeProductoAction(id);
+    setIsLoading(false);
+    if (resp.error) {
+      toast.error(resp.message);
+    } else {
+      router.refresh();
+      await getProducts(1000, true)
+      toast.success(resp.message);
+    }
   };
 
   return (
@@ -77,13 +95,24 @@ export const ProductosGrid = ({ productos }: Props) => {
                   <TableCell>
                     <Badge>{product.is_service ? "SI" : "NO"}</Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex space-x-2">
                     <PermisoClient permiso={PermisoAccion.PRODUCTOS_UPDATE}>
                       <Link href={`${AppRouter.adminProductos}/${product.id}`}>
                         <Button variant="ghost" size="icon">
                           <Edit className="h-4 w-4" />
                         </Button>
                       </Link>
+                    </PermisoClient>
+
+                    <PermisoClient permiso={PermisoAccion.PRODUCTOS_DELETE}>
+                      <Button
+                        variant="destructive"
+                        disabled={isLoading}
+                        size={"icon"}
+                        onClick={() => onDelete(product.id)}
+                      >
+                        x
+                      </Button>
                     </PermisoClient>
                   </TableCell>
                 </TableRow>
