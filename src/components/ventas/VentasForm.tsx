@@ -102,8 +102,8 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
       total: total,
       total_pagado: data.total_pagado,
       productos: new_productos,
-      metodo_pago: data.metodo_pago,
-      referencia_pago: data.referencia_pago,
+      metodo_pago: data.metodo_pago??"EFECTIVO",
+      referencia_pago: data.referencia_pago??"",
     };
 
     const resp = await createFacturaByIdAction(newFactura);

@@ -55,8 +55,8 @@ export const facturaFormSchema = z.object({
   total_pagado: z.number(),
   faltante: z.number(),
   id_cliente: z.number(),
-  referencia_pago: z.string(),
-  metodo_pago: z.string(),
+  referencia_pago: z.string().optional(),
+  metodo_pago: z.string().optional(),
   productos: z.array(productosVentasSchema),
 });
 
@@ -70,7 +70,7 @@ export const emptyFactura: FacturaInterface = {
   is_credito: false,
   total: 0,
   total_pagado: 0,
-  metodo_pago: "",
+  metodo_pago: "EFECTIVO",
   referencia_pago: "",
   cliente: emptyCliente,
   factura_detalle: [],

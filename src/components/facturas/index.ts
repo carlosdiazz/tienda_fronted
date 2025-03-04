@@ -6,3 +6,4 @@ export * from "./factura.store";
 export * from "./FacturaAdminCard";
 export * from "./FacturaGrid";
 export * from "./FacturaForm";
+export * from "./FacturaDetalle";

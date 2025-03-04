@@ -32,7 +32,12 @@ import {
   ComprobanteFormSchemaType,
   comprobanteFormSchema,
 } from "./comprobante.interface";
-import { useFacturaStore } from "../facturas";
+import {
+  emptyFactura,
+  FacturaDetalle,
+  FacturaInterface,
+  useFacturaStore,
+} from "../facturas";
 
 interface Props {
   comprobante: ComprobanteInterface;
@@ -45,6 +50,9 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
 
   const facturas = useFacturaStore((state) => state.factura);
   const getFacturas = useFacturaStore((state) => state.getFactura);
+
+  const [facturaSelect, setFacturaSelect] =
+    useState<FacturaInterface>(emptyFactura);
 
   useEffect(() => {
     getFacturas(1000, false, null); //TODO
@@ -77,6 +85,10 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
   }
   return (
     <div>
+      <div>
+        <FacturaDetalle factura={facturaSelect} />
+      </div>
+
       <h1 className="py-3 text-lg font-semibold md:text-2xl mb-2">
         {comprobante.id === 0 ? "Crear Comprobante" : "Actualizar Comprobante"}
       </h1>
@@ -92,9 +104,15 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
                 <FormItem>
                   <FormLabel>Factura</FormLabel>
                   <Select
-                    onValueChange={(value) =>
-                      field.onChange(parseInt(value, 10))
-                    }
+                    onValueChange={(value) => {
+                      field.onChange(parseInt(value, 10));
+                      const facturaEncontrada = facturas.find(
+                        (item) => item.id === parseInt(value, 10)
+                      );
+                      if (facturaEncontrada) {
+                        setFacturaSelect(facturaEncontrada); // Actualiza el estado con la factura seleccionada
+                      }
+                    }}
                     defaultValue={`${field.value}`}
                     disabled={comprobante.id === 0 ? false : true}
                   >
