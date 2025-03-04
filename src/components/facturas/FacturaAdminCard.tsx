@@ -14,7 +14,7 @@ export const FacturaAdminCard = () => {
   const getFactura = useFacturaStore((state) => state.getFactura);
 
   useEffect(() => {
-    getFactura(1000, true, null);
+    getFactura(1000, true, null, true);
   }, []);
 
   return (

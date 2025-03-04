@@ -31,6 +31,8 @@ export default function FacturaPage() {
   const [id_cliente, setId_cliente] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [activo, setActivo] = useState(true);
+
   const handleSelectPaidChange = (value: string) => {
     if (value === "true") {
       setIsPaid(true);
@@ -38,6 +40,14 @@ export default function FacturaPage() {
       setIsPaid(false);
     } else {
       setIsPaid(null);
+    }
+  };
+
+  const handleSelectChange = (value: string) => {
+    if (value === "true") {
+      setActivo(true);
+    } else {
+      setActivo(false);
     }
   };
 
@@ -56,7 +66,7 @@ export default function FacturaPage() {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    await getFactura(10000, isPaid, id_cliente);
+    await getFactura(10000, isPaid, id_cliente, activo);
     setIsLoading(false);
     toast.success("Factura Actualizada");
   };
@@ -66,8 +76,8 @@ export default function FacturaPage() {
   }, []);
 
   useEffect(() => {
-    getFactura(1000, isPaid, id_cliente);
-  }, [isPaid, id_cliente]);
+    getFactura(1000, isPaid, id_cliente, activo);
+  }, [isPaid, id_cliente, activo]);
 
   const handleSelectClienteChange = (value: string) => {
     if (value === "0") {
@@ -121,6 +131,19 @@ export default function FacturaPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
+            <Select onValueChange={handleSelectChange}>
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Pendientes" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Pendientes</SelectLabel>
+                  <SelectItem value="true">Pendientes</SelectItem>
+                  <SelectItem value="false">Anuladas</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             <PermisoClient permiso={PermisoAccion.FACTURA_CREATE}>
               <Link href={`${AppRouter.adminFactura}/0`}>
                 <Button>+</Button>

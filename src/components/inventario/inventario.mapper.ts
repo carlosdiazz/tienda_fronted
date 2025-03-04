@@ -1,6 +1,7 @@
 import { validateProperty } from "@/lib";
 import { InventarioInterface } from "./inventario.interface";
 import { ProductoMapper } from "../productos";
+import { ProveedorMapper } from "../proveedores";
 
 export const InventarioMapper = (data: any): InventarioInterface => {
   return {
@@ -9,6 +10,7 @@ export const InventarioMapper = (data: any): InventarioInterface => {
     is_ingreso: validateProperty<boolean>(data, "is_ingreso", "boolean"),
     concepto: validateProperty<string>(data, "concepto", "string"),
     producto: data["producto"] ? ProductoMapper(data["producto"]) : null,
+    proovedor: data["proveedor"] ? ProveedorMapper(data["proveedor"]) : null,
   };
 };
 

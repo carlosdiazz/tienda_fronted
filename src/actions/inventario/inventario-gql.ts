@@ -6,7 +6,6 @@ import {
   GetInventarioResponse,
   InventarioFormInterface,
   InventarioInterface,
-  InventarioMapper,
 } from "@/components";
 import { ResponsePropio } from "@/interface";
 import { getGraphQLErrorMessage, makeClientGraphql } from "@/lib";
@@ -50,6 +49,7 @@ export const createInventarioAction = async (
           concepto: inventarioForm.concepto,
           cantidad: inventarioForm.cantidad,
           id_producto: inventarioForm.id_producto,
+          id_proveedor: inventarioForm.id_proveedor,
         },
       },
     });

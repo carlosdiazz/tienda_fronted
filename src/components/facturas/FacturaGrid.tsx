@@ -43,12 +43,27 @@ export const FacturaGrid = ({ facturas }: Props) => {
   const endIndex = startIndex + FACTURA_PER_PAGE;
   const currentFacturas = facturas.slice(startIndex, endIndex);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const getFacturas = useFacturaStore((state) => state.getFactura);
+
   const goToNextPage = () => {
     setCurrentPage((page) => Math.min(page + 1, totalPages));
   };
 
   const goToPreviousPage = () => {
     setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
+  const onDelete = async (id: number) => {
+    setIsLoading(true);
+    const resp = await removeFacturaAction(id);
+    setIsLoading(false);
+    if (resp.error) {
+      toast.error(resp.message);
+    } else {
+      await getFacturas(100, true, null);
+      toast.success(resp.message);
+    }
   };
 
   return (
@@ -93,12 +108,22 @@ export const FacturaGrid = ({ facturas }: Props) => {
                         : "Pendiente"}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex space-x-2">
                     <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
                       <Button variant="ghost" size="icon">
                         <Eye className="h-4 w-4" />
                       </Button>
                     </Link>
+
+                    <PermisoClient permiso={PermisoAccion.FACTURA_DELETE}>
+                      {factura.activo && (<Button
+                        variant="destructive"
+                        disabled={isLoading}
+                        onClick={() => onDelete(factura.id)}
+                      >
+                        X
+                      </Button>)}
+                    </PermisoClient>
                   </TableCell>
                 </TableRow>
               ))}
@@ -127,88 +152,6 @@ export const FacturaGrid = ({ facturas }: Props) => {
           </Button>
         </CardFooter>
       </Card>
-      {/*
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {factura.map((index) => (
-            <FacturaCard factura={index} key={index.id} />
-          ))}
-        </div>
-        */}
     </div>
-  );
-};
-
-interface PropsFactura {
-  factura: FacturaInterface;
-}
-
-export const FacturaCard = ({ factura }: PropsFactura) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const getFacturas = useFacturaStore((state) => state.getFactura);
-
-  const onDelete = async () => {
-    setIsLoading(true);
-    const resp = await removeFacturaAction(factura.id);
-    setIsLoading(false);
-    if (resp.error) {
-      toast.error(resp.message);
-    } else {
-      await getFacturas(100, true, null);
-      toast.success(resp.message);
-    }
-  };
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="grid justify-between gap-2">
-          <Badge variant={"secondary"}>#{factura.codigo_factura}</Badge>
-          <Badge
-            variant={
-              factura.total === factura.total_pagado ? "info" : "destructive"
-            }
-          >
-            {factura.total === factura.total_pagado ? "Pagada" : "Pendiente"}
-          </Badge>
-          <h3 className="text-lg font-semibold">Total: {factura.total}</h3>
-          <p className="text-muted-foreground">
-            Total Pagado: {factura.total_pagado}
-          </p>
-          <p className="text-muted-foreground">
-            Total Items: {factura.factura_detalle.length}
-          </p>
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="mt-2">
-        <div className="flex items-center space-x-2">
-          <Switch checked={factura.activo} />
-          <Label>Activo</Label>
-        </div>
-        <p className="text-muted-foreground mt-2">
-          Cliente: {factura.cliente.name}
-        </p>
-      </CardContent>
-
-      <CardFooter className="flex justify-end gap-x-2">
-        <PermisoClient permiso={PermisoAccion.FACTURA_DELETE}>
-          <Button variant="destructive" disabled={isLoading} onClick={onDelete}>
-            Eliminar
-          </Button>
-        </PermisoClient>
-
-        <PermisoClient permiso={PermisoAccion.FACTURA_UPDATE}>
-          <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
-            <Button variant="default">Editar</Button>
-          </Link>
-        </PermisoClient>
-
-        <PermisoClient permiso={PermisoAccion.FACTURA_VIEW}>
-          <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
-            <Button variant="secondary">Ver</Button>
-          </Link>
-        </PermisoClient>
-      </CardFooter>
-    </Card>
   );
 };

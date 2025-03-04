@@ -32,16 +32,19 @@ import {
 } from "../ui";
 import { ProductoInterface } from "../productos";
 import { PermisoClient } from "../common";
+import { ProveedorInterface } from "../proveedores";
 
 interface Props {
   productos: ProductoInterface[];
+  proveedor: ProveedorInterface[];
   inventario: InventarioInterface;
 }
 
-export const InventarioForm = ({ inventario, productos }: Props) => {
+export const InventarioForm = ({ inventario, productos, proveedor }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const [idProducto, setIdProducto] = useState<number>(0);
+  const [idProveedor, setIdProveedor] = useState<number>(0);
 
   const router = useRouter();
 
@@ -52,6 +55,7 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
       concepto: inventario.concepto,
       id: 0,
       id_producto: 0,
+      id_proveedor: 0,
       is_ingreso: true,
     },
   });
@@ -67,6 +71,7 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
       concepto: data.concepto,
       is_ingreso: true,
       id_producto: idProducto,
+      id_proveedor: idProveedor,
     };
     const resp = await createInventarioAction(newInventario);
     if (resp.error) {
@@ -82,6 +87,12 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
 
   return (
     <div>
+      <div>
+        <h1 className="py-3 text-lg font-semibold md:text-2xl mb-2">
+          Crear Inventario
+        </h1>
+      </div>
+
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-3 gap-4">
@@ -113,6 +124,39 @@ export const InventarioForm = ({ inventario, productos }: Props) => {
                     </SelectContent>
                   </Select>
                   <FormDescription>Producto seleccionado</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Provedoor */}
+            <FormField
+              control={form.control}
+              name="id_proveedor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Proveedor</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(parseInt(value, 10));
+                      setIdProveedor(parseInt(value, 10));
+                    }}
+                    defaultValue={`${field.value}`}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona el Proveedor" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {proveedor.map((item) => (
+                        <SelectItem value={`${item.id}`} key={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Proveedor seleccionado</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

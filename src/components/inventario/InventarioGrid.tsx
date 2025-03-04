@@ -52,6 +52,7 @@ export const InventarioGrid = ({ inventarios }: Props) => {
                 <TableHead>Nombre del Producto</TableHead>
                 <TableHead>Concepto</TableHead>
                 <TableHead>Cantidad</TableHead>
+                <TableHead>Proveedor</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -62,6 +63,7 @@ export const InventarioGrid = ({ inventarios }: Props) => {
                   </TableCell>
                   <TableCell>{inventario.concepto}</TableCell>
                   <TableCell>{inventario.cantidad}</TableCell>
+                  <TableCell>{inventario.proovedor?.name}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
