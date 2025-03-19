@@ -62,4 +62,5 @@ export {
 export {
   getInventarioAction,
   createInventarioAction,
+  changeStatusInventario,
 } from "./inventario/inventario-gql";

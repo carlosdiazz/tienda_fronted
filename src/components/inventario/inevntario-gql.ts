@@ -4,8 +4,8 @@ import { entityProductoGQL } from "../productos";
 import { entityProveedorGQL } from "../proveedores";
 
 export const AllIventarioGQL = gql`
-  query AllInventarios($offset: Int, $limit: Int, $activo: Boolean, $isIngreso: Boolean) {
-    allInventarios(offset: $offset, limit: $limit, activo: $activo, is_ingreso: $isIngreso) {
+  query AllInventarios($offset: Int, $limit: Int, $activo: Boolean, $isIngreso: Boolean, $idProovedor: Int, $isCredito: Boolean) {
+    allInventarios(offset: $offset, limit: $limit, activo: $activo, is_ingreso: $isIngreso, id_proovedor: $idProovedor, is_credito: $isCredito) {
       ${entityInventarioGQL}
       producto{
         ${entityProductoGQL}
@@ -23,4 +23,12 @@ export const createInventarioGQL = gql`
       ${entityInventarioGQL}
   }
 }
+`;
+
+export const changeStatusInventarioGQL = gql`
+  mutation Mutation($changeStatusInventarioId: Int!) {
+    changeStatusInventario(id: $changeStatusInventarioId) {
+      ${entityInventarioGQL}
+    }
+  }
 `;

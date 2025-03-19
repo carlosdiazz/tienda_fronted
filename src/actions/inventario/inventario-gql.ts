@@ -2,6 +2,7 @@
 
 import {
   AllIventarioGQL,
+  changeStatusInventarioGQL,
   createInventarioGQL,
   GetInventarioResponse,
   InventarioFormInterface,
@@ -12,7 +13,9 @@ import { getGraphQLErrorMessage, makeClientGraphql } from "@/lib";
 
 export const getInventarioAction = async (
   limit: number,
-  is_ingreso: boolean | null
+  is_ingreso: boolean | null,
+  is_credito: boolean | null,
+  id_proovedor: number | null
 ): Promise<InventarioInterface[]> => {
   //console.info("getInventarioAction");
   try {
@@ -24,6 +27,8 @@ export const getInventarioAction = async (
       variables: {
         limit: limit,
         isIngreso: is_ingreso,
+        idProovedor: id_proovedor,
+        isCredito: is_credito,
       },
     });
 
@@ -65,6 +70,33 @@ export const createInventarioAction = async (
     return {
       error: true,
       message: `Error creando Inventario: ${message}`,
+    };
+  }
+};
+
+export const changeStatusInventario = async (
+  id: number
+): Promise<ResponsePropio> => {
+  try {
+    const peti = await makeClientGraphql();
+    await peti.mutate({
+      mutation: changeStatusInventarioGQL,
+      fetchPolicy: "no-cache",
+      variables: {
+        changeStatusInventarioId: id,
+      },
+    });
+
+    return {
+      error: false,
+      message: `Ok!`,
+    };
+  } catch (e) {
+    console.error(`Error => ${e}`);
+    const message = getGraphQLErrorMessage(e);
+    return {
+      error: true,
+      message: `Error: ${message}`,
     };
   }
 };
