@@ -51,14 +51,14 @@ export default function InventarioPage() {
             {isFavorite ? <TrashIcon /> : <Star />}
             </Button>
             <h1 className="text-lg font-semibold md:text-2xl mb-2">
-              Inventarios
+              Almancen
             </h1>
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.INVENTARIO_CREATE}>
               <Link href={`${AppRouter.adminInventario}/0`}>
-                <Button>+</Button>
+                <Button>Registrar Nueva Mercancia (+)</Button>
               </Link>
             </PermisoClient>
 

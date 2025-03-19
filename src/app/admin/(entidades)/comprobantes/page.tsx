@@ -68,14 +68,14 @@ export default function ComprobantePage() {
             {isFavorite ? <TrashIcon /> : <Star />}
             </Button>
             <h1 className="text-lg font-semibold md:text-2xl mb-2">
-              Comprobante
+              Recibos
             </h1>
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
             <PermisoClient permiso={PermisoAccion.COMPROBANTE_CREATE}>
               <Link href={`${AppRouter.adminComprobante}/0`}>
-                <Button>+</Button>
+                <Button>Regsitrar Nuevo Recibo +</Button>
               </Link>
             </PermisoClient>
 

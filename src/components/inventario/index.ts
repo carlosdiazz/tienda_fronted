@@ -6,3 +6,4 @@ export * from "./inventario.mapper";
 export * from "./InventarioForm";
 export * from "./InventarioGrid";
 export * from "./LoadingForm";
+export * from "./columns-inventario";

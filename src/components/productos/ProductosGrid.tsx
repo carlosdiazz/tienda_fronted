@@ -93,7 +93,7 @@ export const ProductosGrid = ({ productos }: Props) => {
                   <TableCell>{product.stock}</TableCell>
                   <TableCell>${product.price}</TableCell>
                   <TableCell>
-                    <Badge>{product.is_service ? "SI" : "NO"}</Badge>
+                    <Badge variant={product.is_service ? "default":"secondary"} >{product.is_service ? "SI" : "NO"}</Badge>
                   </TableCell>
                   <TableCell className="flex space-x-2">
                     <PermisoClient permiso={PermisoAccion.PRODUCTOS_UPDATE}>

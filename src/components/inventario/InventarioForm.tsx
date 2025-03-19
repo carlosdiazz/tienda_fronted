@@ -28,6 +28,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Switch,
   Textarea,
 } from "../ui";
 import { ProductoInterface } from "../productos";
@@ -57,6 +58,7 @@ export const InventarioForm = ({ inventario, productos, proveedor }: Props) => {
       id_producto: 0,
       id_proveedor: 0,
       is_ingreso: true,
+      is_credito:inventario.is_credito
     },
   });
 
@@ -72,6 +74,7 @@ export const InventarioForm = ({ inventario, productos, proveedor }: Props) => {
       is_ingreso: true,
       id_producto: idProducto,
       id_proveedor: idProveedor,
+      is_credito: data.is_credito,
     };
     const resp = await createInventarioAction(newInventario);
     if (resp.error) {
@@ -89,7 +92,7 @@ export const InventarioForm = ({ inventario, productos, proveedor }: Props) => {
     <div>
       <div>
         <h1 className="py-3 text-lg font-semibold md:text-2xl mb-2">
-          Crear Inventario
+          Regsitrar Nueva Mercancia
         </h1>
       </div>
 
@@ -199,12 +202,31 @@ export const InventarioForm = ({ inventario, productos, proveedor }: Props) => {
                 </FormItem>
               )}
             />
+
+            {/*Credito*/}
+            <FormField
+              control={form.control}
+              name="is_credito"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="inline-flex items-center space-x-4">
+                      <FormLabel>Es Credito?</FormLabel>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
 
           <div className="mt-10">
             <PermisoClient permiso={PermisoAccion.INVENTARIO_CREATE}>
               <Button type="submit" disabled={loading}>
-                Crear Inventario
+                Guardar
               </Button>
             </PermisoClient>
           </div>

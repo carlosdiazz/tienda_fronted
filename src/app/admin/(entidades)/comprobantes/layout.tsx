@@ -6,8 +6,8 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Comprobante",
-  description: "Pagina para crear nuevos Comprobante",
+  title: "Recibos",
+  description: "Pagina para crear nuevos Recibos",
 };
 
 export default async function ComprobanteLayout({

@@ -17,3 +17,8 @@ export * from "./switch";
 export * from "./textarea";
 export * from "./input-otp";
 export * from "./table";
+export * from "./separator";
+export * from "./sidebar";
+export * from "./tooltip";
+export * from "./avatar";
+export * from "./breadcrumb";

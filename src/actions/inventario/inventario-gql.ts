@@ -41,7 +41,7 @@ export const createInventarioAction = async (
   //console.info("createInventarioAction");
   try {
     const peti = await makeClientGraphql();
-    const { data } = await peti.mutate({
+    await peti.mutate({
       mutation: createInventarioGQL,
       fetchPolicy: "no-cache",
       variables: {
@@ -50,11 +50,10 @@ export const createInventarioAction = async (
           cantidad: inventarioForm.cantidad,
           id_producto: inventarioForm.id_producto,
           id_proveedor: inventarioForm.id_proveedor,
+          is_credito: inventarioForm.is_credito,
         },
       },
     });
-
-    //const new_Inventario = InventarioMapper(data["createInventario"]);
 
     return {
       error: false,

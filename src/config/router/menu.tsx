@@ -16,14 +16,7 @@ import {
 import { PermisoAccion } from "../constants";
 
 
-export const menuItemEntidades: MenuItemInterface[] = [
-  {
-    Path: AppRouter.adminHome,
-    Title: "Home",
-    Icon: <Home />,
-    //TODO
-    permiso_view: PermisoAccion.ROLE_VIEW
-  },
+export const menuAdmin: MenuItemInterface[] = [
   {
     Path: AppRouter.adminRoles,
     Title: "Roles",
@@ -42,18 +35,19 @@ export const menuItemEntidades: MenuItemInterface[] = [
     Icon: <Armchair />,
     permiso_view: PermisoAccion.EMPRESA_VIEW
   },
+
+]
+
+export const menuHome: MenuItemInterface[] = [
   {
-    Path: AppRouter.adminProductos,
-    Title: "Productos",
-    Icon: <ChartColumn />,
-    permiso_view: PermisoAccion.PRODUCTOS_VIEW
+    Path: AppRouter.adminHome,
+    Title: "Favoritos",
+    Icon: <Home />,
+    permiso_view: PermisoAccion.ROLE_VIEW
   },
-  {
-    Path: AppRouter.adminProveedores,
-    Title: "Proveedores",
-    Icon: <Copy />,
-    permiso_view: PermisoAccion.PROVEEDOR_VIEW
-  },
+]
+
+export const menuCuentasPorCobrar: MenuItemInterface[] = [
   {
     Path: AppRouter.adminClientes,
     Title: "Clientes",
@@ -68,24 +62,39 @@ export const menuItemEntidades: MenuItemInterface[] = [
   },
   {
     Path: AppRouter.adminComprobante,
-    Title: "Comprobantes",
+    Title: "Registrar Recibos",
     Icon: <MedalIcon />,
     permiso_view: PermisoAccion.COMPROBANTE_VIEW
   },
+]
 
-];
-
-//TODO Cambiar Roles
-export const menuItemProcesos: MenuItemInterface[] = [
+export const menuVentas: MenuItemInterface[] = [
   {
     Path: AppRouter.adminVentas,
     Title: "Ventas",
     Icon: <GalleryHorizontal />,
     permiso_view: PermisoAccion.FACTURA_CREATE
   },
+]
+
+export const menuEntradaAlmacen: MenuItemInterface[] = [
+  {
+    Path: AppRouter.adminProveedores,
+    Title: "Proveedores",
+    Icon: <Copy />,
+    permiso_view: PermisoAccion.PROVEEDOR_VIEW
+  },
+
+  {
+    Path: AppRouter.adminProductos,
+    Title: "Productos",
+    Icon: <ChartColumn />,
+    permiso_view: PermisoAccion.PRODUCTOS_VIEW
+  },
+
   {
     Path: AppRouter.adminInventario,
-    Title: "Inventario",
+    Title: "Entrada de Almacen",
     Icon: <Bell />,
     permiso_view: PermisoAccion.INVENTARIO_CREATE
   },

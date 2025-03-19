@@ -9,6 +9,7 @@ export const InventarioMapper = (data: any): InventarioInterface => {
     cantidad: validateProperty<number>(data, "cantidad", "number"),
     is_ingreso: validateProperty<boolean>(data, "is_ingreso", "boolean"),
     concepto: validateProperty<string>(data, "concepto", "string"),
+    is_credito: validateProperty<boolean>(data, "is_credito", "boolean"),
     producto: data["producto"] ? ProductoMapper(data["producto"]) : null,
     proovedor: data["proveedor"] ? ProveedorMapper(data["proveedor"]) : null,
   };

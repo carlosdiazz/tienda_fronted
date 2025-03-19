@@ -100,7 +100,10 @@ export default function FacturaPage() {
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
-            <Select onValueChange={handleSelectClienteChange}>
+            <Select
+              onValueChange={handleSelectClienteChange}
+              value={id_cliente?.toString()}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Clientes" />
               </SelectTrigger>
@@ -118,7 +121,10 @@ export default function FacturaPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Select onValueChange={handleSelectPaidChange}>
+            <Select
+              onValueChange={handleSelectPaidChange}
+              value={isPaid?.toString()}
+            >
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="Estado" />
               </SelectTrigger>
@@ -131,14 +137,17 @@ export default function FacturaPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Select onValueChange={handleSelectChange}>
+            <Select
+              onValueChange={handleSelectChange}
+              value={activo.toString()}
+            >
               <SelectTrigger className="w-[120px]">
-                <SelectValue placeholder="Pendientes" />
+                <SelectValue placeholder="Vigentes" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Pendientes</SelectLabel>
-                  <SelectItem value="true">Pendientes</SelectItem>
+                  <SelectItem value="true">Vigentes</SelectItem>
                   <SelectItem value="false">Anuladas</SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -146,7 +155,7 @@ export default function FacturaPage() {
 
             <PermisoClient permiso={PermisoAccion.FACTURA_CREATE}>
               <Link href={`${AppRouter.adminFactura}/0`}>
-                <Button>+</Button>
+                <Button>Registrar Nuevo Factura +</Button>
               </Link>
             </PermisoClient>
 

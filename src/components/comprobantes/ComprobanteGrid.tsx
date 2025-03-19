@@ -52,7 +52,7 @@ export const ComprobanteGrid = ({ Comprobantes }: Props) => {
     <div className="container">
       <Card>
         <CardHeader>
-          <CardTitle>Lista de Comprobantes</CardTitle>
+          <CardTitle>Ultimos Recibos</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

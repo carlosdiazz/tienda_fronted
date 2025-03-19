@@ -10,8 +10,6 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Label,
-  Switch,
   Table,
   TableBody,
   TableCell,

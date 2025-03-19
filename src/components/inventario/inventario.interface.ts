@@ -7,6 +7,7 @@ export interface InventarioInterface {
   cantidad: number;
   concepto: string;
   is_ingreso: boolean;
+  is_credito: boolean;
   producto: ProductoInterface | null;
   proovedor: ProveedorInterface | null;
 }
@@ -18,12 +19,14 @@ export interface InventarioFormInterface {
   is_ingreso: boolean;
   id_producto: number;
   id_proveedor: number;
+  is_credito: boolean;
 }
 
 export const inventarioFormSchema = z.object({
   id: z.number(),
   concepto: z.string().min(3),
   is_ingreso: z.boolean(),
+  is_credito: z.boolean(),
   cantidad: z.number(),
   id_producto: z.number(),
   id_proveedor: z.number(),
@@ -38,6 +41,7 @@ export const emptyInventario: InventarioInterface = {
   is_ingreso: true,
   producto: null,
   proovedor: null,
+  is_credito: false,
 };
 
 export const entityInventarioGQL = `
@@ -45,4 +49,5 @@ export const entityInventarioGQL = `
   concepto
   id
   is_ingreso
+  is_credito
 `;

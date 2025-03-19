@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Inter as FontSans } from "next/font/google";
+import {  Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-import { cn } from "@/lib";
 
 import { Providers } from "@/providers";
 
-const fontSans = FontSans({
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  variable: "--font-sans",
 });
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
 
 export const metadata: Metadata = {
   title: "MaxSerComp",
@@ -25,10 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div>
           <Providers>{children}</Providers>
