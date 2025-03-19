@@ -16,8 +16,6 @@ import { SortedIcon } from "../common/data-table";
 import { useState } from "react";
 import { changeStatusInventario } from "@/actions";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { AppRouter } from "@/config";
 
 export const columnsInevntario: ColumnDef<InventarioInterface>[] = [
   {
