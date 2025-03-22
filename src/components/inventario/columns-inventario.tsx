@@ -16,6 +16,7 @@ import { SortedIcon } from "../common/data-table";
 import { useState } from "react";
 import { changeStatusInventario } from "@/actions";
 import { toast } from "sonner";
+import { formatoMonedaRD } from "@/lib";
 
 export const columnsInevntario: ColumnDef<InventarioInterface>[] = [
   {
@@ -42,23 +43,23 @@ export const columnsInevntario: ColumnDef<InventarioInterface>[] = [
   },
 
   {
-    accessorKey: "proovedor",
+    accessorKey: "producto",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Proovedor
+          Proveedor
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const proovedor: ProveedorInterface | null = row.getValue("proovedor");
+      const producto: ProductoInterface | null = row.getValue("producto");
       return (
         <Badge variant={"secondary"}>
-          {proovedor ? proovedor.name : "Sin-Proovedor"}
+          {producto ? producto.proveedor?.name : "Sin-Proveedor"}
         </Badge>
       );
     },
@@ -95,6 +96,26 @@ export const columnsInevntario: ColumnDef<InventarioInterface>[] = [
     cell: ({ row }) => {
       const cantidad: number = row.getValue("cantidad");
       return <Badge variant={"secondary"}>{cantidad}</Badge>;
+    },
+  },
+
+  {
+    accessorKey: "total_a_pagar",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+
+    cell: ({ row }) => {
+      const total_a_pagar: number = row.getValue("total_a_pagar");
+      return <Badge variant={"secondary"}>{formatoMonedaRD(total_a_pagar)}</Badge>;
     },
   },
 

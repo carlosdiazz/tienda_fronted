@@ -14,8 +14,7 @@ import { getGraphQLErrorMessage, makeClientGraphql } from "@/lib";
 export const getInventarioAction = async (
   limit: number,
   is_ingreso: boolean | null,
-  is_credito: boolean | null,
-  id_proovedor: number | null
+  is_credito: boolean | null
 ): Promise<InventarioInterface[]> => {
   //console.info("getInventarioAction");
   try {
@@ -27,7 +26,6 @@ export const getInventarioAction = async (
       variables: {
         limit: limit,
         isIngreso: is_ingreso,
-        idProovedor: id_proovedor,
         isCredito: is_credito,
       },
     });
@@ -54,7 +52,6 @@ export const createInventarioAction = async (
           concepto: inventarioForm.concepto,
           cantidad: inventarioForm.cantidad,
           id_producto: inventarioForm.id_producto,
-          id_proveedor: inventarioForm.id_proveedor,
           is_credito: inventarioForm.is_credito,
         },
       },

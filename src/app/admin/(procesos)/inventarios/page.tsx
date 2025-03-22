@@ -16,7 +16,6 @@ import {
   SelectValue,
   useFavoritosStore,
   useInventarioStore,
-  useProveedorStore,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { UpdateIcon } from "@radix-ui/react-icons";
@@ -24,13 +23,11 @@ import { Star, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useProductosStore } from "../../../../components/productos/productos.store";
+
 
 export default function InventarioPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [id_proovedor, set_id_proovedor] = useState<number | undefined>(
-    undefined
-  );
+
   const [is_credito, set_is_credito] = useState<boolean | undefined>(undefined);
 
   const inventarios: InventarioInterface[] = useInventarioStore(
@@ -43,9 +40,6 @@ export default function InventarioPage() {
   const toggleFavorites = useFavoritosStore((state) => state.toggleFavorites);
   const isFavorite = useFavoritosStore((state) => state.isFavorite(permiso));
 
-  //PROVEDOR
-  const provedores = useProveedorStore((state) => state.proveedores);
-  const getProveedores = useProveedorStore((state) => state.getProveedores);
 
   const handleSelectCredito = (value: string) => {
     const is_credito =
@@ -53,25 +47,16 @@ export default function InventarioPage() {
     set_is_credito(is_credito);
   };
 
-  const handleSelectProovedor = (value: string) => {
-    const id_proovedor = value === "0" ? undefined : Number(value);
-    set_id_proovedor(id_proovedor);
-  };
-
   const onSubmit = async () => {
     setIsLoading(true);
-    await getInventario(10000, true, is_credito, id_proovedor);
+    await getInventario(10000, true, is_credito,);
     setIsLoading(false);
     toast.success("Inevntarios Actualizados");
   };
 
   useEffect(() => {
-    getProveedores(1000, true);
-  }, []);
-
-  useEffect(() => {
-    getInventario(1000, true, is_credito, id_proovedor);
-  }, [is_credito, id_proovedor]);
+    getInventario(1000, true, is_credito, );
+  }, [is_credito,]);
 
   return (
     <div>
@@ -102,27 +87,6 @@ export default function InventarioPage() {
               </SelectContent>
             </Select>
 
-            <Select
-              onValueChange={handleSelectProovedor}
-              value={id_proovedor?.toString()}
-            >
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Proovedor" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Proovedor</SelectLabel>
-                  <SelectItem value={`0`} key="0">
-                    Todos
-                  </SelectItem>
-                  {provedores.map((item) => (
-                    <SelectItem value={`${item.id}`} key={item.id}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
 
             <PermisoClient permiso={PermisoAccion.INVENTARIO_CREATE}>
               <Link href={`${AppRouter.adminInventario}/0`}>
