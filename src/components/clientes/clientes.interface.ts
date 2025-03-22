@@ -35,7 +35,7 @@ export const emptyCliente: ClienteInterface = {
   activo: true,
   telefono: "",
   documento: "",
-  tipo_documento: "",
+  tipo_documento: "cedula",
 };
 
 export const entityClienterGQL = `

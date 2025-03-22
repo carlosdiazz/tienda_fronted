@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
 import {
   Button,
   Collapsible,
@@ -38,16 +37,20 @@ export function NavMain({ Icon, IsActive, Items, Title }: Props) {
         >
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton tooltip={Title}>
-                {Icon}
-                <span>{ Title}</span>
-                <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+              <SidebarMenuButton
+                tooltip={Title}
+                className="w-full flex items-center"
+              >
+               <Button className="flex-1 text-left justify-start" variant={"secondary"}>{Title}</Button>
               </SidebarMenuButton>
             </CollapsibleTrigger>
             <CollapsibleContent>
               <SidebarMenuSub>
                 {Items.map((subItem) => (
-                  <PermisoClient key={subItem.Title} permiso={subItem.permiso_view}>
+                  <PermisoClient
+                    key={subItem.Title}
+                    permiso={subItem.permiso_view}
+                  >
                     <SidebarMenuSubItem key={subItem.Title}>
                       <SidebarMenuSubButton asChild>
                         <Link href={subItem.Path}>

@@ -1,4 +1,4 @@
-import { Button, PermisoClient, Switch } from "@/components";
+import { Badge, Button, EmpresaInterface, PermisoClient, Switch } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export type UsuariosColumns = {
   id: number,
-  name: string,
   email: string,
   nickname: string,
   activo:boolean
@@ -26,7 +25,7 @@ const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
 
 export const columnsUsuarios: ColumnDef<UsuariosColumns>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "empleado",
     header: ({ column }) => {
       return (
         <Button
@@ -37,6 +36,10 @@ export const columnsUsuarios: ColumnDef<UsuariosColumns>[] = [
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const empleado: EmpresaInterface|undefined = row.getValue("empleado");
+      return <span>{empleado ? empleado.name :"Sin-Nombre"}</span>;
     },
   },
   {

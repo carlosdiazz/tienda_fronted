@@ -168,7 +168,7 @@ export const ButtonChangeStatus = ({
       disabled={isLoading}
       onClick={onChange}
     >
-      Cambiar
+      Pagar Total
     </Button>
   );
 };

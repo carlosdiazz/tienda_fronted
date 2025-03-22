@@ -110,7 +110,6 @@ export const ClienteForm = ({ cliente }: Props) => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="cedula">Cédula</SelectItem>
-                        <SelectItem value="pasaporte">Pasaporte</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -127,7 +126,7 @@ export const ClienteForm = ({ cliente }: Props) => {
                 <FormItem>
                   <FormLabel>Documento</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Documento" {...field} />
+                    <Input placeholder="Cedula Ejemplo: 000-000000-0" {...field} />
                   </FormControl>
                   <FormDescription>Documento</FormDescription>
                   <FormMessage />

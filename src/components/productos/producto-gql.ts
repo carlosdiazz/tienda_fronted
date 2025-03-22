@@ -1,10 +1,14 @@
 import { gql } from "@apollo/client";
 import { entityProductoGQL } from "./producto.interface";
+import { entityProveedorGQL } from "../proveedores";
 
 export const allProductosGQL = gql`
   query AllProductos($offset: Int, $limit: Int, $activo: Boolean, $isService: Boolean) {
     allProductos(offset: $offset, limit: $limit, activo: $activo, is_service: $isService) {
       ${entityProductoGQL}
+      proveedor {
+        ${entityProveedorGQL}
+      }
     }
   }
 `;
@@ -13,6 +17,9 @@ export const findProductoGQL = gql`
   query FindProducto($findProductoId: Int!) {
     findProducto(id: $findProductoId) {
       ${entityProductoGQL}
+      proveedor {
+        ${entityProveedorGQL}
+      }
     }
   }
 `;

@@ -26,12 +26,18 @@ import {
   FormMessage,
   Input,
   Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Switch,
 } from "../ui";
 import { useRouter } from "next/navigation";
 import { AppRouter, PermisoAccion } from "@/config";
 import { useRoleStore } from "../role";
 import { PermisoClient } from "../common";
+import { useEmpresaStore } from "../empleados";
 
 interface Props {
   usuario: UsuarioInterface;
@@ -45,8 +51,12 @@ export const UsuarioForm = ({ usuario }: Props) => {
   const roles = useRoleStore((state) => state.roles);
   const getRoles = useRoleStore((state) => state.getRoles);
 
+  const empleados = useEmpresaStore((state) => state.empresas);
+  const getEmpresas = useEmpresaStore((state) => state.getEmpresas);
+
   useEffect(() => {
     getRoles(1000, true);
+    getEmpresas(10000, true);
   }, []);
 
   const router = useRouter();
@@ -54,12 +64,13 @@ export const UsuarioForm = ({ usuario }: Props) => {
   const form = useForm<UsuarioFormSchemaType>({
     resolver: zodResolver(usuarioFormSchema),
     defaultValues: {
-      name: usuario.name,
+
       email: usuario.email,
       id: usuario.id,
       nickname: usuario.nickname,
       activo: usuario.activo,
       password: undefined,
+      id_empleado: usuario.empleado?.id ?? 0,
       roles: usuario.role.map((item) => item.id),
     },
   });
@@ -88,17 +99,34 @@ export const UsuarioForm = ({ usuario }: Props) => {
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2  gap-8">
-            {/*Name */}
+            {/* Empleado */}
             <FormField
               control={form.control}
-              name="name"
+              name="id_empleado"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nombre</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nombre" {...field} />
-                  </FormControl>
-                  <FormDescription>Nombre del usuario</FormDescription>
+                  <FormLabel>Empleado</FormLabel>
+                  <Select
+                    onValueChange={(value) =>
+                      field.onChange(parseInt(value, 10))
+                    }
+                    defaultValue={`${field.value}`}
+                    //disabled={usuario.id === 0 ? false : true}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona el empleado" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {empleados.map((item) => (
+                        <SelectItem value={`${item.id}`} key={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Loteria seleccionada</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

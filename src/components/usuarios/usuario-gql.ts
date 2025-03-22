@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { entityUsuarioGQL } from "./usuario.interface";
 import { entityRoleGQL } from "../role";
+import { entityEmpresaGQL } from "../empleados";
 
 export const allUsuariosGQL = gql`
   query AllUser($limit: Int, $activo: Boolean) {
@@ -8,6 +9,9 @@ export const allUsuariosGQL = gql`
       ${entityUsuarioGQL}
       role {
         ${entityRoleGQL}
+      }
+      empleado {
+        ${entityEmpresaGQL}
       }
     }
   }
@@ -19,6 +23,9 @@ export const findUserGQL = gql`
       ${entityUsuarioGQL}
       role {
         ${entityRoleGQL}
+      }
+      empleado {
+        ${entityEmpresaGQL}
       }
     }
   }

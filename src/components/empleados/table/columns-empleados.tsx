@@ -50,7 +50,21 @@ export const columnsEmpleados: ColumnDef<EmpleadosColumns>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Descripcion
+          Cargo
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "cedula",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Cedula
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );

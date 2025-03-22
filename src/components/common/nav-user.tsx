@@ -44,12 +44,12 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">
-                  {data?.user?.name?.slice(0, 1).toUpperCase()}
+                  {data?.user?.nickname?.slice(0, 1).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {data?.user?.name}
+                  {data?.user?.nickname}
                 </span>
                 <span className="truncate text-xs">{data?.user?.email}</span>
               </div>
@@ -66,12 +66,12 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarFallback className="rounded-lg">
-                    {data?.user?.name?.slice(0, 1).toUpperCase()}
+                    {data?.user?.nickname?.slice(0, 1).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {data?.user?.name}
+                    {data?.user?.nickname}
                   </span>
                   <span className="truncate text-xs">{data?.user?.email}</span>
                 </div>

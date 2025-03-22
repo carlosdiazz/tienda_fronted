@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ProveedorInterface } from "../proveedores";
 
 export interface ProductoInterface {
   activo: boolean;
@@ -10,6 +11,8 @@ export interface ProductoInterface {
   stock: number;
   is_service: boolean;
   stock_minimo: number;
+  price_de_compra: number;
+  proveedor?: ProveedorInterface;
 }
 
 export interface ProductoFormInterface {
@@ -20,8 +23,10 @@ export interface ProductoFormInterface {
   name: string;
   price: number;
   stock: number;
+  price_de_compra: number;
   is_service: boolean;
   stock_minimo: number;
+  id_proveedor: number;
 }
 
 export const productoFormSchema = z.object({
@@ -34,6 +39,8 @@ export const productoFormSchema = z.object({
   stock: z.number(),
   is_service: z.boolean(),
   stock_minimo: z.number(),
+  id_proveedor: z.number(),
+  price_de_compra: z.number(),
 });
 
 export type ProductoFormSchemaType = z.infer<typeof productoFormSchema>;
@@ -48,6 +55,7 @@ export const emptyProducto: ProductoInterface = {
   stock: 0,
   is_service: false,
   stock_minimo: 0,
+  price_de_compra: 0,
 };
 
 export const entityProductoGQL = `
@@ -60,4 +68,5 @@ export const entityProductoGQL = `
   stock
   is_service
   stock_minimo
+  price_de_compra
 `;

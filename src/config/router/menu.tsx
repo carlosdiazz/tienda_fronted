@@ -24,17 +24,19 @@ export const menuAdmin: MenuItemInterface[] = [
     permiso_view: PermisoAccion.ROLE_VIEW
   },
   {
-    Path: AppRouter.adminUsuarios,
-    Title: "Usuarios",
-    Icon: <User2 />,
-    permiso_view: PermisoAccion.USER_VIEW
-  },
-  {
     Path: AppRouter.adminEmpleados,
     Title: "Empleados",
     Icon: <Armchair />,
     permiso_view: PermisoAccion.EMPRESA_VIEW
   },
+
+  {
+    Path: AppRouter.adminUsuarios,
+    Title: "Usuarios",
+    Icon: <User2 />,
+    permiso_view: PermisoAccion.USER_VIEW
+  },
+
   {
     Path: AppRouter.adminClientes,
     Title: "Clientes",

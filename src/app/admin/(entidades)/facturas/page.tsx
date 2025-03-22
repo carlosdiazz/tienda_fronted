@@ -133,7 +133,7 @@ export default function FacturaPage() {
                   <SelectLabel>Estado Factura</SelectLabel>
                   <SelectItem value="null">Todas</SelectItem>
                   <SelectItem value="true">Pagadas</SelectItem>
-                  <SelectItem value="false">Pendientes</SelectItem>
+                  <SelectItem value="false">Creditos</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -146,7 +146,6 @@ export default function FacturaPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Pendientes</SelectLabel>
                   <SelectItem value="true">Vigentes</SelectItem>
                   <SelectItem value="false">Anuladas</SelectItem>
                 </SelectGroup>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -18,6 +18,11 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Switch,
   Textarea,
 } from "../ui";
@@ -28,6 +33,7 @@ import {
   ProductoInterface,
 } from "./producto.interface";
 import { updateOrCreateProductoByIdAction } from "@/actions";
+import { useProveedorStore } from "../proveedores";
 
 interface Props {
   producto: ProductoInterface;
@@ -38,6 +44,13 @@ export const ProductoForm = ({ producto }: Props) => {
 
   const router = useRouter();
 
+  const proveedores = useProveedorStore((state) => state.proveedores);
+  const getProveedores = useProveedorStore((state) => state.getProveedores);
+
+  useEffect(() => {
+    getProveedores(10000, true);
+  }, []);
+
   const form = useForm<ProductoFormSchemaType>({
     resolver: zodResolver(productoFormSchema),
     defaultValues: {
@@ -47,9 +60,11 @@ export const ProductoForm = ({ producto }: Props) => {
       name: producto.name,
       codigo: producto.codigo,
       price: producto.price,
+      price_de_compra: producto.price_de_compra,
       stock: producto.stock,
       is_service: producto.is_service,
-      stock_minimo: producto.stock_minimo
+      stock_minimo: producto.stock_minimo,
+      id_proveedor: producto.proveedor?.id ?? 0,
     },
   });
   const { handleSubmit } = form;
@@ -75,6 +90,39 @@ export const ProductoForm = ({ producto }: Props) => {
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2  gap-8">
+            {/* Proveedor */}
+            <FormField
+              control={form.control}
+              name="id_proveedor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Proveedor</FormLabel>
+                  <Select
+                    onValueChange={(value) =>
+                      field.onChange(parseInt(value, 10))
+                    }
+                    defaultValue={`${field.value}`}
+                    disabled={producto.id === 0 ? false : true}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona el Proveedor" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {proveedores.map((item) => (
+                        <SelectItem value={`${item.id}`} key={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Loteria seleccionada</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/*Name */}
             <FormField
               control={form.control}
@@ -128,13 +176,13 @@ export const ProductoForm = ({ producto }: Props) => {
               )}
             />
 
-            {/* Precio */}
+            {/* Precio De Venta */}
             <FormField
               control={form.control}
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Precio</FormLabel>
+                  <FormLabel>Precio De Venta</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -144,7 +192,29 @@ export const ProductoForm = ({ producto }: Props) => {
                       }
                     />
                   </FormControl>
-                  <FormDescription>Precio del Producto</FormDescription>
+                  <FormDescription>Precio De Venta</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Precio De Compra*/}
+            <FormField
+              control={form.control}
+              name="price_de_compra"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Precio De Compra</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      }
+                    />
+                  </FormControl>
+                  <FormDescription>Precio De Compra</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

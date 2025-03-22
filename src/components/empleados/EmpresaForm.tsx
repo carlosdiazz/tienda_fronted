@@ -53,7 +53,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
       codigo: empresa.codigo,
       cedula: empresa.cedula,
       sueldo: empresa.sueldo,
-      fecha:empresa.fecha
+      fecha: empresa.fecha,
     },
   });
   const { handleSubmit } = form;
@@ -79,32 +79,6 @@ export const EmpresaForm = ({ empresa }: Props) => {
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2  gap-8">
-            {/*Fecha*/}
-            <FormField
-              control={form.control}
-              name="fecha"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Fecha de ingreso {`${field.value}`}</FormLabel>
-                  <FormControl>
-                    <Calendar
-                      disabled={empresa.id === 0 ? false : true}
-                      mode="single"
-                      selected={date}
-                      onSelect={(newDate) => {
-                        const fecha = newDate || new Date();
-                        setDate(fecha);
-                        const newFecha = convertirDateAString(fecha);
-                        field.onChange(newFecha);
-                      }}
-                      initialFocus
-                      toDate={new Date()}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
             {/*Name */}
             <FormField
               control={form.control}
@@ -164,11 +138,7 @@ export const EmpresaForm = ({ empresa }: Props) => {
                 <FormItem>
                   <FormLabel>CEDULA</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value, 10)}
-                    />
+                  <Input placeholder="Cedula Ejemplo: 000-000000-0" {...field} />
                   </FormControl>
                   <FormDescription>Cedula del empleado</FormDescription>
                   <FormMessage />
@@ -194,6 +164,32 @@ export const EmpresaForm = ({ empresa }: Props) => {
                   </FormControl>
                   <FormDescription>Sueldo del Empleado</FormDescription>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/*Fecha*/}
+            <FormField
+              control={form.control}
+              name="fecha"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fecha de ingreso {`${field.value}`}</FormLabel>
+                  <FormControl>
+                    <Calendar
+                      //disabled={empresa.id === 0 ? false : true}
+                      mode="single"
+                      selected={date}
+                      onSelect={(newDate) => {
+                        const fecha = newDate || new Date();
+                        setDate(fecha);
+                        const newFecha = convertirDateAString(fecha);
+                        field.onChange(newFecha);
+                      }}
+                      initialFocus
+                      toDate={new Date()}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />

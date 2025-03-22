@@ -20,7 +20,7 @@ export default async function ProductoEdit(props: { params: Promise<Params> }) {
   }
 
   const producto: ProductoInterface = isProducto;
-  console.log("DONDE ESTOY");
+
   return (
     <div className="w-full mx-auto">
       <ProductoForm producto={producto} />

@@ -7,37 +7,63 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 
 //Propio
-import { Badge, Button,  ProductoInterface,  Switch, TableCell, useProductosStore } from "@/components";
+import {
+  Badge,
+  Button,
+  ProductoInterface,
+  ProveedorInterface,
+  Switch,
+  TableCell,
+  useProductosStore,
+} from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 
 import { PermisoClient } from "../common";
 
 import { SortedIcon } from "../common/data-table";
 import { formatoMonedaRD } from "@/lib";
-import { removeProductoAction } from '../../actions/productos/productos-action';
+import { removeProductoAction } from "../../actions/productos/productos-action";
 
 export const columnsProductos: ColumnDef<ProductoInterface>[] = [
-    {
-      accessorKey: "codigo",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Codigo
-            <SortedIcon isSorted={column.getIsSorted()} />
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const codigo: number = row.getValue(
-          "codigo"
-        );
-        return <Badge variant={"secondary"}>{codigo}</Badge>;
-      },
+  {
+    accessorKey: "codigo",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Codigo
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
     },
-  
+    cell: ({ row }) => {
+      const codigo: number = row.getValue("codigo");
+      return <Badge variant={"secondary"}>{codigo}</Badge>;
+    },
+  },
+
+  {
+    accessorKey: "proveedor",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Proveedor
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const proveedor: ProveedorInterface | undefined =
+        row.getValue("proveedor");
+      return <Badge variant={"secondary"}>{proveedor?.name ?? ""}</Badge>;
+    },
+  },
+
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -82,9 +108,7 @@ export const columnsProductos: ColumnDef<ProductoInterface>[] = [
       );
     },
     cell: ({ row }) => {
-      const stock: number = row.getValue(
-        "stock"
-      );
+      const stock: number = row.getValue("stock");
       return <Badge variant={"secondary"}>{stock}</Badge>;
     },
   },
@@ -103,11 +127,9 @@ export const columnsProductos: ColumnDef<ProductoInterface>[] = [
       );
     },
     cell: ({ row }) => {
-      const price: number = row.getValue(
-        "price"
-      );
-      const new_price=formatoMonedaRD(price)
-      
+      const price: number = row.getValue("price");
+      const new_price = formatoMonedaRD(price);
+
       return <Badge variant={"secondary"}>{new_price}</Badge>;
     },
   },
@@ -120,7 +142,7 @@ export const columnsProductos: ColumnDef<ProductoInterface>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Servicio
+          Servicio
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
@@ -128,7 +150,11 @@ export const columnsProductos: ColumnDef<ProductoInterface>[] = [
     cell: ({ row }) => {
       const is_service: boolean = row.getValue("is_service");
 
-      return <Badge variant={is_service?"success":"default"}>{is_service?"Si":"No"}</Badge>;
+      return (
+        <Badge variant={is_service ? "success" : "default"}>
+          {is_service ? "Si" : "No"}
+        </Badge>
+      );
     },
   },
 

@@ -2,7 +2,6 @@ export interface UserInterface {
   id: number;
   email: string;
   nickname: string;
-  name: string;
   activo: string;
   token: string;
   permisos: string[];
@@ -53,10 +52,6 @@ export const UserMapper = (data: any): UserInterface => {
     throw new Error("Invalid property nickname");
   }
 
-  if (typeof data.name !== "string") {
-    throw new Error("Invalid property name");
-  }
-
   if (typeof data.activo !== "boolean") {
     throw new Error("Invalid property activo");
   }
@@ -76,7 +71,6 @@ export const UserMapper = (data: any): UserInterface => {
     id: data.id,
     email: data.email,
     nickname: data.nickname,
-    name: data.name,
     activo: data.activo,
     permisos: arreglo,
   };

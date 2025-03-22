@@ -76,7 +76,6 @@ const updateUsuarioAction = async (
           activo: usuario.activo,
           email: usuario.email,
           id: usuario.id,
-          name: usuario.name,
           nickname: usuario.nickname,
           role: usuario.roles,
           password: usuario.password,
@@ -112,10 +111,10 @@ const createUsuarioAction = async (
         signupInput: {
           activo: usuario.activo,
           email: usuario.email,
-          name: usuario.name,
           nickname: usuario.nickname,
           password: usuario.password,
           role: usuario.roles,
+          id_empleado: usuario.id_empleado,
         },
       },
     });
