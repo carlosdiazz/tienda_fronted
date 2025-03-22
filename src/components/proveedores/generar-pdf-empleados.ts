@@ -1,8 +1,11 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { UsuarioInterface } from "./usuario.interface";
 
-export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
+import { ProveedorInterface } from "./proveedor.interface";
+
+export const generateProvedoresReportPDF = (
+  provedores: ProveedorInterface[]
+) => {
   const doc = new jsPDF({
     format: "a4",
     unit: "mm",
@@ -17,26 +20,28 @@ export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
   doc.rect(0, 0, 210, 20, "F");
   doc.setTextColor("#FFFFFF");
   doc.setFontSize(16);
-  doc.text("Reporte de Usuarios - MaxSerComp", 10, 12);
+  doc.text("Reporte de Proveedores - MaxSerComp", 10, 12);
   doc.setFontSize(10);
   doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 10, 17);
 
   // TABLA DE USUARIOS
   autoTable(doc, {
     startY: 30,
-    head: [["Nombre", "Email", "Nickname"]],
-    body: usuarios.map((usuario) => [
-      usuario.name,
-      usuario.email,
-      usuario.nickname,
+    head: [["Nombre", "Descripcion", "Direccion", "Telefono"]],
+    body: provedores.map((provedor) => [
+      provedor.name,
+      provedor.descripcion,
+      provedor.direccion,
+      provedor.telefono,
     ]),
     theme: "grid",
     headStyles: { fillColor: [74, 144, 226] }, // Azul
     styles: { fontSize: 10, textColor: textColor, cellPadding: 3 },
     columnStyles: {
-      0: { cellWidth: 70 }, // Nombre
-      1: { cellWidth: 70 }, // Email
-      2: { cellWidth: 50 }, // Nickname
+      0: { cellWidth: 45 },
+      1: { cellWidth: 45 },
+      2: { cellWidth: 45 },
+      3: { cellWidth: 45 },
     },
   });
 
@@ -52,5 +57,5 @@ export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
   }
 
   // Guardar el PDF
-  doc.save("reporte_usuarios.pdf");
+  doc.save("reporte_proveedores.pdf");
 };

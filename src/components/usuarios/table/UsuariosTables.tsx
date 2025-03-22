@@ -22,7 +22,7 @@ export const UsuariosTables = ({ usuarios }: Props) => {
         className="mt-4 self-end"
         onClick={handlePrint}
       >
-        Imprimir Reporte
+        Imprimir Reporte de Usuarios
       </Button>
       <DataTableUsuarios columns={columnsUsuarios} data={usuarios} />
     </div>

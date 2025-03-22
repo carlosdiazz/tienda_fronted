@@ -1,8 +1,9 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { UsuarioInterface } from "./usuario.interface";
+import { EmpresaInterface } from "./empresa.interface";
+import { formatoMonedaRD } from "@/lib";
 
-export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
+export const generateEmpleadosReportPDF = (empleados: EmpresaInterface[]) => {
   const doc = new jsPDF({
     format: "a4",
     unit: "mm",
@@ -17,26 +18,32 @@ export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
   doc.rect(0, 0, 210, 20, "F");
   doc.setTextColor("#FFFFFF");
   doc.setFontSize(16);
-  doc.text("Reporte de Usuarios - MaxSerComp", 10, 12);
+  doc.text("Reporte de Empleados - MaxSerComp", 10, 12);
   doc.setFontSize(10);
   doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 10, 17);
 
   // TABLA DE USUARIOS
   autoTable(doc, {
     startY: 30,
-    head: [["Nombre", "Email", "Nickname"]],
-    body: usuarios.map((usuario) => [
-      usuario.name,
-      usuario.email,
-      usuario.nickname,
+    head: [["Nombre", "Descripcion", "Codigo", "Cedula", "Sueldo", "Fecha"]],
+    body: empleados.map((empleado) => [
+      empleado.name,
+      empleado.descripcion,
+      empleado.codigo,
+      empleado.cedula,
+      formatoMonedaRD(empleado.sueldo),
+      empleado.fecha.slice(0, 10),
     ]),
     theme: "grid",
     headStyles: { fillColor: [74, 144, 226] }, // Azul
     styles: { fontSize: 10, textColor: textColor, cellPadding: 3 },
     columnStyles: {
-      0: { cellWidth: 70 }, // Nombre
-      1: { cellWidth: 70 }, // Email
-      2: { cellWidth: 50 }, // Nickname
+      0: { cellWidth: 30 }, // Nombre
+      1: { cellWidth: 30 }, // Email
+      2: { cellWidth: 20 }, // Nickname
+      3: { cellWidth: 30 }, // Nickname
+      4: { cellWidth: 40 }, // Nickname
+      5: { cellWidth: 30 }, // Nickname
     },
   });
 
@@ -52,5 +59,5 @@ export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
   }
 
   // Guardar el PDF
-  doc.save("reporte_usuarios.pdf");
+  doc.save("reporte_empleados.pdf");
 };
