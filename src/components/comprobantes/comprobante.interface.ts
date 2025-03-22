@@ -4,7 +4,6 @@ export interface ComprobanteInterface {
   id: number;
   concepto: string;
   monto_pagado: number;
-
   referencia_pago: string;
   metodo_pago: string;
 }
@@ -14,7 +13,6 @@ export interface ComprobanteFormInterface {
   concepto: string;
   monto_pagado: number;
   id_facura: number;
-
   referencia_pago: string;
   metodo_pago: string;
 }

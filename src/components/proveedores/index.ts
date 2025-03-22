@@ -5,3 +5,4 @@ export * from "./proveedor.store";
 export * from "./ProveedorAdminCard";
 export * from "./ProveedorGrid";
 export * from "./ProveedorForm";
+export * from "./columns-proveedores";

@@ -17,9 +17,10 @@ import {
   TableHeader,
   TableRow,
 } from "../ui";
-import { generatePDF } from "./generar-pdf";
+import { generateFacturaPDF } from "./generar-pdf";
 import { Import } from "lucide-react";
 import { FacturaDetalle } from "./FacturaDetalle";
+import { formatoMonedaRD } from "@/lib";
 
 interface Props {
   factura: FacturaInterface;
@@ -27,7 +28,7 @@ interface Props {
 
 export const FacturaForm = ({ factura }: Props) => {
   const handlePrint = () => {
-    generatePDF(factura);
+    generateFacturaPDF(factura);
   };
 
   return (
@@ -35,7 +36,7 @@ export const FacturaForm = ({ factura }: Props) => {
       <div className="flex gap-4">
         <h1 className="text-2xl font-bold mb-4">Detalles de la Factura</h1>
         <Button onClick={handlePrint}>
-          {" "}
+          Imprimir Factura
           <Import></Import>
         </Button>
       </div>
@@ -66,10 +67,10 @@ export const FacturaForm = ({ factura }: Props) => {
                       {product.cantidad}
                     </TableCell>
                     <TableCell className="text-right">
-                      ${product.precio.toFixed(2)}
+                     {formatoMonedaRD(product.precio)}
                     </TableCell>
                     <TableCell className="text-right">
-                      ${product.total.toFixed(2)}
+                    {formatoMonedaRD(product.total)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -98,7 +99,7 @@ export const FacturaForm = ({ factura }: Props) => {
                   <TableRow key={index}>
                     <TableCell>{comprobante.concepto}</TableCell>
                     <TableCell className="text-right">
-                      ${comprobante.monto_pagado.toFixed(2)}
+                      {formatoMonedaRD(comprobante.monto_pagado)}
                     </TableCell>
                     <TableCell className="text-right">
                       {comprobante.metodo_pago}

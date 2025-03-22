@@ -35,6 +35,18 @@ export const menuAdmin: MenuItemInterface[] = [
     Icon: <Armchair />,
     permiso_view: PermisoAccion.EMPRESA_VIEW
   },
+  {
+    Path: AppRouter.adminClientes,
+    Title: "Clientes",
+    Icon: <User />,
+    permiso_view: PermisoAccion.CLIENTE_VIEW
+  },
+  {
+    Path: AppRouter.adminProveedores,
+    Title: "Proveedores",
+    Icon: <Copy />,
+    permiso_view: PermisoAccion.PROVEEDOR_VIEW
+  },
 
 ]
 
@@ -48,12 +60,6 @@ export const menuHome: MenuItemInterface[] = [
 ]
 
 export const menuCuentasPorCobrar: MenuItemInterface[] = [
-  {
-    Path: AppRouter.adminClientes,
-    Title: "Clientes",
-    Icon: <User />,
-    permiso_view: PermisoAccion.CLIENTE_VIEW
-  },
   {
     Path: AppRouter.adminFactura,
     Title: "Facturas",
@@ -78,12 +84,6 @@ export const menuVentas: MenuItemInterface[] = [
 ]
 
 export const menuEntradaAlmacen: MenuItemInterface[] = [
-  {
-    Path: AppRouter.adminProveedores,
-    Title: "Proveedores",
-    Icon: <Copy />,
-    permiso_view: PermisoAccion.PROVEEDOR_VIEW
-  },
 
   {
     Path: AppRouter.adminProductos,
@@ -91,7 +91,6 @@ export const menuEntradaAlmacen: MenuItemInterface[] = [
     Icon: <ChartColumn />,
     permiso_view: PermisoAccion.PRODUCTOS_VIEW
   },
-
   {
     Path: AppRouter.adminInventario,
     Title: "Entrada de Almacen",

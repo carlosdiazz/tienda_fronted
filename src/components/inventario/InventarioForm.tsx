@@ -92,7 +92,7 @@ export const InventarioForm = ({ inventario, productos, proveedor }: Props) => {
     <div>
       <div>
         <h1 className="py-3 text-lg font-semibold md:text-2xl mb-2">
-          Regsitrar Nueva Mercancia
+          Registrar Nueva Mercancia
         </h1>
       </div>
 

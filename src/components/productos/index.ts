@@ -5,3 +5,4 @@ export * from "./productos.store";
 export * from "./ProductosAdminCard";
 export * from "./ProductosGrid";
 export * from "./ProductoForm";
+export * from "./productos-columns";

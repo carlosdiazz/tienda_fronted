@@ -7,3 +7,4 @@ export * from "./sleep";
 export * from "./utils";
 export * from "./validateProperty";
 export * from "./convertirDateAString";
+export * from "./converirFormatDinero";

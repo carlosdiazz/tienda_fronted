@@ -30,7 +30,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <NavMain
             Icon={<Gamepad2 />}
             IsActive={false}
-            Title="Adminsitracion"
+            Title="Administracion"
             Items={menuAdmin}
           />
         </PermisoClient>

@@ -10,14 +10,14 @@ import { ClienteInterface, emptyCliente, entityClienterGQL } from "../clientes";
 export interface FacturaInterface {
   id: number;
   activo: boolean;
-  total: number;
-  codigo_factura: number;
-  is_credito: boolean;
-  total_pagado: number;
-  faltante: number;
+  total: number; //4
+  codigo_factura: number; //1
+  is_credito: boolean; //7
+  total_pagado: number; //5
+  faltante: number; //6
   referencia_pago: string;
-  metodo_pago: string;
-  cliente: ClienteInterface;
+  metodo_pago: string; //3
+  cliente: ClienteInterface; //2
   factura_detalle: FacturaDetalleInterface[];
   comprobante: ComprobanteInterface[];
 }

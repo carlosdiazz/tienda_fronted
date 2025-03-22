@@ -2,6 +2,7 @@
 
 import { ChevronRight } from "lucide-react";
 import {
+  Button,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -39,7 +40,7 @@ export function NavMain({ Icon, IsActive, Items, Title }: Props) {
             <CollapsibleTrigger asChild>
               <SidebarMenuButton tooltip={Title}>
                 {Icon}
-                <span>{Title}</span>
+                <span>{ Title}</span>
                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </SidebarMenuButton>
             </CollapsibleTrigger>

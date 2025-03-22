@@ -7,3 +7,4 @@ export * from "./FacturaAdminCard";
 export * from "./FacturaGrid";
 export * from "./FacturaForm";
 export * from "./FacturaDetalle";
+export * from "./columns-facturas";

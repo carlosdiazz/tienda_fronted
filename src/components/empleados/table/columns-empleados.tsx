@@ -1,5 +1,6 @@
 import { Badge, Button, PermisoClient, Switch } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
+import { formatoMonedaRD } from "@/lib";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowUpDown, Eye } from "lucide-react";
@@ -70,7 +71,8 @@ export const columnsEmpleados: ColumnDef<EmpleadosColumns>[] = [
     },
     cell: ({ row }) => {
       const sueldo: number = row.getValue("sueldo");
-      return <Badge variant={"secondary"}>${sueldo}.00 </Badge>;
+      const new_monto=formatoMonedaRD(sueldo)
+      return <Badge variant={"secondary"}>{new_monto}</Badge>;
     },
   },
   {

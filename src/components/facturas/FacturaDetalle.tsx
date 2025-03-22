@@ -1,5 +1,6 @@
 "use client";
 
+import { formatoMonedaRD } from "@/lib";
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "../ui";
 import {  FacturaInterface } from "./factura.interface";
 
@@ -30,14 +31,14 @@ export const FacturaDetalle = ({factura}:Props) => {
           <strong>Referencia de Pago:</strong> {factura.referencia_pago}
         </p>
         <p>
-          <strong>Total:</strong> ${factura.total.toFixed(2)}
+          <strong>Total:</strong> {formatoMonedaRD(factura.total)}
         </p>
         <p>
           <strong>Total Pagado:</strong> $
-          {factura.total_pagado.toFixed(2)}
+          {formatoMonedaRD(factura.total_pagado)}
         </p>
         <p>
-          <strong>Faltante:</strong> ${factura.faltante.toFixed(2)}
+          <strong>Faltante:</strong> {formatoMonedaRD(factura.faltante)}
         </p>
         <p>
           <strong>Tipo:</strong>{" "}
