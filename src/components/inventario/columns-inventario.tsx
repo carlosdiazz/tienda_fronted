@@ -41,6 +41,28 @@ export const columnsInevntario: ColumnDef<InventarioInterface>[] = [
       );
     },
   },
+  {
+    accessorKey: "producto",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Precio de Compra
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const producto: ProductoInterface | null = row.getValue("producto");
+      return (
+        <Badge variant={"secondary"}>
+          {producto ? formatoMonedaRD(producto.price_de_compra) : "Sin-Producto"}
+        </Badge>
+      );
+    },
+  },
 
   {
     accessorKey: "producto",

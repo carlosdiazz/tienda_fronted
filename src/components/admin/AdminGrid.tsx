@@ -16,7 +16,7 @@ import { UsuarioAdminCard } from "../usuarios";
 import { PermisoAccion } from "@/config";
 import { useFavoritosStore } from "./admin-favorites.store";
 import { EmpresaAdminCard } from "../empleados";
-import { ProductosAdminCard } from "../productos";
+import { ProductosAdminCard, ProductosPocoStockAdminCard } from "../productos";
 import { ProveedorAdminCard } from "../proveedores";
 import { ClienteAdminCard } from "../clientes";
 import { FacturaAdminCard } from "../facturas";
@@ -28,6 +28,8 @@ export const AdminGrid = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <ProductosPocoStockAdminCard/>
+
       {isFavorite(PermisoAccion.USER_VIEW) && <UsuarioAdminCard />}
 
       {isFavorite(PermisoAccion.ROLE_VIEW) && <RoleAminCard />}

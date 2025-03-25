@@ -12,7 +12,7 @@ export const ProductosAdminCard = () => {
   const getProductos = useProductosStore((state) => state.getProductos);
 
   useEffect(() => {
-    getProductos(1000, true);
+    getProductos(1000, true,undefined, undefined, "");
   }, []);
 
   return (
@@ -21,6 +21,27 @@ export const ProductosAdminCard = () => {
         title="Productos"
         descripcion="Productos Creadas"
         total={productos.length}
+        href={AppRouter.adminProductos}
+        permiso={PermisoAccion.PRODUCTOS_CREATE}
+      />
+    </PermisoClient>
+  );
+};
+
+export const ProductosPocoStockAdminCard = () => {
+  const productos_stock_bajo = useProductosStore((state) => state.productos_stock_bajo);
+  const get_productos_stock_bajo = useProductosStore((state) => state.get_productos_stock_bajo);
+
+  useEffect(() => {
+    get_productos_stock_bajo();
+  }, []);
+
+  return (
+    <PermisoClient permiso={PermisoAccion.PRODUCTOS_VIEW}>
+      <AdminCard
+        title="Productos"
+        descripcion="Productos Con Poco Stock"
+        total={productos_stock_bajo.length}
         href={AppRouter.adminProductos}
         permiso={PermisoAccion.PRODUCTOS_CREATE}
       />

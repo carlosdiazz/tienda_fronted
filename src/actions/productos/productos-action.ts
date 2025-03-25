@@ -23,7 +23,8 @@ export const getProductosAction = async (
   limit: number,
   activo: boolean | null,
   is_service: boolean | null,
-  idProveedor: number | null
+  idProveedor: number | null,
+  isStockMinimo: boolean | null
 ): Promise<ProductoInterface[]> => {
   //console.info("getProductosAction");
   try {
@@ -37,6 +38,7 @@ export const getProductosAction = async (
         activo: activo,
         isService: is_service,
         idProveedor: idProveedor,
+        isStockMinimo: isStockMinimo,
       },
     });
 

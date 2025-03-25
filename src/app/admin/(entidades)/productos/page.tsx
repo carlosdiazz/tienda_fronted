@@ -27,6 +27,7 @@ import { toast } from "sonner";
 
 export default function ProductosPage() {
   const [activo, setActivo] = useState(true);
+  const [is_stock_minimo, set_is_stock_minimo] = useState<string>("todos");
   const [isLoading, setIsLoading] = useState(false);
   const [id_proveedor, set_id_proveedor] = useState<number | undefined>(
     undefined
@@ -37,6 +38,16 @@ export default function ProductosPage() {
       setActivo(true);
     } else {
       setActivo(false);
+    }
+  };
+
+  const handleSelectStockChange = (value: string) => {
+    if (value === "true") {
+      set_is_stock_minimo("true");
+    } else if (value === "false") {
+      set_is_stock_minimo("false");
+    } else {
+      set_is_stock_minimo("todos");
     }
   };
 
@@ -65,8 +76,8 @@ export default function ProductosPage() {
   }, []);
 
   useEffect(() => {
-    getProductos(1000, activo, undefined, id_proveedor);
-  }, [activo, id_proveedor]);
+    getProductos(1000, activo, undefined, id_proveedor, is_stock_minimo);
+  }, [activo, id_proveedor, is_stock_minimo]);
 
   const handleSelectClienteChange = (value: string) => {
     if (value === "0") {
@@ -91,6 +102,23 @@ export default function ProductosPage() {
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
+            <Select
+              onValueChange={handleSelectStockChange}
+              value={is_stock_minimo?.toString()}
+            >
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Stock" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Stock</SelectLabel>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  <SelectItem value="false">Normal</SelectItem>
+                  <SelectItem value="true">Bajo</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             <Select
               onValueChange={handleSelectClienteChange}
               value={id_proveedor?.toString()}
