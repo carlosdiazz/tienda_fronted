@@ -26,7 +26,7 @@ export const generateUsuariosReportPDF = (usuarios: UsuarioInterface[]) => {
     startY: 30,
     head: [["Nombre", "Email", "Nickname"]],
     body: usuarios.map((usuario) => [
-      usuario.name,
+      usuario.empleado?.name ?? "",
       usuario.email,
       usuario.nickname,
     ]),

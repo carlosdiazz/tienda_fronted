@@ -13,7 +13,6 @@ import {
   SelectValue,
   useFavoritosStore,
   useUsuariosStore,
-  UsuarioGrid,
   UsuarioInterface,
   UsuariosTables,
 } from "@/components";
