@@ -41,9 +41,10 @@ import {
 
 interface Props {
   comprobante: ComprobanteInterface;
+  factura: FacturaInterface;
 }
 
-export const ComprobanteForm = ({ comprobante }: Props) => {
+export const ComprobanteForm = ({ comprobante, factura }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -52,7 +53,7 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
   const getFacturas = useFacturaStore((state) => state.getFactura);
 
   const [facturaSelect, setFacturaSelect] =
-    useState<FacturaInterface>(emptyFactura);
+    useState<FacturaInterface>(factura);
 
   useEffect(() => {
     getFacturas(1000, false, null); //TODO
@@ -64,7 +65,7 @@ export const ComprobanteForm = ({ comprobante }: Props) => {
       concepto: comprobante.concepto,
       id: comprobante.id,
       monto_pagado: comprobante.monto_pagado,
-      id_facura: 0,
+      id_facura: factura.id,
       referencia_pago: comprobante.referencia_pago,
       metodo_pago: comprobante.metodo_pago,
     },

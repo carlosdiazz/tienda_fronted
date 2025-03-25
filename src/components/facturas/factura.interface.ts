@@ -6,6 +6,8 @@ import {
 import { entityProductoGQL } from "../productos";
 import { ComprobanteInterface, entityComprobanteGQL } from "../comprobantes";
 import { ClienteInterface, emptyCliente, entityClienterGQL } from "../clientes";
+import { UserInterface } from "../auth";
+import { emptyUsuario, entityUsuarioGQL, UsuarioInterface } from "../usuarios";
 
 export interface FacturaInterface {
   id: number;
@@ -18,6 +20,7 @@ export interface FacturaInterface {
   referencia_pago: string;
   metodo_pago: string; //3
   cliente: ClienteInterface; //2
+  user: UsuarioInterface;
   factura_detalle: FacturaDetalleInterface[];
   comprobante: ComprobanteInterface[];
 }
@@ -73,6 +76,7 @@ export const emptyFactura: FacturaInterface = {
   metodo_pago: "EFECTIVO",
   referencia_pago: "",
   cliente: emptyCliente,
+  user: emptyUsuario,
   factura_detalle: [],
   comprobante: [],
 };
@@ -112,6 +116,9 @@ export const entityRelacionesFacturaGQL = `
   }
   comprobante {
     ${entityComprobanteGQL}
+  }
+  user {
+    ${entityUsuarioGQL}
   }
 `;
 

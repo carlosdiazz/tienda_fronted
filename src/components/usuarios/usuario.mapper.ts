@@ -12,7 +12,7 @@ export const UsuarioMapper = (data: any): UsuarioInterface => {
     empleado:
       data["empleado"] != null ? EmpresaMapper(data["empleado"]) : undefined,
     password: "",
-    role: GetRolesResponse(data["role"]),
+    role: data["role"] != null ? GetRolesResponse(data["role"]) : [],
   };
 };
 

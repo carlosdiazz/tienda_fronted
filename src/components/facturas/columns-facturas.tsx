@@ -4,10 +4,19 @@ import Link from "next/link";
 import { toast } from "sonner";
 
 import { ColumnDef } from "@tanstack/react-table";
-import {  Edit, Eye } from "lucide-react";
+import { Edit, Eye } from "lucide-react";
 
 //Propio
-import {Badge,  Button, ClienteInterface, FacturaInterface, Switch, TableCell, useFacturaStore } from "@/components";
+import {
+  Badge,
+  Button,
+  ClienteInterface,
+  FacturaInterface,
+  Switch,
+  TableCell,
+  useFacturaStore,
+  UsuarioInterface,
+} from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 
 import { PermisoClient } from "../common";
@@ -31,10 +40,26 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
       );
     },
     cell: ({ row }) => {
-      const codigo_factura: number = row.getValue(
-        "codigo_factura"
-      );
+      const codigo_factura: number = row.getValue("codigo_factura");
       return <Badge variant={"secondary"}>{codigo_factura}</Badge>;
+    },
+  },
+  {
+    accessorKey: "user",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Facturado Por:
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user: UsuarioInterface = row.getValue("user");
+      return <span>{user.nickname}</span>;
     },
   },
 
@@ -52,10 +77,8 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
       );
     },
     cell: ({ row }) => {
-      const cliente: ClienteInterface = row.getValue(
-        "cliente"
-      );
-      return <span>{ cliente.name}</span>;
+      const cliente: ClienteInterface = row.getValue("cliente");
+      return <span>{cliente.name}</span>;
     },
   },
 
@@ -75,25 +98,25 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
   },
 
   {
-      accessorKey: "total",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Total
-            <SortedIcon isSorted={column.getIsSorted()} />
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const total: number = row.getValue("total");
-        const new_total=formatoMonedaRD(total)
-        return <Badge variant={"secondary"}>{new_total}</Badge>;
-      },
+    accessorKey: "total",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const total: number = row.getValue("total");
+      const new_total = formatoMonedaRD(total);
+      return <Badge variant={"secondary"}>{new_total}</Badge>;
+    },
   },
-    
+
   {
     accessorKey: "total_pagado",
     header: ({ column }) => {
@@ -109,7 +132,7 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
     },
     cell: ({ row }) => {
       const total_pagado: number = row.getValue("total_pagado");
-      const new_total=formatoMonedaRD(total_pagado)
+      const new_total = formatoMonedaRD(total_pagado);
       return <Badge variant={"secondary"}>{new_total}</Badge>;
     },
   },
@@ -122,14 +145,14 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Faltante
+          Faltante
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
     },
     cell: ({ row }) => {
       const faltante: number = row.getValue("faltante");
-      const new_faltante=formatoMonedaRD(faltante)
+      const new_faltante = formatoMonedaRD(faltante);
       return <Badge variant={"secondary"}>{new_faltante}</Badge>;
     },
   },
@@ -142,7 +165,7 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Status
+          Status
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
@@ -150,7 +173,11 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
     cell: ({ row }) => {
       const is_credito: boolean = row.getValue("is_credito");
 
-      return <Badge variant={is_credito?"destructive":"default"}>{is_credito?"Credito":"Pagada"}</Badge>;
+      return (
+        <Badge variant={is_credito ? "destructive" : "default"}>
+          {is_credito ? "Credito" : "Pagada"}
+        </Badge>
+      );
     },
   },
 
@@ -163,9 +190,18 @@ export const columnsFacturas: ColumnDef<FacturaInterface>[] = [
           <ButtonDeleteFactura id={factura.id} />
           <Link href={`${AppRouter.adminFactura}/${factura.id}`}>
             <Button variant={"secondary"}>
-              <Eye/>
+              <Eye />
             </Button>
           </Link>
+          <PermisoClient permiso={PermisoAccion.COMPROBANTE_CREATE}>
+            {factura.faltante != 0 ? (
+              <Link href={`${AppRouter.adminComprobante}/${factura.id}`}>
+                <Button variant="secondary">$$</Button>
+              </Link>
+            ) : (
+              <div></div>
+            )}
+          </PermisoClient>
         </TableCell>
       );
     },

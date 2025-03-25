@@ -3,6 +3,7 @@ import { FacturaInterface } from "./factura.interface";
 import { GetFacturaDetalleResponse } from "./factura-detalle";
 import { GetComprobanteResponse } from "../comprobantes";
 import { ClienteMapper } from "../clientes";
+import { UsuarioMapper } from "../usuarios";
 
 export const FacturaMapper = (data: any): FacturaInterface => {
   return {
@@ -17,6 +18,7 @@ export const FacturaMapper = (data: any): FacturaInterface => {
     comprobante: GetComprobanteResponse(data["comprobante"]),
     cliente: ClienteMapper(data["cliente"]),
     metodo_pago: validateProperty<string>(data, "metodo_pago", "string"),
+    user: UsuarioMapper(data["user"]),
     referencia_pago: validateProperty<string>(
       data,
       "referencia_pago",

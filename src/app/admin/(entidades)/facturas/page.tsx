@@ -25,10 +25,12 @@ import { Star, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useUsuariosStore } from "../../../../components/usuarios/usuario.store";
 
 export default function FacturaPage() {
   const [isPaid, setIsPaid] = useState<boolean | null>(null);
   const [id_cliente, setId_cliente] = useState<number | null>(null);
+  const [id_user, set_id_user] = useState<number | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   const [activo, setActivo] = useState(true);
@@ -51,6 +53,24 @@ export default function FacturaPage() {
     }
   };
 
+  const handleSelectClienteChange = (value: string) => {
+    if (value === "0") {
+      setId_cliente(null);
+    } else {
+      const cliente = Number(value);
+      setId_cliente(cliente);
+    }
+  };
+
+  const handleSelectUserChange = (value: string) => {
+    if (value === "0") {
+      set_id_user(undefined);
+    } else {
+      const user = Number(value);
+      set_id_user(user);
+    }
+  };
+
   const factura: FacturaInterface[] = useFacturaStore((state) => state.factura);
   const getFactura = useFacturaStore((state) => state.getFactura);
   const loadingFactura = useFacturaStore((state) => state.loading);
@@ -59,6 +79,9 @@ export default function FacturaPage() {
     (state) => state.clientes
   );
   const getClientes = useCLienteStore((state) => state.getClientes);
+
+  const usuarios = useUsuariosStore((state) => state.usuarios);
+  const getUsuarios = useUsuariosStore((state) => state.getUsuarios);
 
   const permiso = PermisoAccion.FACTURA_VIEW;
   const toggleFavorites = useFavoritosStore((state) => state.toggleFavorites);
@@ -73,20 +96,12 @@ export default function FacturaPage() {
 
   useEffect(() => {
     getClientes(999, true);
+    getUsuarios(10000, true);
   }, []);
 
   useEffect(() => {
-    getFactura(1000, isPaid, id_cliente, activo);
-  }, [isPaid, id_cliente, activo]);
-
-  const handleSelectClienteChange = (value: string) => {
-    if (value === "0") {
-      setId_cliente(null);
-    } else {
-      const cliente = Number(value);
-      setId_cliente(cliente);
-    }
-  };
+    getFactura(1000, isPaid, id_cliente, activo, id_user);
+  }, [isPaid, id_cliente, activo, id_user]);
 
   return (
     <div>
@@ -116,6 +131,27 @@ export default function FacturaPage() {
                   {clientes.map((item) => (
                     <SelectItem value={`${item.id}`} key={item.id}>
                       {item.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              onValueChange={handleSelectUserChange}
+              value={id_cliente?.toString()}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Facturado Por:" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Usuarios</SelectLabel>
+                  <SelectItem value={`0`} key="0">
+                    Todos
+                  </SelectItem>
+                  {usuarios.map((item) => (
+                    <SelectItem value={`${item.id}`} key={item.id}>
+                      {item.nickname}
                     </SelectItem>
                   ))}
                 </SelectGroup>

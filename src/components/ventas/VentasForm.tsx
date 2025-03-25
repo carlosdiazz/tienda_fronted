@@ -35,6 +35,7 @@ import { toast } from "sonner";
 import { createFacturaByIdAction } from "@/actions";
 import { useRouter } from "next/navigation";
 import { AppRouter } from "@/config";
+import { formatoMonedaRD } from "../../lib/converirFormatDinero";
 
 interface Props {
   facturaForm: FacturaFormInterface;
@@ -102,8 +103,8 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
       total: total,
       total_pagado: data.total_pagado,
       productos: new_productos,
-      metodo_pago: data.metodo_pago??"EFECTIVO",
-      referencia_pago: data.referencia_pago??"",
+      metodo_pago: data.metodo_pago ?? "EFECTIVO",
+      referencia_pago: data.referencia_pago ?? "",
     };
 
     const resp = await createFacturaByIdAction(newFactura);
@@ -210,7 +211,7 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
                   <SelectContent>
                     {productos.map((producto) => (
                       <SelectItem key={producto.id} value={`${producto.id}`}>
-                        {producto.name} - ${producto.price}
+                        {producto.name} - {formatoMonedaRD(producto.price)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -242,7 +243,9 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
                   <tr>
                     <th className="px-4 py-2 text-left">Producto</th>
                     <th className="px-4 py-2 text-left">Cantidad</th>
-                    <th className="px-4 py-2 text-left">Precio Total</th>
+                    <th className="px-4 py-2 text-left">Total Bruto</th>
+                    <th className="px-4 py-2 text-left">Itbis</th>
+                    <th className="px-4 py-2 text-left">Neto a Pagar</th>
                     <th className="px-4 py-2 text-center">Acciones</th>
                   </tr>
                 </thead>
@@ -252,7 +255,20 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
                       <td className="px-4 py-2">{producto.name}</td>
                       <td className="px-4 py-2">{producto.cantidad}</td>
                       <td className="px-4 py-2">
-                        ${producto.price * producto.cantidad}
+                        {formatoMonedaRD(producto.price * producto.cantidad)}
+                      </td>
+                      <td className="px-4 py-2">
+                        {formatoMonedaRD(
+                          Math.floor(producto.price * producto.cantidad * 0.18)
+                        )}
+                      </td>
+                      <td className="px-4 py-2">
+                        {formatoMonedaRD(
+                          Math.floor(
+                            producto.price * producto.cantidad * 0.18
+                          ) +
+                            producto.price * producto.cantidad
+                        )}
                       </td>
                       <td className="px-4 py-2 text-center">
                         <Button
@@ -273,12 +289,30 @@ export const VentasForm = ({ facturaForm, clientes, productos }: Props) => {
 
             {/* Segunda tarjeta: Monto a pagar y botón de pagar */}
             <Card className="col-span-1 p-4">
-              <h2 className="text-lg font-bold mb-4">Resumen</h2>
+              <h2 className="text-lg font-bold mb-4">Resumen de la Factura</h2>
 
-              {/* Total */}
-              <div className="mt-2">
-                <label className="block text-sm font-medium">Total</label>
-                <span className="text-xl font-bold">${total.toFixed(2)}</span>
+              {/* Detalles del total */}
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="font-medium">Total Bruto:</span>
+                  <span>{formatoMonedaRD(total)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="font-medium">ITBIS (18%):</span>
+                  <span className="text-xl font-bold">
+                    {formatoMonedaRD(Math.floor(total * 0.18))}
+                  </span>
+                </div>
+
+                <hr className="my-2 border-gray-300" />
+
+                <div className="flex justify-between">
+                  <span className="font-medium text-lg">Neto a Pagar:</span>
+                  <span className="text-lg font-bold">
+                    {formatoMonedaRD(Math.floor(total * 1.18))}
+                  </span>
+                </div>
               </div>
 
               {/* Monto a Pagar */}

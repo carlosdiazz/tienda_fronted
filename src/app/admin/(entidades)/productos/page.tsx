@@ -16,6 +16,7 @@ import {
   SelectValue,
   useFavoritosStore,
   useProductosStore,
+  useProveedorStore,
 } from "@/components";
 import { AppRouter, PermisoAccion } from "@/config";
 import { UpdateIcon } from "@radix-ui/react-icons";
@@ -27,6 +28,9 @@ import { toast } from "sonner";
 export default function ProductosPage() {
   const [activo, setActivo] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [id_proveedor, set_id_proveedor] = useState<number | undefined>(
+    undefined
+  );
 
   const handleSelectChange = (value: string) => {
     if (value === "true") {
@@ -53,9 +57,25 @@ export default function ProductosPage() {
     toast.success("Productos Actualizadas");
   };
 
+  const proveedores = useProveedorStore((state) => state.proveedores);
+  const getProveedores = useProveedorStore((state) => state.getProveedores);
+
   useEffect(() => {
-    getProductos(1000, activo);
-  }, [activo]);
+    getProveedores(1000, true);
+  }, []);
+
+  useEffect(() => {
+    getProductos(1000, activo, undefined, id_proveedor);
+  }, [activo, id_proveedor]);
+
+  const handleSelectClienteChange = (value: string) => {
+    if (value === "0") {
+      set_id_proveedor(undefined);
+    } else {
+      const proveedor = Number(value);
+      set_id_proveedor(proveedor);
+    }
+  };
 
   return (
     <div>
@@ -71,6 +91,28 @@ export default function ProductosPage() {
           </div>
 
           <div className="flex justify-end m-2 gap-x-4">
+            <Select
+              onValueChange={handleSelectClienteChange}
+              value={id_proveedor?.toString()}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Proveedores" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Proveedores</SelectLabel>
+                  <SelectItem value={`0`} key="0">
+                    Todos
+                  </SelectItem>
+                  {proveedores.map((item) => (
+                    <SelectItem value={`${item.id}`} key={item.id}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             <Select onValueChange={handleSelectChange}>
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="Activo" />

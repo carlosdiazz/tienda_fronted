@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 import { entityRelacionesFacturaGQL } from "./factura.interface";
 
 export const allFacturaGQL = gql`
-  query AllFactura($offset: Int, $limit: Int, $activo: Boolean, $isPaid: Boolean, $idCliente: Int) {
-    allFactura(offset: $offset, limit: $limit, activo: $activo, is_paid: $isPaid, id_cliente: $idCliente) {
+  query AllFactura($offset: Int, $limit: Int, $activo: Boolean, $isPaid: Boolean, $idCliente: Int, $idUser: Int) {
+    allFactura(offset: $offset, limit: $limit, activo: $activo, is_paid: $isPaid, id_cliente: $idCliente, id_user: $idUser) {
       ${entityRelacionesFacturaGQL}
     }
   }

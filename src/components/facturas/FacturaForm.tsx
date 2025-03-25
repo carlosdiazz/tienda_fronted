@@ -56,7 +56,9 @@ export const FacturaForm = ({ factura }: Props) => {
                   <TableHead>Nombre</TableHead>
                   <TableHead className="text-right">Cantidad</TableHead>
                   <TableHead className="text-right">Precio</TableHead>
-                  <TableHead className="text-right">Total</TableHead>
+                  <TableHead className="text-right">Total Bruto</TableHead>
+                  <TableHead className="text-right">Itbis</TableHead>
+                  <TableHead className="text-right">Neto a Pagar</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -70,7 +72,13 @@ export const FacturaForm = ({ factura }: Props) => {
                      {formatoMonedaRD(product.precio)}
                     </TableCell>
                     <TableCell className="text-right">
-                    {formatoMonedaRD(product.total)}
+                    {formatoMonedaRD(Math.floor(product.total))}
+                    </TableCell>
+                    <TableCell className="text-right">
+                    {formatoMonedaRD(Math.floor(product.total*0.18))}
+                    </TableCell>
+                    <TableCell className="text-right">
+                    {formatoMonedaRD(Math.floor(product.total*1.18))}
                     </TableCell>
                   </TableRow>
                 ))}

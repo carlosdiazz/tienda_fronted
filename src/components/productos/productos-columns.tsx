@@ -121,13 +121,34 @@ export const columnsProductos: ColumnDef<ProductoInterface>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          price
+          Precio
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );
     },
     cell: ({ row }) => {
       const price: number = row.getValue("price");
+      const new_price = formatoMonedaRD(price);
+
+      return <Badge variant={"secondary"}>{new_price}</Badge>;
+    },
+  },
+
+  {
+    accessorKey: "price_de_compra",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Precio de Compra
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const price: number = row.getValue("price_de_compra");
       const new_price = formatoMonedaRD(price);
 
       return <Badge variant={"secondary"}>{new_price}</Badge>;

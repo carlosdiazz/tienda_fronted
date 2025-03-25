@@ -1,6 +1,6 @@
 "use client";
 
-import { PermisoClient } from "@/components";
+import { ClienteInterface, PermisoClient } from "@/components";
 import { Button, Switch } from "@/components/ui";
 import { AppRouter, PermisoAccion } from "@/config";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
@@ -8,13 +8,6 @@ import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowUpDown, Eye } from "lucide-react";
 import Link from "next/link";
 
-export type ClientesColumn = {
-  id: number;
-  name: string;
-  documento: string;
-  telefono: string;
-  activo: boolean;
-};
 
 const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
   if (isSorted === "asc") {
@@ -27,7 +20,7 @@ const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
   return <ArrowUpDown className="ml-2 h-4 w-4" />;
 };
 
-export const columnsClientes: ColumnDef<ClientesColumn>[] = [
+export const columnsClientes: ColumnDef<ClienteInterface>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -37,6 +30,20 @@ export const columnsClientes: ColumnDef<ClientesColumn>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Nombre
+          <SortedIcon isSorted={column.getIsSorted()} />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "tipo_documento",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Tipo Documento
           <SortedIcon isSorted={column.getIsSorted()} />
         </Button>
       );

@@ -1,5 +1,5 @@
-import { getComprobanteByIdAction } from "@/actions";
-import { ComprobanteForm, ComprobanteInterface } from "@/components";
+import { getComprobanteByIdAction, getFacturaByIdAction } from "@/actions";
+import { ComprobanteForm, ComprobanteInterface, emptyComprobante } from "@/components";
 import { notFound } from "next/navigation";
 
 type Params = Promise<{
@@ -15,16 +15,16 @@ export default async function ComprobanteEdit(props: {
     notFound();
   }
 
-  const isComprobante = await getComprobanteByIdAction(id);
-  if (isComprobante === null) {
+  const isFactura = await getFacturaByIdAction(id);
+  if (isFactura === null) {
     notFound();
   }
 
-  const comprobante: ComprobanteInterface = isComprobante;
+  const comprobante: ComprobanteInterface = emptyComprobante;
 
   return (
     <div className="w-full mx-auto">
-      <ComprobanteForm comprobante={comprobante} />
+      <ComprobanteForm comprobante={comprobante} factura={isFactura}/>
     </div>
   );
 }

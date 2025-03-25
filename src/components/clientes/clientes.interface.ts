@@ -23,7 +23,7 @@ export const clienteFormSchema = z.object({
   name: z.string().min(2),
   activo: z.boolean(),
   telefono: z.string().min(2),
-  documento: z.string().min(2),
+  documento: z.string(),
   tipo_documento: z.string().min(2),
 });
 
@@ -35,7 +35,7 @@ export const emptyCliente: ClienteInterface = {
   activo: true,
   telefono: "",
   documento: "",
-  tipo_documento: "cedula",
+  tipo_documento: "Cédula",
 };
 
 export const entityClienterGQL = `

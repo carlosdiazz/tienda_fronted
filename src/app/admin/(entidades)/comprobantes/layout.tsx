@@ -19,6 +19,5 @@ export default async function ComprobanteLayout({
   if (!ver) {
     redirect(AppRouter.adminHome)
   };
-
   return <div>{children}</div>;
 }
